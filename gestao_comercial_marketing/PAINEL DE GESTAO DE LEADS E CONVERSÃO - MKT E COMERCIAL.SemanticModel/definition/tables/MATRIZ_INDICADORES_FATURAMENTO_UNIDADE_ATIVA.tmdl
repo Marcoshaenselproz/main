@@ -1,0 +1,191 @@
+table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
+	lineageTag: 4fcc2db6-227e-4f08-9b76-0b72645d0fac
+
+	measure VALOR_MATRIZ_FATURAMENTO_UNIDADE_ATIVA = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA[Métrica])
+			
+			// Variável auxiliar para calcular valores filtrados por status "Ativa"
+			VAR ValorAtivo =
+			    SWITCH(
+			        TRUE(),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto", CALCULATE([Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia", CALCULATE([Total Faturamento 1ª Mensalidade Recorrencia], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento total mensalidades", CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão", CALCULATE([Total Faturamento Antecipado Taxa Recorrencia Aprovado], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto", CALCULATE([Total Faturamento Antecipado Taxa Liquida Aprovado], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Taxa", CALCULATE([Total Faturamento Antecipado Taxa Aprovada], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Total", CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "TKT Médio", CALCULATE([Total Ticket Médio Faturamento Total Curso], dim_unidade_historica[status] = "Ativa"),
+			        BLANK()
+			    )
+			
+			// Cálculo do valor bruto com base no indicador e métrica selecionados
+			VAR ValorBruto =
+			    SWITCH(
+			        TRUE(),
+			        // Faturamento Previsto 1º Pgto - Boleto
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa")),
+			        
+			        // Faturamento Previsto 1º Pgto - Recorrência
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa")),
+			        
+			        // Faturamento Total Mensalidades
+			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, [Total Faturamento Meta BP]),
+			        
+			        // Faturamento Recorrente - Taxa Cartão
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "% Ating", BLANK(),
+			        
+			        // Faturamento Taxa de Matrícula - Boleto
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "% Ating", BLANK(),
+			        
+			        // Faturamento Taxa
+			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "% Ating", BLANK(),
+			        
+			        // Faturamento Total
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, [Total Faturamento Meta BP]),
+			        
+			        // TKT Médio
+			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, DIVIDE([Total Faturamento Meta BP], [Total Mat Meta BP])) - 1,
+			        
+			        // Caso padrão
+			        BLANK()
+			    )
+			
+			// Formatação condicional
+			VAR FormatarValor =
+			    IF(
+			        MetricaSelecionada = "% Ating",
+			        FORMAT(ValorBruto, "0.0%"),
+			        FORMAT(ValorBruto, "#,###")
+			    )
+			
+			RETURN FormatarValor
+			```
+		lineageTag: 40f717e0-6f23-4b10-a82f-47cfc31c9f68
+
+	measure '% Ating com Ícones FATURAMENTO_UNIDADE_ATIVA' = ```
+			
+			VAR ValorTexto = TRIM([VALOR_MATRIZ_FATURAMENTO_UNIDADE_ATIVA]) // Remove espaços extras
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(SUBSTITUTE(ValorTexto, "%", "")) / 100  // Remove "%" e converte para número
+			    )
+			
+			RETURN 
+			    IF(
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			        IF(
+			            SELECTEDVALUE(MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA[Métrica]) = "% Ating",
+			            SWITCH(
+			                TRUE(),
+			                ValorNumerico >= [% D.U Real], "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0, "🟡 " & ValorTexto,  // Entre 50% e 99.9% → círculo amarelo
+			                ValorNumerico < [% D.U Real], "🔴 " & ValorTexto,  // Abaixo de 50% → círculo vermelho
+			                ValorTexto // Caso padrão
+			            ),
+			            ValorTexto // Mantém a formatação original para os demais indicadores
+			        )
+			    )
+			
+			
+			```
+		lineageTag: b10ddba4-dd39-43a3-ae8b-5b9f5d542693
+
+	column Indicador
+		lineageTag: 520833f7-a1dc-4e8e-b440-38b12012c93d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: dc3b640d-7747-420a-8aa0-9874a50ac5ce
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: b0548b2a-7e1b-4218-bbd6-ffa9341df0d2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+		sortByColumn: Ordem_Métrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: d1cbcc8d-eb08-48b9-8ded-9c627b5616c5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				
+				        {"Faturamento Previsto 1º Pgto - Boleto", 1, "Real", 2},
+				        {"Faturamento Previsto 1º Pgto - Boleto", 1, "% Ating", 3},
+				
+				        {"Faturamento Previsto 1º Pgto - Recorrencia", 2, "Real", 2},
+				        {"Faturamento Previsto 1º Pgto - Recorrencia", 2, "% Ating", 3},
+				
+				        {"Faturamento total mensalidades", 3, "Real", 2},
+				        {"Faturamento total mensalidades", 3, "% Ating", 3},
+				
+				        {"Faturamento Recorrente - Taxa Cartão", 4, "Real", 2},
+				        {"Faturamento Recorrente - Taxa Cartão", 4, "% Ating", 3},
+				
+				        {"Faturamento Taxa de Matrícula - Boleto", 5, "Real", 2},
+				        {"Faturamento Taxa de Matrícula - Boleto", 5, "% Ating", 3},
+				
+				        {"Faturamento Taxa", 6, "Real", 2},
+				        {"Faturamento Taxa", 6, "% Ating", 3},
+				
+				        {"Faturamento Total", 7, "Real", 2},
+				        {"Faturamento Total", 7, "% Ating", 3},
+				
+				        {"TKT Médio", 8, "Real", 2},
+				        {"TKT Médio", 8, "% Ating", 3}
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = bf9525c264ab48a09b6f8a0e755eb8a6
+

@@ -1,0 +1,86 @@
+table vw_base_leads_historica_count
+	lineageTag: cd76b18c-3fd7-43a6-8b3a-a6e556dffaad
+
+	column data_de_criacao
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9c0a25a7-3f92-41a7-a112-afb4758c551c
+		summarizeBy: none
+		sourceColumn: data_de_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column qtde
+		dataType: int64
+		formatString: 0
+		lineageTag: c8a6632d-1b36-4e69-95bd-602766d19757
+		summarizeBy: sum
+		sourceColumn: qtde
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 0480c8d2-6a8c-4734-a38f-0de3df70fefd
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada
+		dataType: string
+		lineageTag: e864594e-4e6d-46c1-8b33-7b2e636edac5
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato_agrupada_final
+		dataType: string
+		lineageTag: e0f25475-c3a4-4117-a126-294111969a4b
+		summarizeBy: none
+		sourceColumn: origem_do_contato_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_usuario
+		dataType: string
+		lineageTag: 2ac9386f-7f2d-42dd-b522-02e6e47df82e
+		summarizeBy: none
+		sourceColumn: email_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: f5ce1cc6-a877-4ed4-87d3-b7b53bc77b1b
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		lineageTag: e6df33b4-c0a9-44bc-85bf-b8c687849e0c
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_base_leads_historica_count = m
+		mode: import
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.dados_historico.vw_base_leads_historica_count", null, [EnableFolding=true]),
+				
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"curso", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

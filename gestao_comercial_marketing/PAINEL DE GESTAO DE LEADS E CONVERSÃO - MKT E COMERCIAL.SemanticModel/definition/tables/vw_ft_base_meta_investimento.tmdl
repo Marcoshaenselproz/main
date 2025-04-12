@@ -1,0 +1,72 @@
+table vw_ft_base_meta_investimento
+	lineageTag: 50b091b8-4493-42e1-9814-9c963f8da16e
+
+	column regional
+		dataType: string
+		lineageTag: f6bd7239-4d3c-4661-81d1-662d0b30f359
+		summarizeBy: none
+		sourceColumn: regional
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		lineageTag: 2907ccc3-3434-4a2e-8fcf-cf603c9d6466
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_unidade
+		dataType: string
+		lineageTag: f4d55c67-ff6e-45ce-ab30-c52582ad97f6
+		summarizeBy: none
+		sourceColumn: status_unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column versao
+		dataType: string
+		lineageTag: 1e0bd5f5-5ae0-424f-b0b5-7c7a93f41c5f
+		summarizeBy: none
+		sourceColumn: versao
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ae98ec99-fbc1-4a36-a4e2-80f8b7abb5a3
+		summarizeBy: none
+		sourceColumn: DATA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column meta_investimento_pdu
+		dataType: double
+		lineageTag: 63335b4a-4ef0-42c6-b8fd-68020875e866
+		summarizeBy: sum
+		sourceColumn: meta_investimento_pdu
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_ft_base_meta_investimento = m
+		mode: import
+		queryGroup: CAC
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_ft_base_meta_investimento", null, [EnableFolding=true]),
+				
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"regional", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"status_unidade", Text.Proper, type text}, {"versao", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

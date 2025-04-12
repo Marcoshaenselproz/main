@@ -1,0 +1,26 @@
+table parametro_hora_Venda
+	lineageTag: 74e5de9e-4d52-48b9-941c-cdd268163347
+
+	measure 'Valor parametro_hora' = CALCULATE(SELECTEDVALUE('parametro_hora_Venda'[parametro_hora], HOUR(NOW())) -3)
+		formatString: 0
+		lineageTag: ed26038f-a869-44c8-aa8f-12b51020400c
+
+	column parametro_hora
+		formatString: 0
+		lineageTag: baa56038-f82e-4f00-9d52-af7ed8481b2d
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition parametro_hora_Venda = calculated
+		mode: import
+		source = GENERATESERIES(0, 23, 1)
+
+	annotation PBI_Id = 11bbba07e23645738a7fffe4fe2bddf7
+

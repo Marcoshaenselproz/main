@@ -1,0 +1,102 @@
+table VW_VISITANTES
+	lineageTag: 01042d9f-cfec-42d3-a64b-df0826c18b90
+
+	column data_criacao
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 73566a5c-33a2-4a42-b7cf-508eeef1cabc
+		summarizeBy: none
+		sourceColumn: data_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column url
+		dataType: string
+		lineageTag: 79a73f6e-559e-463d-a1aa-0347dd6bd2de
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	column total
+		dataType: int64
+		formatString: 0
+		lineageTag: 4cc9d790-8777-424a-8810-d394f6e9e6f9
+		summarizeBy: sum
+		sourceColumn: total
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_cadastro
+		dataType: string
+		lineageTag: dace74a7-cce7-47da-8198-d515b9927475
+		summarizeBy: none
+		sourceColumn: status_cadastro
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 56794e0f-0f21-4281-88aa-60b3fec9ae4d
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_matriculados
+		dataType: int64
+		formatString: 0
+		lineageTag: a2751419-ecbc-4391-a6b0-02d46aa2cb4b
+		summarizeBy: sum
+		sourceColumn: total_matriculados
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato
+		dataType: string
+		lineageTag: 7a100838-dc5d-4e49-aee4-12886c0d7d50
+		summarizeBy: none
+		sourceColumn: origem_do_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada
+		dataType: string
+		lineageTag: bb224156-7686-4f4f-b540-e6ce82715081
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column url_agrupada
+		dataType: string
+		lineageTag: 714a86c0-6bd8-4725-a6ea-5dbd3af77006
+		summarizeBy: none
+		sourceColumn: url_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora
+		dataType: int64
+		formatString: 0
+		lineageTag: 51301b89-bbd8-4062-9dd6-f08f1a12ccb0
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_VISITANTES = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.VW_VISITANTES_GROUP", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"status_cadastro", Text.Proper, type text}, {"origem_do_contato", Text.Proper, type text}, {"url", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}, {"url_agrupada", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

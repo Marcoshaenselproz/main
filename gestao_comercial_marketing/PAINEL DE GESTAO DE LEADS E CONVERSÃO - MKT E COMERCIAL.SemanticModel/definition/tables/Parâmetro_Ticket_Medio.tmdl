@@ -1,0 +1,26 @@
+table Parâmetro_Ticket_Medio
+	lineageTag: f59f61d1-0655-439c-9d33-67536300320d
+
+	measure 'Valor Parâmetro_Ticket' = SELECTEDVALUE('Parâmetro_Ticket_Medio'[Parâmetro_Ticket_Medio],0)
+		formatString: 0
+		lineageTag: 1742513c-5848-4a20-a7ab-8185d87fd881
+
+	column Parâmetro_Ticket_Medio
+		formatString: 0%;-0%;0%
+		lineageTag: 59db7b4a-ab7a-485a-aa9d-3e9f58a1547b
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_Ticket_Medio = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.001)
+
+	annotation PBI_Id = 98043cbf13c640b28db3af485c2e6b07
+

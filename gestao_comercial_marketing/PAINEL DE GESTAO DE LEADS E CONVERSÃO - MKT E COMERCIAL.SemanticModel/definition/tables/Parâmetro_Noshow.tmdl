@@ -1,0 +1,28 @@
+table Parâmetro_Noshow
+	lineageTag: a4c37e22-49fd-43e7-bde7-f274710bbc41
+
+	measure 'Valor noshow' = SELECTEDVALUE('Parâmetro_Noshow'[noshow],0)
+		lineageTag: 1b55e143-b3b6-4ae5-b2dd-caafb949c7e9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column noshow
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 87754465-f248-43af-9121-c2db48224033
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_Noshow = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.001)
+
+	annotation PBI_Id = 6458b6db66bd49758a2cfb1149b50174
+

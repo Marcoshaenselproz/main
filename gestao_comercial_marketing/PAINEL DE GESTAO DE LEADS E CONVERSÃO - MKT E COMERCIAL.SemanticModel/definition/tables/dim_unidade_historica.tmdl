@@ -1,0 +1,145 @@
+table dim_unidade_historica
+	lineageTag: 609f39d5-aa00-45c0-934f-a5b3cdd14f85
+
+	column data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f6df4cab-8872-4d71-9df8-dc0bf65b2d47
+		summarizeBy: none
+		sourceColumn: data
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: 88298003-ab8c-4a62-a2ee-d6baa49be6a7
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column territorio
+		dataType: string
+		lineageTag: 37a647a9-49a4-42e0-95fd-7c044d8fc774
+		summarizeBy: none
+		sourceColumn: territorio
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional
+		dataType: string
+		lineageTag: 0c4771a7-b3eb-4cb1-9129-a996f6186eca
+		summarizeBy: none
+		sourceColumn: regional
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 4fff6bb9-00e2-4fcc-b171-202c86dfe672
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla
+		dataType: string
+		lineageTag: edcd078a-799e-4be0-a2f5-d169ed21d258
+		summarizeBy: none
+		sourceColumn: sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		formatString: 0
+		lineageTag: d7307928-aac2-4bd5-a9fe-52dc075b1581
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column branch_id
+		dataType: string
+		lineageTag: 1bb58f8b-5e07-4c58-874e-fcb033c06afe
+		summarizeBy: none
+		sourceColumn: branch_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column dsc_unidade
+		dataType: string
+		lineageTag: 18cc56fe-df2c-473b-a765-64f710a27c69
+		summarizeBy: none
+		sourceColumn: dsc_unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column porte
+		dataType: string
+		lineageTag: 5869e9f7-d0c0-49f6-a94e-edf3cf68d486
+		summarizeBy: none
+		sourceColumn: porte
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_mes
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a919638e-1293-451f-8536-b3caaba3bfdb
+		summarizeBy: none
+		sourceColumn: data_mes
+
+		variation Variation
+			isDefault
+			relationship: a5386790-05d1-4fc0-8ed6-1438bfc9d3af
+			defaultHierarchy: LocalDateTable_02e8a343-438e-4e85-9324-e4ae579af2c6.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ultimo_status
+		dataType: string
+		lineageTag: 8e4cb831-da49-477a-83ee-a480523bc41d
+		summarizeBy: none
+		sourceColumn: ultimo_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column porte_unidade
+		dataType: string
+		lineageTag: 27890cc7-73aa-44cf-ba7e-c92a25b88abb
+		summarizeBy: none
+		sourceColumn: porte_unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao
+		dataType: string
+		lineageTag: fa38864e-4a08-4137-bb12-7ad9d9afe844
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_unidade_historica = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_unidade_historica", null, [EnableFolding=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"ano", Int64.Type}, {"data", type date}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"unidade", Text.Proper, type text}, {"dsc_unidade", Text.Proper, type text}, {"territorio", Text.Proper, type text}, {"regional", Text.Proper, type text}, {"status", Text.Proper, type text}, {"sigla", Text.Proper, type text}, {"ultimo_status", Text.Proper, type text}, {"regiao", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

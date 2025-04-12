@@ -1,0 +1,35 @@
+table VW_MATRICULAS_LIQUIDAS
+	lineageTag: 8f19b44b-646a-41fb-b056-db11471fdf45
+
+	column mes_fechamento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 70335f18-cf4a-4598-a465-d666433b4ad7
+		summarizeBy: none
+		sourceColumn: mes_fechamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column qtde_matriculas
+		dataType: int64
+		formatString: 0
+		lineageTag: c589ebb8-6516-41d3-8d76-0d0d737a4f57
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_MATRICULAS_LIQUIDAS = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.modelo.ft_base_vendas_liquidas", null, [EnableFolding=true])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

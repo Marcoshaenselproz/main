@@ -1,0 +1,83 @@
+table vw_ft_investimento_distribuido_tb
+	lineageTag: 0694ce28-ebce-49da-af49-2e332c92d65a
+
+	column data_criacao
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e32a52e7-4d91-4b21-914b-a6a568bed6cb
+		summarizeBy: none
+		sourceColumn: data_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: ee65520e-2962-402d-a4fb-5998a3858cc8
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada
+		dataType: string
+		lineageTag: 7d35b788-f3ed-466f-93bd-ca8662370346
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo
+		dataType: string
+		lineageTag: d545d622-5bb9-4deb-87fb-e189c8a3c624
+		summarizeBy: none
+		sourceColumn: tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column investimento
+		dataType: double
+		lineageTag: 45922119-a23d-48ec-b87d-e0794c1b1a96
+		summarizeBy: sum
+		sourceColumn: investimento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column regional_tratada
+		dataType: string
+		lineageTag: 9a0a5854-e0ca-4166-8e3f-28460a17570c
+		summarizeBy: none
+		sourceColumn: regional_tratada
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiao
+		dataType: string
+		lineageTag: 8e4662d6-c9a3-451d-9692-ca810b5473f8
+		summarizeBy: none
+		sourceColumn: regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_ft_investimento_distribuido_tb = m
+		mode: import
+		queryGroup: CAC
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * from plancomercial.PERSONE_ETL.tb_ft_investimento_distribuido", null, [EnableFolding=true]),
+				
+				    #"Valor Substituído" = Table.ReplaceValue(Fonte,"todas","Sem Unidade",Replacer.ReplaceText,{"unidade_tratada"}),
+				    #"Valor Substituído1" = Table.ReplaceValue(#"Valor Substituído",null,"Sem Utm",Replacer.ReplaceValue,{"utm_campaign_agrupada"}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Valor Substituído1",{{"unidade_tratada", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"tipo", Text.Proper, type text}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Colocar Cada Palavra Em Maiúscula",{{"unidade_tratada", "unidade"}})
+				in
+				    #"Colunas Renomeadas"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

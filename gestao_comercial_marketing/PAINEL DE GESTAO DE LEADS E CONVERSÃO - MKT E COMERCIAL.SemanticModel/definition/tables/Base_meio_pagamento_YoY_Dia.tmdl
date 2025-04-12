@@ -1,0 +1,93 @@
+table Base_meio_pagamento_YoY_Dia
+	lineageTag: 52874198-ac39-411f-87b3-9464ff0df0c3
+
+	column tipo_pagamento
+		dataType: string
+		lineageTag: 14751601-6be6-4acb-9a3d-2d504d5d76b2
+		summarizeBy: none
+		sourceColumn: tipo_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_pagamento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 294946ad-46fb-4db4-a240-955ca8b39ed6
+		summarizeBy: none
+		sourceColumn: data_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mes_pagamento
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 7178891a-437c-442c-af6f-4813319b8b9c
+		summarizeBy: none
+		sourceColumn: mes_pagamento
+
+		variation Variation
+			isDefault
+			relationship: 8735bba7-6254-4c2b-abea-4fca725ad744
+			defaultHierarchy: LocalDateTable_b349f525-a741-4f7a-929e-aeefc9bda202.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status
+		dataType: string
+		lineageTag: 9a007477-a4f1-4409-8237-bde07ead92ac
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_installment
+		dataType: string
+		lineageTag: 6dd92fd8-b5fa-40d7-9ce5-e33ca3917e51
+		summarizeBy: none
+		sourceColumn: is_installment
+
+		annotation SummarizationSetBy = Automatic
+
+	column enrollment_fee
+		dataType: string
+		lineageTag: 043b3f19-fb11-40ab-ade5-5a94cdc19e18
+		summarizeBy: none
+		sourceColumn: enrollment_fee
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor_pago
+		dataType: double
+		lineageTag: 464a966f-9571-416f-927a-37afd4d5701e
+		summarizeBy: sum
+		sourceColumn: valor_pago
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unidade
+		dataType: string
+		lineageTag: efc2ae75-be46-4576-8396-9da4188a3e6b
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Base_meio_pagamento_YoY_Dia = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT #(lf)  branch_name AS unidade,#(lf)  --course_name AS curso,#(lf)  --shift_name AS turno,#(lf)  tipo_baixa_correto AS tipo_pagamento,#(lf)  payment_date AS data_pagamento,#(lf)  DATE_TRUNC(payment_date, MONTH) AS mes_pagamento,#(lf)  status,#(lf)  is_installment,#(lf)  enrollment_fee,#(lf)  SUM(payment_value) AS valor_pago#(lf)FROM #(lf)  plancomercial.PERSONE_ETL.ft_meios_pagamentos#(lf)WHERE #(lf)  -- Mês atual do ano atual#(lf)  (EXTRACT(YEAR FROM payment_date) = EXTRACT(YEAR FROM CURRENT_DATE()) #(lf)   AND EXTRACT(MONTH FROM payment_date) IN (EXTRACT(MONTH FROM CURRENT_DATE()), EXTRACT(MONTH FROM DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))))#(lf)  OR#(lf)  -- Mês atual e anterior do ano anterior#(lf)  (EXTRACT(YEAR FROM payment_date) = EXTRACT(YEAR FROM DATE_SUB(CURRENT_DATE(), INTERVAL 1 YEAR)) #(lf)   AND EXTRACT(MONTH FROM payment_date) IN (EXTRACT(MONTH FROM CURRENT_DATE()), EXTRACT(MONTH FROM DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))))#(lf)GROUP BY #(lf)  1, 2, 3, 4, 5, 6,7#(lf)ORDER BY #(lf)  payment_date DESC", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"tipo_pagamento", Text.Proper, type text}, {"status", Text.Proper, type text}, {"is_installment", Text.Proper, type text}, {"enrollment_fee", Text.Proper, type text}, {"unidade", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

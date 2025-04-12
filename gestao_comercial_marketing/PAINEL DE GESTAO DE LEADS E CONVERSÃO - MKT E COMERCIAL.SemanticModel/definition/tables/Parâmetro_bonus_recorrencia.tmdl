@@ -1,0 +1,26 @@
+table Parâmetro_bonus_recorrencia
+	lineageTag: c4b47da5-62a3-405e-8c2f-a4791b9fbe42
+
+	measure 'Valor Parâmetro_bonus_recorrencia' = SELECTEDVALUE('Parâmetro_bonus_recorrencia'[Parâmetro_bonus_recorrencia],[% Total Recorrencia Aprovado])
+		formatString: 0%;-0%;0%
+		lineageTag: 04b8b06e-cf27-4600-b64d-1e1bbe90cbc8
+
+	column Parâmetro_bonus_recorrencia
+		formatString: 0%;-0%;0%
+		lineageTag: 04917052-4d5e-413a-aa49-bb3a09896f25
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_bonus_recorrencia = calculated
+		mode: import
+		source = GENERATESERIES(0, 0.31, 0.1)
+
+	annotation PBI_Id = 07953a28b5d84275ac561b6d1450e817
+

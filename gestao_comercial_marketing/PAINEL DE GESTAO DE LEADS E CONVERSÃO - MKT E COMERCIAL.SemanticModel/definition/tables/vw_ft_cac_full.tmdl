@@ -1,0 +1,134 @@
+table vw_ft_cac_full
+	lineageTag: 3ef3f519-ef7e-454d-9cd7-220ca789e29c
+
+	column mes_data
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 4b67daf9-0a4a-4524-9e5a-7d6aa63dba49
+		summarizeBy: none
+		sourceColumn: mes_data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(max)
+		lineageTag: 17da9050-85e8-4fec-aa7e-d04ecc92ae5e
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column central
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 7a48c456-be10-4833-afea-6600723bd0be
+		summarizeBy: sum
+		sourceColumn: central
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column comercial
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 5c7cfb67-e2be-4f06-9f3a-55112a80c7dd
+		summarizeBy: sum
+		sourceColumn: comercial
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column marketing
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 04388a64-d52c-48ce-924c-6e003e53f487
+		summarizeBy: sum
+		sourceColumn: marketing
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column custo_total
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 9ec05eac-e396-4395-8d5f-36e24b64dbfb
+		summarizeBy: sum
+		sourceColumn: custo_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column persone
+		dataType: double
+		lineageTag: 01824460-6dc3-4a7c-a91e-31ed2269434c
+		summarizeBy: sum
+		sourceColumn: persone
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column take
+		dataType: double
+		lineageTag: dc545c1a-d2f7-4b80-850b-c85324525b71
+		summarizeBy: sum
+		sourceColumn: take
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rd_crm
+		dataType: double
+		lineageTag: 8f033e71-9305-4abb-9acf-091665ea359f
+		summarizeBy: sum
+		sourceColumn: rd_crm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rd_mkt
+		dataType: double
+		lineageTag: 687053ce-e962-4354-9991-07c5a986f5db
+		summarizeBy: sum
+		sourceColumn: rd_mkt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_soul
+		dataType: double
+		lineageTag: ed4f4d60-99e8-42d6-8c3e-e8a40cf3c1f1
+		summarizeBy: sum
+		sourceColumn: data_soul
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_ft_cac_full = m
+		mode: import
+		queryGroup: CAC
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.CAC.vw_ft_cac_full", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

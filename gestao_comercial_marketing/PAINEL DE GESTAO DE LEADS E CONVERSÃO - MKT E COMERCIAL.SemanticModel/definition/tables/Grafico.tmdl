@@ -1,0 +1,52 @@
+table Grafico
+	lineageTag: 62e6893d-731b-4554-8434-72de7e9bc202
+
+	column Grafico
+		lineageTag: 1646c3bc-7ae7-4cdb-b3a8-68a3a15c74de
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Grafico Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Grafico Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grafico Campos'
+		isHidden
+		lineageTag: 8ccf9456-2afb-46c7-bbd6-b21c2c2cd0d2
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Grafico Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Grafico Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: c7e71f3c-6368-47cf-b929-732b1a34cac8
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Grafico = calculated
+		mode: import
+		source =
+				{
+				    ("% do tempo percorrido no mês", NAMEOF('MEDIDAS'[% D.U Real]), 0),
+				    ("%% ating.  investimento feito", NAMEOF('Medida_LTV'[% Total Investimento]), 1),
+				    ("% ating. Leads Total", NAMEOF('MEDIDAS'[% Total Leads Meta]), 2),
+				    ("% ating. Leads Pagos", NAMEOF('MEDIDAS'[% Total Leads Meta Pago]), 3),
+				    ("% ating. meta Matrículas", NAMEOF('MEDIDAS'[% Total Mat Meta BP]), 4),
+				    ("% ating. meta Receita", NAMEOF('MEDIDAS'[% Total Faturamento Boleto/Pix/Cartão]), 5)
+				}
+
+	annotation PBI_Id = e11dd49394114ae1928753ddcbdd14df
+

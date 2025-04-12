@@ -1,0 +1,26 @@
+table Parâmetro_ticket_meta
+	lineageTag: 0f183c20-1fb9-4a7e-b265-3d275154c1a4
+
+	measure 'Valor Parâmetro_ticket_meta' = SELECTEDVALUE('Parâmetro_ticket_meta'[Parâmetro_ticket_meta])
+		formatString: 0
+		lineageTag: 7f7d3188-760e-495f-be5c-24ff0e3c5bdd
+
+	column Parâmetro_ticket_meta
+		formatString: 0
+		lineageTag: 2f3d0117-fe7d-49fb-9977-22f831e5af3a
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_ticket_meta = calculated
+		mode: import
+		source = GENERATESERIES(0, 1000, 1)
+
+	annotation PBI_Id = e4324d18b68a4fa9b3d5a614f4b290ec
+

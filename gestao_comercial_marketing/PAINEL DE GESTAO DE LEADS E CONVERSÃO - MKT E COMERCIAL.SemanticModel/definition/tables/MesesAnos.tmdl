@@ -1,0 +1,56 @@
+table MesesAnos
+	lineageTag: 24532173-440b-4071-8c38-86a1c201796f
+
+	column DATA
+		formatString: General Date
+		lineageTag: 72d8981f-1801-4a60-a42a-898560d68b94
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: VW_CALENDARIO[DATA]
+
+		variation Variation
+			isDefault
+			relationship: c348f94c-018c-4920-a5dc-81c4428fd55a
+			defaultHierarchy: LocalDateTable_9bf67694-8369-490d-8412-f9788165844c.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano
+		formatString: 0
+		lineageTag: a9a1cfc7-bd3a-44e3-b198-d209e4b7ed2d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ano]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mês
+		formatString: 0
+		lineageTag: 765ce5c8-67c7-4f4e-8cf9-46d61fe15c30
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Mês]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ano-Mês
+		lineageTag: abe27b5e-338f-4629-847b-a9399cac705a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Ano-Mês]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MesesAnos = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    DISTINCT(VW_CALENDARIO[DATA]),
+				    "Ano", YEAR([DATA]),
+				    "Mês", MONTH([DATA]),
+				    "Ano-Mês", FORMAT([DATA], "YYYY-MM")
+				)
+
+	annotation PBI_Id = f6197b9da6ef40af9e19ae0a3f7d5c4f
+

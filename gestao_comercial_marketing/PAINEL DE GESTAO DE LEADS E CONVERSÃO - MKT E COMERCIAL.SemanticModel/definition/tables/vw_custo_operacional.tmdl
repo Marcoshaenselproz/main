@@ -1,0 +1,64 @@
+table vw_custo_operacional
+	lineageTag: 3c7c259b-1304-48ca-bef6-5abe7a16b1d9
+
+	column mes_data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: fcd13ad7-869a-4836-8a9e-5d9e143f77d0
+		summarizeBy: none
+		sourceColumn: mes_data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column origem_custo
+		dataType: string
+		lineageTag: 406eb7cc-fedd-404b-8634-ba3fa8a033e0
+		summarizeBy: none
+		sourceColumn: origem_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_custo
+		dataType: string
+		lineageTag: 43f7abf8-d14b-4622-b220-e6ac3e6d9d8d
+		summarizeBy: none
+		sourceColumn: tipo_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column custo_operacional
+		dataType: double
+		lineageTag: 26f13a40-efb1-4381-a9c0-d538fa666657
+		summarizeBy: sum
+		sourceColumn: custo_operacional
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_custo_operacional = m
+		mode: import
+		queryGroup: CAC
+		source = ```
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.CAC.vw_custo_operacional", null, [EnableFolding=true]),
+				
+				    #"Colunas Não Dinâmicas" = Table.UnpivotOtherColumns(Fonte, {"mes_data", "origem_custo"}, "Atributo", "Valor"),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Colunas Não Dinâmicas", each ([Atributo] <> "salario_bruto" and [Atributo] <> "total_custos_operacionais")),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Linhas Filtradas",{{"Valor", "custo_operacional"}, {"Atributo", "tipo_custo"}}),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Colunas Renomeadas", "Personalizar", each if [origem_custo] = "marketing" and [tipo_custo] = "comissao" then 
+				1 
+				else 0),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Personalização Adicionada", each ([Personalizar] = 0)),
+				    #"Colunas Removidas" = Table.RemoveColumns(#"Linhas Filtradas1",{"Personalizar"}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Colunas Removidas",{{"origem_custo", Text.Proper, type text}, {"tipo_custo", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

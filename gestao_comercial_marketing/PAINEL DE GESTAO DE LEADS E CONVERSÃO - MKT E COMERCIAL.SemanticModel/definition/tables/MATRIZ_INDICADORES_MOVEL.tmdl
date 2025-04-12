@@ -1,0 +1,193 @@
+table MATRIZ_INDICADORES_MOVEL
+	lineageTag: 7a6fd67a-d013-4580-96ac-a4fc67fe16b1
+
+	measure VALOR_MATRIZ_META_MOVEL = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL[Métrica])
+			VAR ValorBruto = 
+			    SWITCH(
+			        TRUE(),
+			        IndicadorSelecionado = "Matrículas" && MetricaSelecionada = "Meta", [Total Mat Meta BP Movel],
+			        IndicadorSelecionado = "Matrículas" && MetricaSelecionada = "Real", [Total Mat Geral],
+			        IndicadorSelecionado = "Matrículas" && MetricaSelecionada = "% Ating", [% Total Mat Meta BP Movel],
+			        IndicadorSelecionado = "Leads" && MetricaSelecionada = "Meta", [Total Leads Meta Movel],
+			        IndicadorSelecionado = "Leads" && MetricaSelecionada = "Real", [Total Leads],
+			        IndicadorSelecionado = "Leads" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel],
+			        IndicadorSelecionado = "Leads Pagos" && MetricaSelecionada = "Meta", [Total Leads Meta Movel Pago],
+			        IndicadorSelecionado = "Leads Pagos" && MetricaSelecionada = "Real", [Total Leads Pago],
+			        IndicadorSelecionado = "Leads Pagos" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel Pago],
+			        
+			        IndicadorSelecionado = "Leads Não Pagos" && MetricaSelecionada = "Meta", [Total Leads Meta Movel Não Pago],
+			        IndicadorSelecionado = "Leads Não Pagos" && MetricaSelecionada = "Real", [Total Leads Não Pago],
+			        IndicadorSelecionado = "Leads Não Pagos" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel Não Pago],
+			
+			        IndicadorSelecionado = "Conversão Geral" && MetricaSelecionada = "Meta", [Conversão Geral Meta Movel],
+			        IndicadorSelecionado = "Conversão Geral" && MetricaSelecionada = "Real", [Conversão Geral],
+			        IndicadorSelecionado = "Conversão Geral" && MetricaSelecionada = "% Ating", [Conversão Geral Meta Movel p.p],
+			
+			
+			        IndicadorSelecionado = "Investimento" && MetricaSelecionada = "Meta", [Total Investimento Meta Movel],
+			        IndicadorSelecionado = "Investimento" && MetricaSelecionada = "Real", [Total Investimento],
+			        IndicadorSelecionado = "Investimento" && MetricaSelecionada = "% Ating", [% Total Investimento Meta Móvel Reduzido],
+			
+			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "Meta", [Total CPL Meta Movel Pago],
+			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "Real", [Total CPL Pago],
+			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "% Ating", [Total CPL Meta Movel Pago Dif],
+			
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Meta", [Total Faturamento Meta Movel BP],
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Real", [Total Faturamento 1ª Mensalidade],
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "% Ating",DIVIDE([Total Faturamento 1ª Mensalidade],[Total Faturamento Meta Movel BP]),
+			
+			        BLANK()
+			    )
+			
+			VAR FormatarValor =
+			    IF(
+			        MetricaSelecionada = "% Ating",
+			        IF(
+			            IndicadorSelecionado IN {"Conversão Geral", "CPL"},
+			            ValorBruto, -- Já formatado como "p.p"
+			            FORMAT(ValorBruto, "0.0%") -- Outros indicadores em %
+			        ),
+			        // Formatação específica para Meta e Real
+			        IF(
+			            IndicadorSelecionado = "Conversão Geral",
+			            FORMAT(ValorBruto, "0.0%"), -- Formato de porcentagem para Conversão Geral
+			            FORMAT(ValorBruto, "#,###") -- Formato numérico padrão para outros indicadores
+			        )
+			    )
+			RETURN FormatarValor
+			```
+		lineageTag: 2ea062e6-9626-46dd-8608-12cd5f2ca90b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Ating com Ícones MATRIZ_MOVEL' = ```
+			
+			
+			VAR ValorTexto = TRIM([VALOR_MATRIZ_META_MOVEL]) // Remove espaços extras
+			// Verifica se o valor contém "p.p" ou "%" para definir o tratamento adequado
+			VAR ContemPP = SEARCH("p.p", ValorTexto, 1, 0) > 0
+			VAR ContemPorcento = SEARCH("%", ValorTexto, 1, 0) > 0
+			// Remove os indicadores de texto para conversão numérica
+			VAR ValorLimpo = SUBSTITUTE(SUBSTITUTE(ValorTexto, " p.p", ""), "%", "")
+			// Converte para número, mas só divide por 100 se for percentual ("%")
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(ValorLimpo) / IF(ContemPorcento, 100, 1) // Divide por 100 apenas para "%"
+			    )
+			RETURN 
+			    IF(
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			        SWITCH(
+			            TRUE(),
+			            // Formatação para "% Ating"
+			            SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL[Métrica]) = "% Ating",
+			                SWITCH(
+			                    TRUE(),
+			                    // Tratamento específico para CPL dentro de "% Ating"
+			                    SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL[Indicador]) = "CPL",
+			                        IF(
+			                            ValorNumerico > 0, 
+			                            "🔴 " & ValorTexto,  // Valor positivo → vermelho
+			                            "🟢 " & ValorTexto   // Valor negativo ou zero → verde
+			                        ),
+			                    
+			                    // Ícones para outros indicadores em "% Ating"
+			                    ValorNumerico >= 1, "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde
+			                    ValorNumerico >= 0, "🟡 " & ValorTexto,  // Entre 0% e meta → círculo amarelo
+			                    ValorNumerico < 0, "🔴 " & ValorTexto,  // Abaixo de 0% → círculo vermelho
+			                    ValorTexto // Caso padrão
+			                ),
+			            
+			            // Para todos os outros indicadores, mantém o formato original
+			            ValorTexto
+			        )
+			    )
+			```
+		lineageTag: d5e27099-9777-4588-9ae7-e5e2deb4ba20
+
+	column Indicador
+		lineageTag: 5445b217-b0db-4ade-8879-9c502c036f93
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: 3f4d1249-454f-4939-b00b-d354b735117b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: 2ef9f181-5dbb-4871-9cf1-b3ee96e751f6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+		sortByColumn: Ordem_Métrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: 14a1f4ee-a484-49dd-a195-af93305f4e88
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_MOVEL = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				        {"Matrículas", 1, "Meta", 1},
+				        {"Matrículas", 1, "Real", 2},
+				        {"Matrículas", 1, "% Ating", 3},
+				        {"Leads", 2, "Meta", 1},
+				        {"Leads", 2, "Real", 2},
+				        {"Leads", 2, "% Ating", 3},
+				        {"Leads Pagos", 3, "Meta", 1},
+				        {"Leads Pagos", 3, "Real", 2},
+				        {"Leads Pagos", 3, "% Ating", 3},
+				        {"Leads Não Pagos", 4, "Meta", 1},
+				        {"Leads Não Pagos", 4, "Real", 2},
+				        {"Leads Não Pagos", 4, "% Ating", 3},
+				        {"Conversão Geral", 5, "Meta", 1},
+				        {"Conversão Geral", 5, "Real", 2},
+				        {"Conversão Geral", 5, "% Ating", 3},
+				        {"Investimento", 6, "Meta", 1},
+				        {"Investimento", 6, "Real", 2},
+				        {"Investimento", 6, "% Ating", 3},
+				        {"CPL", 7, "Meta", 1},
+				        {"CPL", 7, "Real", 2},
+				        {"CPL", 7, "% Ating", 3},
+				          {"Faturamento Previsto 1º Pgto", 8, "Meta", 1},
+				        {"Faturamento Previsto 1º Pgto", 8, "Real", 2},
+				        {"Faturamento Previsto 1º Pgto", 8, "% Ating", 3}
+				
+				
+				
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = ab5ed51951ad4eef83a68e3ed6a870d4
+

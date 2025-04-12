@@ -1,0 +1,256 @@
+table MEDIDA_RVV
+	lineageTag: e21ebdb6-1313-4d59-ba11-7f10fc4fbb0f
+
+	measure '% Faixa Comissao Faturamento' =
+			
+			
+			VAR metamovel = [% Total Faturamento Meta Móvel]
+			RETURN
+			SWITCH(TRUE(),
+			metamovel >= 1,0.2,
+			metamovel >=0.85,0.16,
+			metamovel >=0.5,0.12,
+			metamovel >=0.25,0.05)
+		formatString: 0%;-0%;0%
+		lineageTag: aa6effc4-5334-4bcf-9fd8-8052d6feae37
+
+	measure 'Quarter Faixa Comissao Faturamento' =
+			
+			
+			VAR metamovel = [% Total Faturamento Meta Móvel]
+			RETURN
+			SWITCH(TRUE(),
+			metamovel >= 1,"Q1",
+			metamovel >=0.85,"Q2",
+			metamovel >=0.5,"Q3",
+			metamovel >=0.25,"Q4")
+		lineageTag: ef720310-05b4-4b20-b950-9d9d06665a59
+
+	measure 'Total Bonus comissao ating meta proz' = ```
+			
+			var fatbrutoall =  
+			SWITCH(TRUE(),
+			ISBLANK([Total Faturamento Bruto Esperado]),BLANK(),
+			   CALCULATE([Total Faturamento Bruto Esperado],ALLSELECTED(vw_dim_users_ajustado[nome_usuario])))
+			var fatmetaall =  
+			SWITCH(TRUE(),
+			ISBLANK([Total Faturamento Bruto Esperado]),BLANK(),
+			   CALCULATE([Total Faturamento Meta Movel],ALLSELECTED(vw_dim_users_ajustado[nome_usuario])))
+			var calcmeta = DIVIDE(fatbrutoall,fatmetaall)
+			var calcbonusproz = SWITCH(TRUE(),
+			calcmeta>=1,0.02,0)
+			var fatcomissao120 = [Total Faturamento comissao ate 120%]
+			RETURN
+			fatcomissao120 * calcbonusproz
+			```
+		formatString: #,0
+		lineageTag: d29ade5c-c1ef-4d9d-8f10-16268e98ecf3
+
+	measure 'Total Bonus Comissao Recorrencia' = ```
+			
+			
+			var perbonusrecor = 
+			SWITCH(TRUE(),
+			[% Total Recorrencia Matriculado x Vendas]>=0.3,0.05,0)
+			
+			
+			var fatucomissao120 = [Total Faturamento comissao ate 120%]
+			
+			RETURN
+			fatucomissao120 * perbonusrecor
+			
+			```
+		formatString: #,0
+		lineageTag: 119fdcd1-a02e-4afe-9c92-6977eebd30f8
+
+	measure 'Total Comissao Faturamento' =
+			
+			var totalcomissao = [Total Comissão por Quarter]+[Total Bonus Comissao Recorrencia]+[Total Bonus comissao ating meta proz]
+			RETURN
+			totalcomissao
+		formatString: #,0
+		lineageTag: c1dfed17-be4a-4036-b1e7-ee74605a410f
+
+	measure 'Total Comissão por Quarter' = ```
+			
+			var fatcomissao120 = [Total Faturamento comissao ate 120%]
+			VAR faixa = [% Faixa Comissao Faturamento]
+			RETURN
+			fatcomissao120 * faixa
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 735bc2c1-c910-4b52-aec8-ce1759dd08f0
+
+	measure 'Total Faturamento comissao ate 120%' = ```
+			
+			
+			
+			VAR percfatmovel = 
+			    SWITCH(
+			        TRUE(),
+			        [% Total Faturamento Meta Móvel] > 1.2, 1.2,
+			        [% Total Faturamento Meta Móvel] <= 1.2,[% Total Faturamento Meta Móvel] -- Valor padrão caso nenhuma condição seja atendida
+			    )
+			VAR metafat = [Total Faturamento Meta comercial]
+			
+			RETURN
+			metafat * percfatmovel
+			```
+		formatString: #,0
+		lineageTag: cd6624a1-a97c-4101-90cb-e4dcb40a2451
+
+	measure 'Total Faturamento Bruto Simulado' = ```
+			
+			var paramvendas = 'Parâmetro_venda_rvv'[Valor Parâmetro_venda_rvv] 
+			var ticktmeta = 'Parâmetro_ticket_meta'[Valor Parâmetro_ticket_meta]
+			var fatsimul = paramvendas * ticktmeta
+			var calcfinal = fatsimul * 1.2
+			var calmeta = DIVIDE(fatsimul,[Total Faturamento Meta comercial])
+			RETURN
+			fatsimul
+			
+			```
+		lineageTag: 3b2f42ba-266e-4ab5-8e1f-a0a48c140533
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Faixa Comissao Faturamento Simulado' =
+			
+			
+			
+			
+			VAR metamovel = [% Total Faturamento Meta Simulado]
+			RETURN
+			SWITCH(TRUE(),
+			metamovel >= 1,0.2,
+			metamovel >=0.85,0.16,
+			metamovel >=0.5,0.12,
+			metamovel >=0.25,0.05)
+		formatString: 0%;-0%;0%
+		lineageTag: dea82b11-d01c-45b9-9b56-448404200a5d
+
+	measure '% Total Faturamento Meta Simulado' = ```
+			
+			var paramvendas = 'Parâmetro_venda_rvv'[Valor Parâmetro_venda_rvv] 
+			var ticktmeta = 'Parâmetro_ticket_meta'[Valor Parâmetro_ticket_meta]
+			var fatsimul = paramvendas * ticktmeta
+			var calcfinal = fatsimul * 1.2
+			var calmeta = DIVIDE(fatsimul,[Total Faturamento Meta comercial])
+			RETURN
+			
+			ROUNDDOWN(calmeta,3)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b3222dcc-0c92-4427-bc53-cb7b17c5b926
+
+	measure 'Quarter Faixa Comissao Faturamento Simulado' =
+			
+			
+			VAR metamovel = [% Total Faturamento Meta Simulado]
+			RETURN
+			SWITCH(TRUE(),
+			metamovel >= 1,"Q1",
+			metamovel >=0.85,"Q2",
+			metamovel >=0.5,"Q3",
+			metamovel >=0.25,"Q4")
+		lineageTag: 5d7f193b-94d3-414f-870a-57103c0dbb00
+
+	measure 'Total Bonus comissao ating meta proz Simulado' = ```
+			
+			var fatbrutoall =  
+			SWITCH(TRUE(),
+			ISBLANK([Total Faturamento Bruto Simulado]),BLANK(),
+			   CALCULATE([Total Faturamento Bruto Simulado],ALLSELECTED(vw_dim_users_ajustado[nome_usuario])))
+			var fatmetaall =  
+			SWITCH(TRUE(),
+			ISBLANK([Total Faturamento Bruto Simulado]),BLANK(),
+			   CALCULATE([% Total Faturamento Meta Simulado],ALLSELECTED(vw_dim_users_ajustado[nome_usuario])))
+			var calcmeta = 'Parâmetro_Ating_Proz'[Valor Parâmetro_Ating_Proz]
+			var calcbonusproz = SWITCH(TRUE(),
+			calcmeta>=1,0.02,0)
+			var fatcomissao120 = [Total Faturamento comissao ate 120% Simulado]
+			RETURN
+			fatcomissao120 * calcbonusproz
+			```
+		lineageTag: 0df06d23-5ef8-4d24-b322-3b67ba9d9b27
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento comissao ate 120% Simulado' = ```
+			
+			
+			
+			VAR percfatmovel = 
+			    SWITCH(
+			        TRUE(),
+			        [% Total Faturamento Meta Simulado] > 1.2, 1.2,
+			        [% Total Faturamento Meta Simulado] <= 1.2,[% Total Faturamento Meta Simulado] -- Valor padrão caso nenhuma condição seja atendida
+			    )
+			VAR metafat = [Total Faturamento Bruto Simulado]
+			
+			RETURN
+			metafat * percfatmovel
+			```
+		lineageTag: 776d643a-a385-4eb1-84ad-cf7a3eaba8f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Bonus Comissao Recorrencia Simulado' = ```
+			
+			
+			var perbonusrecor = 
+			SWITCH(TRUE(),
+			[Valor Parâmetro_bonus_recorrencia] >=0.3,0.05,0)
+			
+			
+			var fatucomissao120 = [Total Faturamento comissao ate 120% Simulado]
+			
+			RETURN
+			fatucomissao120 * perbonusrecor
+			
+			```
+		lineageTag: 03905bfa-1ff0-4288-8506-e8c6f9c6cc30
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comissão por Quarter Simulado' = ```
+			
+			var fatcomissao120 = [Total Faturamento comissao ate 120% Simulado]
+			VAR faixa = [% Faixa Comissao Faturamento Simulado]
+			RETURN
+			fatcomissao120 * faixa
+			
+			```
+		lineageTag: ea52ed1c-f184-43b9-ba89-d36c277e4945
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Comissao Faturamento Simulado' =
+			
+			var totalcomissao = [Total Comissão por Quarter Simulado]+[Total Bonus Comissao Recorrencia Simulado]+[Total Bonus comissao ating meta proz Simulado]
+			RETURN
+			totalcomissao
+		lineageTag: 2075bbe8-5d72-46b7-991f-abf4302bae8a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: a64fff15-a3b5-4753-af6e-8d916cd71c1c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MEDIDA_RVV = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 460b3c1f6b1c4351b8f2a096deea6675
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

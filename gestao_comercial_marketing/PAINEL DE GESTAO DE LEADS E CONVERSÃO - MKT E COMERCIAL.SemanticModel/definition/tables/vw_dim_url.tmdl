@@ -1,0 +1,26 @@
+table vw_dim_url
+	lineageTag: 2cc0c059-1405-48a1-b564-d84997d2bd3b
+
+	column url_agrupada
+		dataType: string
+		lineageTag: ade11836-88ce-4044-a512-f4f343e6a7db
+		summarizeBy: none
+		sourceColumn: url_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_dim_url = m
+		mode: import
+		queryGroup: DEPARA
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT#(lf)url_agrupada#(lf) FROM plancomercial.Static_Data.tb_dim_url#(lf)group by 1", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"url_agrupada", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,26 @@
+table Parâmetro_Ating_Proz
+	lineageTag: a63539a4-c3cd-4e66-9103-23c661986cbf
+
+	measure 'Valor Parâmetro_Ating_Proz' = SELECTEDVALUE('Parâmetro_Ating_Proz'[Parâmetro_Ating_Proz],[% Total Faturamento Meta])
+		formatString: 0%;-0%;0%
+		lineageTag: 737f92b8-02dd-410c-a5ba-8a70f75ad996
+
+	column Parâmetro_Ating_Proz
+		formatString: 0%;-0%;0%
+		lineageTag: 2216dd9b-99ca-43be-9d71-f6bc32932642
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_Ating_Proz = calculated
+		mode: import
+		source = GENERATESERIES(0, 1, 1)
+
+	annotation PBI_Id = a1594ecb783645429e14e210de4b308a
+

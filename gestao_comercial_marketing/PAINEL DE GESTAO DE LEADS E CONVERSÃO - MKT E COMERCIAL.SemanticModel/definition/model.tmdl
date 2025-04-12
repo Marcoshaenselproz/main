@@ -1,0 +1,124 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup CAC
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup DEPARA
+
+	annotation PBI_QueryGroupOrder = 1
+
+/// Erros nas consultas que foram carregadas em 12/03/2025 10:19:55.
+queryGroup 'Erros na Consulta - 12/03/2025 10:19:55'
+
+	annotation PBI_QueryGroupOrder = 2
+
+annotation PBI_QueryOrder = ["VW_LEADS_GROUP","VW_LEADS_GROUP_SEM_CONSULTOR","VW_VISITANTES","VW_VISITANTES_GROUP","VW_MATRICULAS","VW_MATRICULAS_LIQUIDAS","VW_ATENDIMENTOS_GROUP","VW_LEADS_SEM_ATENDIMENTO","base_matricula_historica_count","base_matricula_dia_Y-1","vw_base_leads_historica_count","MEDIDAS","int_commercial__life_time_value_per_branch","vw_dim_users_ajustado","DIM_HORA","vw_dim_origens","vw_dim_url","DIM_UTM_CAMPAIGN","DIM_TIPO_LEAD","DIM_UNIDADE","dim_unidade_historica","DIM_TURNO","VW_CALENDARIO","DIM_COLABORADORES_ID","vw_dim_curso","vw_custo_ferramenta","vw_custo_operacional","vw_custo_consolidado_unidade","vw_custo_consolidado_unidade_group","vw_ft_investimento_distribuido_tb","vw_ft_base_meta_investimento","vw_ft_cac_full","vw_ft_meta_bp_comercial","Relatório_atendimentos","vw_ft_recorrencia","Contatos_asc","Base_meio_pagamento","Base_meio_pagamento_YoY_Dia","RangeStart","RangeEnd","DIM_TIPO_PAGAMENTO","DIM_TIPO_PARCELA","DIM_TAXA_MATRICULA","DIM_CONFIG_PAGINAS","DIM_EMAIL_AUTORIZADO_PAGINAS_BI","Quadrante_RVV","vw_dim_curso_2","Tabela_Evasao_Pedrino","Base_Titulos_reprovados","Erros em VW_MATRICULAS","DIM_METRICAS_PBI"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.141.1558.0 (25.03)+75b5f06a991f8f8a8a4d6b6fcd0f66e1ec2d6fdc
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table VW_LEADS_GROUP
+ref table VW_MATRICULAS
+ref table MEDIDAS
+ref table DateTableTemplate_e929a6be-7b60-467d-b8f4-f89342d72221
+ref table VW_CALENDARIO
+ref table int_commercial__life_time_value_per_branch
+ref table Medida_LTV
+ref table LocalDateTable_4e51ed17-c883-4512-84b8-910f06b7571f
+ref table LocalDateTable_ec0c5cb2-9fdc-4162-b4ee-fcf9f42ddbea
+ref table LocalDateTable_47b8b2cb-15d0-4fb2-9fc2-7718434be2dd
+ref table LocalDateTable_71d8047d-e090-4f93-9730-5401923807b8
+ref table DIM_HORA
+ref table DIM_TIPO_LEAD
+ref table vw_ft_investimento_distribuido_tb
+ref table vw_ft_cac_full
+ref table vw_base_leads_historica_count
+ref table Parâmetro_total_custos
+ref table Parâmetro_Noshow
+ref table Parâmetro_Ticket_Medio
+ref table Parametro_matricula_liquida
+ref table Parâmetro_Per6M
+ref table Parâmetro_PerAnual
+ref table Parâmetro_PerTotal
+ref table vw_ft_base_meta_investimento
+ref table vw_dim_origens
+ref table vw_custo_ferramenta
+ref table vw_custo_operacional
+ref table vw_custo_consolidado_unidade
+ref table vw_dim_users_ajustado
+ref table Parâmetro
+ref table Medida_simulacao
+ref table param_qtd_meses
+ref table param_qtd_semanas
+ref table vw_ft_meta_bp_comercial
+ref table vw_dim_curso
+ref table LocalDateTable_2d333da1-9e8f-4b43-9d4a-6de662a5cf70
+ref table parametro_hora_Venda
+ref table paramentro_hora_leads
+ref table VW_VISITANTES_GROUP
+ref table LocalDateTable_ff84b8d2-588a-4f39-b721-0280eab57e10
+ref table LocalDateTable_08bdf049-ae9e-4bf0-be1b-df19ed88fffb
+ref table base_matricula_historica_count
+ref table Base_meio_pagamento
+ref table base_matricula_dia_Y-1
+ref table LocalDateTable_e113f0d2-a35a-4da7-a69d-ed6ebf1c7a49
+ref table LocalDateTable_2d26ada7-f9f9-446b-96ec-7efd70dfa85c
+ref table DIM_TURNO
+ref table Base_meio_pagamento_YoY_Dia
+ref table LocalDateTable_b349f525-a741-4f7a-929e-aeefc9bda202
+ref table DIM_TIPO_PAGAMENTO
+ref table DIM_TIPO_PARCELA
+ref table DIM_TAXA_MATRICULA
+ref table LocalDateTable_f613afc7-7ef1-4742-867c-83e58b718e47
+ref table LocalDateTable_06af1bf9-7997-4099-8f6a-86a3cb999739
+ref table MEDIDA_RVV
+ref table Parâmetro_venda_rvv
+ref table Parâmetro_ticket_meta
+ref table Parâmetro_Ating_Proz
+ref table Parâmetro_bonus_recorrencia
+ref table DIM_CONFIG_PAGINAS
+ref table DIM_EMAIL_AUTORIZADO_PAGINAS_BI
+ref table dim_unidade_historica
+ref table MATRIZ_INDICADORES_FATURAMENTO
+ref table vw_dim_curso_2
+ref table LocalDateTable_aab0a798-ab41-4a9f-8c23-e6677817e21f
+ref table Tabela_Evasao_Pedrino
+ref table VW_VISITANTES
+ref table vw_dim_url
+ref table MATRIZ_INDICADORES_MOVEL
+ref table MATRIZ_INDICADORES_TOTAL
+ref table MATRIZ_INDICADORES_DIA
+ref table Grafico
+ref table MATRIZ_INDICADORES_GRAFICO
+ref table MATRIZ_INDICADORES_TOTAL_UNIDADE_ATIVA
+ref table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
+ref table LocalDateTable_02e8a343-438e-4e85-9324-e4ae579af2c6
+ref table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
+ref table MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA
+ref table 'Qtd Últimos Dias'
+ref table 'Data Dia Anterior'
+ref table MATRIZ_INDICADORES_SEMANA
+ref table DiasSemana1
+ref table DiasSemana2
+ref table DiasSemana3
+ref table DiasSemana4
+ref table DiasSemana5
+ref table MesesAnos
+ref table LocalDateTable_9bf67694-8369-490d-8412-f9788165844c
+ref table DIM_UTM_CAMPAIGN
+ref table DIM_METRICAS_PBI
+ref table VW_MATRICULAS_LIQUIDAS
+ref table 'Medidas Pedrino'
+
+ref cultureInfo pt-BR
+

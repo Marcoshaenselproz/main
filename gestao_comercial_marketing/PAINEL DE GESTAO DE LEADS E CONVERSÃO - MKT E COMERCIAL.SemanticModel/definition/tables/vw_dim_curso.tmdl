@@ -1,0 +1,98 @@
+table vw_dim_curso
+	lineageTag: 848559b7-68fc-4b6d-a510-979098e4bda6
+
+	column de_curso
+		dataType: string
+		lineageTag: 91c6489e-fc94-413c-a321-3b2be28ed7f6
+		summarizeBy: none
+		sourceColumn: de_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: 38af553d-1993-437f-84c2-f122a0735851
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_curso
+		dataType: string
+		lineageTag: 89007112-2df3-4864-a70a-083de4c9617c
+		summarizeBy: none
+		sourceColumn: cluster_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_curso
+		dataType: dateTime
+		formatString: mmm
+		lineageTag: 6e3ae5c1-5b42-48cc-af77-bf646e62b729
+		summarizeBy: none
+		sourceColumn: data_curso
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column ano_curso
+		dataType: int64
+		formatString: 0
+		lineageTag: 3569539a-bde1-4584-ae7a-beeb0afb1c6c
+		summarizeBy: none
+		sourceColumn: ano_curso
+
+		annotation SummarizationSetBy = User
+
+	column curso_ofertado
+		dataType: string
+		lineageTag: fa0efdcc-f87d-415b-82c3-a52be0c22dbe
+		summarizeBy: none
+		sourceColumn: curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel_curso
+		dataType: string
+		lineageTag: 04c387e8-c916-4de6-8e54-219eaecb19fa
+		summarizeBy: none
+		sourceColumn: nivel_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultimo_curso_ofertado
+		dataType: string
+		lineageTag: 8941acd3-ffdb-4d39-9225-22954550254f
+		summarizeBy: none
+		sourceColumn: ultimo_curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla_curso
+		dataType: string
+		lineageTag: b67ee46a-d56c-4f20-8fd9-beb0c866bfed
+		summarizeBy: none
+		sourceColumn: sigla_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_dim_curso = m
+		mode: import
+		queryGroup: DEPARA
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_curso", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"de_curso", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"cluster_curso", Text.Proper, type text}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"ano_curso", Int64.Type}}),
+				    #"Colocar Cada Palavra Em Maiúscula1" = Table.TransformColumns(#"Tipo Alterado",{{"de_curso", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"cluster_curso", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula1"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

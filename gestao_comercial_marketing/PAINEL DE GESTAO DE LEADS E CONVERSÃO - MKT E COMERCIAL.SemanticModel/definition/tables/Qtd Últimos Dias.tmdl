@@ -1,0 +1,26 @@
+table 'Qtd Últimos Dias'
+	lineageTag: a651b206-2948-4f1f-92ca-b58825db5cbb
+
+	measure 'Valor Qtd Últimos Dias' = SELECTEDVALUE('Qtd Últimos Dias'[Qtd Últimos Dias],[MaxData-1])
+		formatString: 0
+		lineageTag: 7b14a97c-08bf-474c-838d-015d297ca5c2
+
+	column 'Qtd Últimos Dias'
+		formatString: 0
+		lineageTag: 975eb1a5-d703-451e-97f8-aa0c3b311c6e
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition 'Qtd Últimos Dias' = calculated
+		mode: import
+		source = GENERATESERIES(0, 100, 1)
+
+	annotation PBI_Id = caf50917a4804e9baed1e8f61940b0a8
+

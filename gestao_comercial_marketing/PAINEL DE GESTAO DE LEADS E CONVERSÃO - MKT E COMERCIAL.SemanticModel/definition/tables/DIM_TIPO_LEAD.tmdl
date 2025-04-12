@@ -1,0 +1,26 @@
+table DIM_TIPO_LEAD
+	lineageTag: 489bd407-3e52-44a5-802b-338282589dee
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 86f91e68-f713-4b11-8a9f-d14c3692ddfa
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TIPO_LEAD = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8ju8OF8hIDE9XylWJ1oJzghOzVUILclVio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [tipo_lead = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"tipo_lead", type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"tipo_lead", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

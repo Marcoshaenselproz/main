@@ -1,0 +1,52 @@
+table DIM_CONFIG_PAGINAS
+	lineageTag: 40b4bc79-de9c-499e-9cfe-b76a50783b8c
+
+	column email
+		dataType: string
+		lineageTag: 9b468d8c-daa3-43ce-b344-8bdf3fdc63fe
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column cargo
+		dataType: string
+		lineageTag: cddf7269-a689-4754-b54c-f26f30737901
+		summarizeBy: none
+		sourceColumn: cargo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pagina
+		dataType: string
+		lineageTag: 50a4aad8-2002-42e8-99c1-64e6eabeed63
+		summarizeBy: none
+		sourceColumn: Pagina
+
+		annotation SummarizationSetBy = Automatic
+
+	column Valor
+		dataType: int64
+		formatString: 0
+		lineageTag: 79821166-b36b-4074-b554-dc7b26d6062e
+		summarizeBy: sum
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_CONFIG_PAGINAS = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Csv.Document(Web.Contents("https://prozedu-my.sharepoint.com/personal/planejamento_comercial_prozeducacao_com_br/Documents/PBI/02.%20Tabelas_Dimens%C3%A3o/DIM_EMAIL_AUTORIZADO_PAGINAS_BI.csv"),[Delimiter=";", Columns=31, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(Fonte, [PromoteAllScalars=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Cabeçalhos Promovidos",{{"email", type text}, {"cargo", type text}, {"Acesso_Restrito", Int64.Type}, {"Acesso_Restrito_Lgpd", Int64.Type}, {"Visão Geral", Int64.Type}, {"Recorrência", Int64.Type}, {"Resultado", Int64.Type}, {"CAC", Int64.Type}, {"CAC/LTV", Int64.Type}, {"Investimentos", Int64.Type}, {"Meios_pagamentos", Int64.Type}, {"Comercial", Int64.Type}, {"Estrutura Comercial", Int64.Type}, {"Simulador_RVV", Int64.Type}, {"Tabulação", Int64.Type}, {"Data_Hora_Vendas", Int64.Type}, {"Marketing", Int64.Type}, {"Mkt Data Hora Leads", Int64.Type}, {"Mkt Campanhas", Int64.Type}, {"Mkt Origens", Int64.Type}, {"Mkt Unidade", Int64.Type}, {"Mkt Convertido_no_mes", Int64.Type}, {"Base_Vendas", Int64.Type}, {"Base_Pre_Vendas", Int64.Type}, {"Base_Documentos", Int64.Type}, {"Base_Leads", Int64.Type}, {"Base Leads s/Consultor", Int64.Type}, {"Base_sem_atendimento", Int64.Type}, {"Base_Cancelados", Int64.Type}, {"Histórico_Vendas", Int64.Type}, {"Histórico_Leads", Int64.Type}}),
+				    #"Colunas Não Dinâmicas" = Table.UnpivotOtherColumns(#"Tipo Alterado", {"email", "cargo"}, "Pagina", "Valor")
+				in
+				    #"Colunas Não Dinâmicas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

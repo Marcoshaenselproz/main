@@ -1,0 +1,276 @@
+table VW_CALENDARIO
+	lineageTag: 082963ce-de4c-46b9-b793-4d3a8f581ef7
+
+	column DATA
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: be274e02-525f-4e61-9ff5-7a7fcd3a2894
+		summarizeBy: none
+		sourceColumn: DATA
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DATA_MES
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 86caa5a4-352a-4a48-bb40-b27f86cd89d4
+		summarizeBy: none
+		sourceColumn: DATA_MES
+
+		variation Variation
+			isDefault
+			relationship: baacd185-2c55-4ad9-8932-99f68edc766d
+			defaultHierarchy: LocalDateTable_71d8047d-e090-4f93-9730-5401923807b8.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column COD_DIA
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 86bbf409-eb29-41bb-b9db-22264e2f8aa4
+		summarizeBy: none
+		sourceColumn: COD_DIA
+
+		annotation SummarizationSetBy = User
+
+	column DSC_DIA
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: ef57034f-8e0a-416a-bc4e-6cb063d17622
+		summarizeBy: none
+		sourceColumn: DSC_DIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: ee6216a4-6aa6-42c1-8a9a-a3ecddab2f99
+		summarizeBy: none
+		sourceColumn: MTD
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_FECHAMENTO
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 6bec7909-10be-4153-a40d-9a7624dc5c1f
+		summarizeBy: none
+		sourceColumn: MTD_FECHAMENTO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_DIA_UTIL
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 57e2856f-c020-4069-9b9c-6032e340566e
+		summarizeBy: sum
+		sourceColumn: COD_DIA_UTIL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COD_SEMANA_ANO
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 24c7b6ba-e290-4d9a-b6a3-ed489ecfe85d
+		summarizeBy: sum
+		sourceColumn: COD_SEMANA_ANO
+
+		annotation SummarizationSetBy = Automatic
+
+	column DSC_SEMANA
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 37bc60e4-bed3-46e9-8a04-317e47b29a0e
+		summarizeBy: none
+		sourceColumn: DSC_SEMANA
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_TRIM
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: f9a5e07a-401a-4d25-a53c-1cfee2b02682
+		summarizeBy: sum
+		sourceColumn: COD_TRIM
+
+		annotation SummarizationSetBy = Automatic
+
+	column DSC_TRIM
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 5b5ef3a5-dabb-427a-b12d-b60e86a47f53
+		summarizeBy: none
+		sourceColumn: DSC_TRIM
+
+		annotation SummarizationSetBy = Automatic
+
+	column DSC_MES
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 50efa8c3-10f0-4cfb-b14a-bb43212ab9c8
+		summarizeBy: none
+		sourceColumn: DSC_MES
+		sortByColumn: COD_MES
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_MES
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: b9de9adc-b5ee-442d-a48e-388f48ddebb4
+		summarizeBy: sum
+		sourceColumn: COD_MES
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_ANO
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 23ab7560-054e-43a5-a262-d6d47a5a12ed
+		summarizeBy: sum
+		sourceColumn: COD_ANO
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_SEMANA_DIA
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: cfa58883-dd8b-4cbd-a092-65b5d5847a09
+		summarizeBy: sum
+		sourceColumn: COD_SEMANA_DIA
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_SEMANA_MES
+		dataType: int64
+		formatString: 0
+		lineageTag: e7751e82-eeb9-4910-bbd3-9f054acdda02
+		summarizeBy: sum
+		sourceColumn: COD_SEMANA_MES
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_REAL
+		dataType: string
+		lineageTag: a5ab265d-fc0c-442e-a5ae-e4af5184299c
+		summarizeBy: none
+		sourceColumn: MTD_REAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column DSC_DIA_RESUME
+		dataType: string
+		lineageTag: 94557d65-513d-435c-bb79-b38a49ba3e21
+		summarizeBy: none
+		sourceColumn: DSC_DIA_RESUME
+
+		annotation SummarizationSetBy = Automatic
+
+	column COD_DIA_UTIL_AJUSTADO
+		dataType: double
+		lineageTag: bf35c69c-c7f3-4238-b209-e499d809c963
+		summarizeBy: sum
+		sourceColumn: COD_DIA_UTIL_AJUSTADO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SEMANA_COMPLETA
+		dataType: string
+		lineageTag: 0833cca2-4902-48da-9f25-4cbfd2af3d1b
+		summarizeBy: none
+		sourceColumn: SEMANA_COMPLETA
+
+		annotation SummarizationSetBy = Automatic
+
+	column DSC_FERIADOS
+		dataType: string
+		lineageTag: d5ffaa4b-024f-4531-ab4d-d86e5ca34e1c
+		summarizeBy: none
+		sourceColumn: DSC_FERIADOS
+
+		annotation SummarizationSetBy = Automatic
+
+	column INICIO_SEMANA
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e7c6df44-90bd-48e0-9357-b738c9e551c7
+		summarizeBy: none
+		sourceColumn: INICIO_SEMANA
+
+		variation Variation
+			isDefault
+			relationship: 3f78a331-7156-40e1-9a9f-fafb9e41b02f
+			defaultHierarchy: LocalDateTable_f613afc7-7ef1-4742-867c-83e58b718e47.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TERMINO_SEMANA
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e5b101d9-0e5e-4a34-b3f2-266a96c4bdee
+		summarizeBy: none
+		sourceColumn: TERMINO_SEMANA
+
+		variation Variation
+			isDefault
+			relationship: 3d072625-ff9f-408c-aeb2-4adfa3628620
+			defaultHierarchy: LocalDateTable_06af1bf9-7997-4099-8f6a-86a3cb999739.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_MES_ANO
+		dataType: string
+		lineageTag: 2704e37d-bc86-40f0-8f83-4cee96127631
+		summarizeBy: none
+		sourceColumn: DATA_MES_ANO
+
+		annotation SummarizationSetBy = Automatic
+
+	column hoje
+		dataType: string
+		lineageTag: 3aa4b07e-06d5-4292-9b1c-24feb0eeefe4
+		summarizeBy: none
+		sourceColumn: hoje
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_CALENDARIO = m
+		mode: import
+		queryGroup: DEPARA
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_calendario_novo#(lf)--SELECT * FROM plancomercial.PERSONE_ETL.VW_CALENDARIO", null, [EnableFolding=true]),
+				
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"DATA", type date}, {"DATA_MES", type date}, {"COD_DIA", Int64.Type}, {"DSC_DIA", type text}, {"DSC_DIA_RESUME", type text}, {"MTD", type text}, {"MTD_FECHAMENTO", type text}, {"MTD_REAL", type text}, {"COD_DIA_UTIL", type number}, {"COD_DIA_UTIL_AJUSTADO", type number}, {"COD_SEMANA_ANO", Int64.Type}, {"COD_SEMANA_MES", Int64.Type}, {"DSC_SEMANA", type text}, {"COD_TRIM", Int64.Type}, {"DSC_TRIM", type text}, {"DSC_MES", type text}, {"COD_MES", Int64.Type}, {"COD_ANO", Int64.Type}, {"DSC_FERIADOS", type text}, {"COD_SEMANA_DIA", Int64.Type}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"DSC_DIA", Text.Proper, type text}, {"DSC_DIA_RESUME", Text.Proper, type text}, {"MTD", Text.Proper, type text}, {"MTD_FECHAMENTO", Text.Proper, type text}, {"MTD_REAL", Text.Proper, type text}, {"DSC_SEMANA", Text.Proper, type text}, {"DSC_TRIM", Text.Proper, type text}, {"DSC_MES", Text.Proper, type text}, {"DSC_FERIADOS", Text.Proper, type text}, {"hoje", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

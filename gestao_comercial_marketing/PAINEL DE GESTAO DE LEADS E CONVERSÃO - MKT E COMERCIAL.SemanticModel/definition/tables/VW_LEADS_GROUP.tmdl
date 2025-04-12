@@ -1,0 +1,456 @@
+table VW_LEADS_GROUP
+	lineageTag: 2dd41ab9-36bb-44d4-8e27-9e9862d67599
+
+	column data_criacao
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 33f5368f-34ec-4f29-8c04-a5352461e12d
+		summarizeBy: none
+		sourceColumn: data_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora
+		dataType: int64
+		formatString: 0
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 7e2107e5-9ffa-41db-9fda-9eb1463d270a
+		summarizeBy: none
+		sourceColumn: hora
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 85002d26-8dac-4483-bb38-669f4d3bd175
+		summarizeBy: none
+		sourceColumn: origem_do_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 9baafa38-4a76-4f72-ab5a-7c0cfe780302
+		summarizeBy: none
+		sourceColumn: utm_campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column total
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 8c3d394c-e274-40be-8de9-ca49ed06adc9
+		summarizeBy: sum
+		sourceColumn: total
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_matriculados
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 598cea32-4e25-41a3-b8a9-b5e3939361b7
+		summarizeBy: sum
+		sourceColumn: total_matriculados
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_inscritos
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 609d1dd5-35d6-4e09-8164-33815156f2cc
+		summarizeBy: sum
+		sourceColumn: total_inscritos
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_pre_matriculados
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d7c8266f-ed45-443c-8f4a-45061505c772
+		summarizeBy: sum
+		sourceColumn: total_pre_matriculados
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada
+		dataType: string
+		lineageTag: 74ab91ff-25d9-40d8-b254-abb5fd7b0db5
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 9f68f1d4-e421-476e-bb4a-4a196af1f5cf
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos
+		dataType: int64
+		formatString: 0
+		lineageTag: ebdf1c5a-f26a-40e5-84ac-c4a835205d92
+		summarizeBy: sum
+		sourceColumn: total_atendimentos
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos_unicos
+		dataType: int64
+		formatString: 0
+		lineageTag: de76aa33-ba1b-4740-87ad-d1363fc1196e
+		summarizeBy: sum
+		sourceColumn: total_atendimentos_unicos
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos_falados
+		dataType: int64
+		formatString: 0
+		lineageTag: 68e73284-c0eb-49eb-8f9d-473042c20efa
+		summarizeBy: sum
+		sourceColumn: total_atendimentos_falados
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos_falados_validos
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ff0bbff-75c5-41d7-b5bb-ffab405cd7fb
+		summarizeBy: sum
+		sourceColumn: total_atendimentos_falados_validos
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos_whatsapp
+		dataType: int64
+		formatString: 0
+		lineageTag: 9ede79f7-1669-4843-a01a-92fa000e1429
+		summarizeBy: sum
+		sourceColumn: total_atendimentos_whatsapp
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_atendimentos_telefonia
+		dataType: int64
+		formatString: 0
+		lineageTag: 29ab1211-45fe-4a05-89d7-ac05ba43e744
+		summarizeBy: sum
+		sourceColumn: total_atendimentos_telefonia
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_cadastro
+		dataType: string
+		lineageTag: e5ae6d01-29b3-481e-bf7b-28f715798e7c
+		summarizeBy: none
+		sourceColumn: status_cadastro
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_sem_atendimento
+		dataType: int64
+		formatString: 0
+		lineageTag: 12e4be2c-abce-4024-b092-90e1ee69cc5c
+		summarizeBy: sum
+		sourceColumn: total_sem_atendimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column url
+		dataType: string
+		lineageTag: 6f56eec4-9971-4ff9-9bbe-dbb6d47a45c2
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato_agrupada
+		dataType: string
+		lineageTag: d10271eb-76f3-46de-a2c4-72e04d6b27c1
+		summarizeBy: none
+		sourceColumn: origem_do_contato_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: 956884e4-a611-41d5-bd44-3a9a9cefdee5
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_safra
+		dataType: string
+		lineageTag: 5f12e0b6-4a07-4a10-aef7-56aebcfee26c
+		summarizeBy: none
+		sourceColumn: status_safra
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_safra
+		dataType: string
+		lineageTag: 58087c9d-c9b3-4399-9023-fe31a24d7aec
+		summarizeBy: none
+		sourceColumn: data_safra
+
+		annotation SummarizationSetBy = Automatic
+
+	column atendimento_n1
+		dataType: string
+		lineageTag: db621792-9f56-471a-836f-9c5960c57033
+		summarizeBy: none
+		sourceColumn: atendimento_n1
+
+		annotation SummarizationSetBy = Automatic
+
+	column atendimento_n2
+		dataType: string
+		lineageTag: 20c5570b-6506-4757-b210-10413518fb0a
+		summarizeBy: none
+		sourceColumn: atendimento_n2
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada_final
+		dataType: string
+		lineageTag: 3bf138a1-b328-4b46-b85a-20738dc040dc
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato_agrupada_final
+		dataType: string
+		lineageTag: 7e3f3838-b9bc-4fb0-bfe1-6c27a5498505
+		summarizeBy: none
+		sourceColumn: origem_do_contato_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_contato
+		dataType: string
+		lineageTag: 715ae7eb-3395-4c04-b348-cd47ff93ba3b
+		summarizeBy: none
+		sourceColumn: id_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column phone
+		dataType: string
+		lineageTag: be0bf029-d2f6-4e83-81f7-b4b898c0c404
+		summarizeBy: none
+		sourceColumn: phone
+
+		annotation SummarizationSetBy = Automatic
+
+	column atendimento_n1_agrupada
+		dataType: string
+		lineageTag: d7bbfe36-34d3-473b-8cac-0006be4dfc2f
+		summarizeBy: none
+		sourceColumn: atendimento_n1_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_exclusao
+		dataType: string
+		lineageTag: 9f3be8f6-eebb-4127-8c06-0c0dd3c4a98f
+		summarizeBy: none
+		sourceColumn: tipo_exclusao
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: 3073d125-4325-4dcd-ad73-d9ea82cb8bb6
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column primeira_origem
+		dataType: string
+		lineageTag: 210ab57d-a05d-4d4b-8b59-8b153b9a7713
+		summarizeBy: none
+		sourceColumn: primeira_origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_hora
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 69a66c12-4c29-44a8-a981-ce440aaa4f72
+		summarizeBy: none
+		sourceColumn: data_hora
+
+		variation Variation
+			isDefault
+			relationship: 41a44e6b-bf7b-4eb5-a9ff-e4d41df22c04
+			defaultHierarchy: LocalDateTable_2d26ada7-f9f9-446b-96ec-7efd70dfa85c.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_matricula
+		dataType: string
+		lineageTag: c9d22864-d9b2-4d04-8399-e2fac2f58a60
+		summarizeBy: none
+		sourceColumn: origem_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: 22e92265-d6b2-4b38-a49a-2a262ab3a69e
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column tags
+		dataType: string
+		lineageTag: 6d33b6ac-5276-43d8-ac03-41d0aa898029
+		summarizeBy: none
+		sourceColumn: tags
+
+		annotation SummarizationSetBy = Automatic
+
+	column cpf
+		dataType: string
+		lineageTag: 56df6c61-0e5d-4a5e-b670-e81956f96718
+		summarizeBy: none
+		sourceColumn: cpf
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_primeiro_contato
+		dataType: int64
+		formatString: 0
+		lineageTag: 906dc2db-8e81-4af6-8854-1b7661d12891
+		summarizeBy: sum
+		sourceColumn: total_primeiro_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_24h_contato
+		dataType: int64
+		formatString: 0
+		lineageTag: f3659994-83e2-44a5-9769-c711425987f9
+		summarizeBy: sum
+		sourceColumn: total_24h_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_36h_contato
+		dataType: int64
+		formatString: 0
+		lineageTag: afefc368-e750-4740-bf74-613c2e423ad0
+		summarizeBy: sum
+		sourceColumn: total_36h_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_7dias_contato
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f53b883-c25c-4b23-856e-7bc4e9b840a7
+		summarizeBy: sum
+		sourceColumn: total_7dias_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 582e568f-40f7-4ff3-b05c-2b4963eb0a37
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column servico
+		dataType: string
+		lineageTag: 5da93d4e-b876-43c3-b9d8-50fe9b494d45
+		summarizeBy: none
+		sourceColumn: servico
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_atendimento
+		dataType: string
+		lineageTag: 167f0cb7-31f7-4fc7-8fe4-dc88be3256a8
+		summarizeBy: none
+		sourceColumn: tipo_atendimento
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_criacao
+		dataType: string
+		lineageTag: 0f5ff957-77b7-4dd6-9859-db32a728cd97
+		summarizeBy: none
+		sourceColumn: mes_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		lineageTag: 140c716a-b93b-42cb-94ba-e0eeef43b553
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_usuario
+		dataType: string
+		lineageTag: adf2bdeb-1170-4b05-a6e8-c24fa84c1b3c
+		summarizeBy: none
+		sourceColumn: email_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column url_agrupada
+		dataType: string
+		lineageTag: 7114caae-5b7c-405d-bf12-d4c725389557
+		summarizeBy: none
+		sourceColumn: url_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_LEADS_GROUP = m
+		mode: import
+		source =
+				//let
+				  //  Fonte = GoogleBigQuery.Database(),
+				    //plancomercial = Fonte{[Name="plancomercial"]}[Data],
+				    //PERSONE_ETL_Schema = plancomercial{[Name="PERSONE_ETL",Kind="Schema"]}[Data],
+				
+				//let
+				  //  Fonte = Odbc.Query("dsn=Bigquery", "SELECT * FROM plancomercial.PERSONE_ETL.VW_LEADS_GROUP"),
+				    //plancomercial_Database = Fonte{[Name="plancomercial",Kind="Database"]}[Data],
+				    //PERSONE_ETL_Schema = plancomercial_Database{[Name="PERSONE_ETL",Kind="Schema"]}[Data],
+				
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.TB_LEADS_GROUP", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula1" = Table.TransformColumns(Fonte,{{"status_cadastro", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"origem_do_contato", Text.Proper, type text}, {"origem_do_contato_agrupada", Text.Proper, type text}, {"url", Text.Proper, type text}, {"utm_campaign", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"status_safra", Text.Proper, type text}, {"data_safra", Text.Proper, type text}, {"atendimento_n1", Text.Proper, type text}, {"atendimento_n2", Text.Proper, type text}, {"utm_campaign_agrupada_final", Text.Proper, type text}, {"origem_do_contato_agrupada_final", Text.Proper, type text}, {"primeira_origem", Text.Proper, type text}, {"nome", Text.Proper, type text}, {"tags", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"atendimento_n1_agrupada", Text.Proper, type text}, {"status", Text.Proper, type text}, {"tipo_atendimento", Text.Proper, type text}, {"url_agrupada", Text.Proper, type text}}),
+				    #"Valor Substituído" = Table.ReplaceValue(#"Colocar Cada Palavra Em Maiúscula1",0,null,Replacer.ReplaceValue,{"total", "total_matriculados", "total_inscritos", "total_pre_matriculados", "total_atendimentos", "total_sem_atendimento", "total_atendimentos_unicos", "total_atendimentos_falados", "total_atendimentos_falados_validos", "total_atendimentos_whatsapp", "total_atendimentos_telefonia"}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Valor Substituído",{{"hora", Int64.Type}, {"id_contato", type text}}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Tipo Alterado", {"id_contato"})
+				in
+				    #"Duplicatas Removidas"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

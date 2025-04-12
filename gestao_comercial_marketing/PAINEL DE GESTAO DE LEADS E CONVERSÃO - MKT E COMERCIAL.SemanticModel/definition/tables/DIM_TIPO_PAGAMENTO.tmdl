@@ -1,0 +1,25 @@
+table DIM_TIPO_PAGAMENTO
+	lineageTag: fa859169-bea1-4f54-8b47-44bc3f5a033a
+
+	column tipo_pagamento
+		dataType: string
+		lineageTag: 5e1cf052-83c6-4916-b470-a2a1298cf2df
+		summarizeBy: none
+		sourceColumn: tipo_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TIPO_PAGAMENTO = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("XU07DsIwDL1KlBmJOzTZQYgt6mCCoZZau7ip1PswlZUj5GKUBgaY/Py+IdhKWkxiKuAISmLrTbB7mtbrQFO+i/FonOb5TEn+eZ/n05f22OfnsHxma44KPFxQ84MjQWmFK3TIi7zjlhhLhrhB0t/eA0ZRXazF4xq8jR849tKtuzhE4fdw/QI=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [tipo_pagamento = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"tipo_pagamento", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

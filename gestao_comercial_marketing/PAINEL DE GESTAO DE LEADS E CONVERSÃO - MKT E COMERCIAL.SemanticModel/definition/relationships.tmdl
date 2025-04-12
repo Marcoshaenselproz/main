@@ -1,0 +1,413 @@
+relationship 00917ed8-f3b1-7d91-8ff2-363a5eba71a4
+	fromColumn: VW_LEADS_GROUP.data_criacao
+	toColumn: VW_CALENDARIO.DATA
+
+relationship ddef7fbb-ccac-45dd-84f1-27b6a6a57b8d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.mes_fechamento
+	toColumn: LocalDateTable_4e51ed17-c883-4512-84b8-910f06b7571f.Date
+
+relationship 649cbf90-90ab-49da-b87a-8971a2000950
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.data_criacao
+	toColumn: LocalDateTable_ec0c5cb2-9fdc-4162-b4ee-fcf9f42ddbea.Date
+
+relationship d776ef75-06e3-4922-a872-015ec8ffc82a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.mes_criacao
+	toColumn: LocalDateTable_47b8b2cb-15d0-4fb2-9fc2-7718434be2dd.Date
+
+relationship baacd185-2c55-4ad9-8932-99f68edc766d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_CALENDARIO.DATA_MES
+	toColumn: LocalDateTable_71d8047d-e090-4f93-9730-5401923807b8.Date
+
+relationship AutoDetected_2321a356-673b-4579-b8f8-28eafe2e7f1a
+	fromColumn: VW_LEADS_GROUP.tipo_lead
+	toColumn: DIM_TIPO_LEAD.tipo_lead
+
+relationship AutoDetected_1f2a3f52-70b3-4ece-8f28-d26994558797
+	fromColumn: VW_MATRICULAS.tipo_lead
+	toColumn: DIM_TIPO_LEAD.tipo_lead
+
+relationship 65f13a7e-25b1-26f7-88ed-a7f14aee813d
+	fromColumn: vw_ft_cac_full.mes_data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 0f4c0ea2-a3cd-5a30-56fb-e72eb3826e7e
+	fromColumn: vw_ft_investimento_distribuido_tb.data_criacao
+	toColumn: VW_CALENDARIO.DATA
+
+relationship f5398cd1-4bfa-4c12-dc9a-6e877442df58
+	fromColumn: int_commercial__life_time_value_per_branch.sale_month
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 7744fd66-1798-d684-bcd9-8d756833286f
+	fromColumn: vw_base_leads_historica_count.data_de_criacao
+	toColumn: VW_CALENDARIO.DATA
+
+relationship AutoDetected_cbb3c1af-df34-4fdb-a4d4-9025cdf589a0
+	fromColumn: vw_base_leads_historica_count.tipo_lead
+	toColumn: DIM_TIPO_LEAD.tipo_lead
+
+relationship 39dd4425-0113-2eb6-215f-e3a3d12fceaf
+	fromColumn: vw_ft_base_meta_investimento.DATA
+	toColumn: VW_CALENDARIO.DATA
+
+relationship AutoDetected_72da548d-8f95-4dd9-869f-f13a1f68628a
+	fromColumn: VW_LEADS_GROUP.origem_do_contato
+	toColumn: vw_dim_origens.origem_do_contato
+
+relationship AutoDetected_dd707418-e38d-4ecd-b83c-d3396885b14e
+	fromColumn: VW_MATRICULAS.origem_do_contato
+	toColumn: vw_dim_origens.origem_do_contato
+
+relationship 62c0987c-9b53-b838-1fb5-fb1821d46dc3
+	fromColumn: vw_custo_operacional.mes_data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 02d3925f-a7ed-d7a5-d148-58d5da9c64e4
+	fromColumn: vw_custo_ferramenta.mes_data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship c4a852db-9cb5-d2e4-4f9c-cc9d77a6b1e0
+	fromColumn: vw_custo_consolidado_unidade.mes_data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship cb226255-caca-4d45-148e-cb8dc58677ba
+	toCardinality: many
+	fromColumn: VW_MATRICULAS.email_usuario
+	toColumn: vw_dim_users_ajustado.email_usuario
+
+relationship fd341fe6-ce8e-ee82-588f-b642073d9ec3
+	fromColumn: vw_ft_meta_bp_comercial.data_dia
+	toColumn: VW_CALENDARIO.DATA
+
+relationship d16c514c-e09f-a70b-78d2-4ab3e7aad903
+	toCardinality: many
+	fromColumn: vw_ft_meta_bp_comercial.email
+	toColumn: vw_dim_users_ajustado.email_usuario
+
+relationship a075ffef-60c5-352f-0565-3bc015bbe7fb
+	toCardinality: many
+	fromColumn: VW_MATRICULAS.curso
+	toColumn: vw_dim_curso.de_curso
+
+relationship 1b28c7a9-ed8a-a2da-b9bb-ee9b4347e6a3
+	toCardinality: many
+	fromColumn: VW_LEADS_GROUP.curso
+	toColumn: vw_dim_curso.de_curso
+
+relationship 35feaa83-3096-408f-a5f4-04b32e30b2c9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.data_status_saida
+	toColumn: LocalDateTable_2d333da1-9e8f-4b43-9d4a-6de662a5cf70.Date
+
+relationship 50d4c9cd-cd51-8784-9889-e862bc072a46
+	fromColumn: VW_LEADS_GROUP.hora
+	toColumn: DIM_HORA.'Cod Hora'
+
+relationship b693e43b-74c6-d61f-c79a-55eaddf164bb
+	fromColumn: VW_MATRICULAS.data_final
+	toColumn: VW_CALENDARIO.DATA
+
+relationship ad799f36-08e0-5731-7681-4f8fab7a04b5
+	fromColumn: VW_MATRICULAS.hora_final
+	toColumn: DIM_HORA.'Cod Hora'
+
+relationship dcdb8b5a-8e86-35e0-3dfe-87b4f4feac7b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: parametro_hora_Venda.parametro_hora
+	toColumn: DIM_HORA.'Cod Hora'
+
+relationship 9ac9202f-5614-fdbe-247a-d7227e9cb7de
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DIM_HORA.'Cod Hora'
+	toColumn: paramentro_hora_leads.paramento_hora_leads
+
+relationship 12710575-59fe-3852-05f7-4328dd2aaa7a
+	fromColumn: VW_VISITANTES_GROUP.data_criacao
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 2147acc7-620e-0c88-97d0-76eb84ad3b08
+	fromColumn: VW_VISITANTES_GROUP.hora
+	toColumn: DIM_HORA.'Cod Hora'
+
+relationship ced8ff66-dcda-49e0-acff-e1ac33b0fe94
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.data_cupom_pag
+	toColumn: LocalDateTable_ff84b8d2-588a-4f39-b721-0280eab57e10.Date
+
+relationship 9fd6ecaa-5a17-4db1-87ed-4fecfa3104cb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_MATRICULAS.data_taxa_pag
+	toColumn: LocalDateTable_08bdf049-ae9e-4bf0-be1b-df19ed88fffb.Date
+
+relationship 74abd5cf-ba4a-815e-e42d-38f6e0d70413
+	fromColumn: base_matricula_historica_count.data_final
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 0b24240c-5367-9a9c-1c04-e4835329b9ec
+	toCardinality: many
+	fromColumn: base_matricula_historica_count.curso
+	toColumn: vw_dim_curso.de_curso
+
+relationship a01a0c80-2c70-9e9f-cf68-d8e35f5deaa2
+	toCardinality: many
+	fromColumn: Base_meio_pagamento.curso
+	toColumn: vw_dim_curso.de_curso
+
+relationship d0dd2eba-b844-3602-28d7-4179cc575af1
+	fromColumn: Base_meio_pagamento.mes_pagamento
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 9773eb15-ee62-4cae-a690-28f428e9622f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: base_matricula_dia_Y-1.data_final
+	toColumn: LocalDateTable_e113f0d2-a35a-4da7-a69d-ed6ebf1c7a49.Date
+
+relationship 483ab1b9-2f22-7f89-a852-24b831496cfe
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: VW_CALENDARIO.DATA
+	toColumn: base_matricula_dia_Y-1.data_final
+
+relationship 41a44e6b-bf7b-4eb5-a9ff-e4d41df22c04
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_LEADS_GROUP.data_hora
+	toColumn: LocalDateTable_2d26ada7-f9f9-446b-96ec-7efd70dfa85c.Date
+
+relationship 255397ce-711b-0b70-b6ef-85348d3e87f7
+	fromColumn: Base_meio_pagamento.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship 8735bba7-6254-4c2b-abea-4fca725ad744
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Base_meio_pagamento_YoY_Dia.mes_pagamento
+	toColumn: LocalDateTable_b349f525-a741-4f7a-929e-aeefc9bda202.Date
+
+relationship 8ba03f87-3a32-6407-6da7-afedba0e1a64
+	fromColumn: Base_meio_pagamento_YoY_Dia.data_pagamento
+	toColumn: VW_CALENDARIO.DATA
+
+relationship AutoDetected_a584c911-84fd-417d-8f52-ebf38cb9e43d
+	fromColumn: Base_meio_pagamento.tipo_pagamento
+	toColumn: DIM_TIPO_PAGAMENTO.tipo_pagamento
+
+relationship AutoDetected_bdc8350b-61e9-4a7b-b1d1-4b142b547561
+	fromColumn: Base_meio_pagamento_YoY_Dia.tipo_pagamento
+	toColumn: DIM_TIPO_PAGAMENTO.tipo_pagamento
+
+relationship AutoDetected_24b12f6b-8b2c-4b4d-bb7d-7d6874e73121
+	fromColumn: Base_meio_pagamento.is_installment
+	toColumn: DIM_TIPO_PARCELA.is_installment
+
+relationship AutoDetected_ebd60bb8-1250-4ab5-9e25-cc5288c67354
+	fromColumn: Base_meio_pagamento_YoY_Dia.is_installment
+	toColumn: DIM_TIPO_PARCELA.is_installment
+
+relationship AutoDetected_ec803785-9142-4835-afff-22dd7bc26e57
+	fromColumn: Base_meio_pagamento.enrollment_fee
+	toColumn: DIM_TAXA_MATRICULA.enrollment_fee
+
+relationship AutoDetected_1cb505cd-c785-417a-a1db-bb9b67ed1278
+	fromColumn: Base_meio_pagamento_YoY_Dia.enrollment_fee
+	toColumn: DIM_TAXA_MATRICULA.enrollment_fee
+
+relationship 7fc2d89d-efbf-687d-bce0-838a2f41cda9
+	toCardinality: many
+	fromColumn: base_matricula_historica_count.email_usuario
+	toColumn: vw_dim_users_ajustado.email_usuario
+
+relationship 3f78a331-7156-40e1-9a9f-fafb9e41b02f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_CALENDARIO.INICIO_SEMANA
+	toColumn: LocalDateTable_f613afc7-7ef1-4742-867c-83e58b718e47.Date
+
+relationship 3d072625-ff9f-408c-aeb2-4adfa3628620
+	joinOnDateBehavior: datePartOnly
+	fromColumn: VW_CALENDARIO.TERMINO_SEMANA
+	toColumn: LocalDateTable_06af1bf9-7997-4099-8f6a-86a3cb999739.Date
+
+relationship 17fd3e28-2b6c-b661-9b86-a132acd3ca77
+	fromColumn: base_matricula_historica_count.tipo_lead
+	toColumn: DIM_TIPO_LEAD.tipo_lead
+
+relationship 8217942b-1d8a-9feb-281f-b296c891c092
+	toCardinality: many
+	fromColumn: vw_base_leads_historica_count.email_usuario
+	toColumn: vw_dim_users_ajustado.email_usuario
+
+relationship d2c2894b-fe15-41e4-002f-7fc9ed537339
+	toCardinality: many
+	fromColumn: vw_base_leads_historica_count.curso
+	toColumn: vw_dim_curso.de_curso
+
+relationship a9fa96b6-4cc7-4396-2ed1-5c0e8f24b249
+	fromColumn: VW_MATRICULAS.tipo_pagamento
+	toColumn: DIM_TIPO_PAGAMENTO.tipo_pagamento
+
+relationship fcc692cb-513d-a9ba-bfd1-9b88771f71e8
+	toCardinality: many
+	fromColumn: int_commercial__life_time_value_per_branch.branch_id
+	toColumn: dim_unidade_historica.branch_id
+
+relationship d23b6139-14c4-dc9f-05f8-bf13477b5dba
+	toCardinality: many
+	fromColumn: base_matricula_historica_count.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 6c591ea8-744b-e771-464d-8667c797375f
+	toCardinality: many
+	fromColumn: Base_meio_pagamento.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 43a1db3a-58d9-c8f3-a801-2d18baeb14a0
+	toCardinality: many
+	fromColumn: Base_meio_pagamento_YoY_Dia.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 8b3f039d-d6bc-e6b2-d969-f14d04cc0c8a
+	toCardinality: many
+	fromColumn: vw_custo_consolidado_unidade.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship c63a84fa-695a-653c-97f6-ed25a8e748dd
+	toCardinality: many
+	fromColumn: vw_ft_base_meta_investimento.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship eb844dbb-f084-dce4-aec3-f6bb2fac5f5d
+	toCardinality: many
+	fromColumn: vw_ft_cac_full.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 2995b9cb-6eaf-4fce-da74-f74accee1967
+	toCardinality: many
+	fromColumn: vw_ft_investimento_distribuido_tb.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 65c23afd-2ebf-5b1d-7f4c-987b939c3b01
+	toCardinality: many
+	fromColumn: vw_ft_meta_bp_comercial.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship a067e776-5408-2bf5-6fdf-ae8ed0d12e53
+	toCardinality: many
+	fromColumn: vw_base_leads_historica_count.utm_campaign_agrupada
+	toColumn: vw_dim_origens.origem_do_contato_agrupada
+
+relationship 722ef539-6e2f-8be6-5934-99b8016bb881
+	toCardinality: many
+	fromColumn: VW_MATRICULAS.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 640c9bf6-1fd0-4fd7-bf75-cfc7f0b36ddc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: vw_dim_curso_2.data_curso
+	toColumn: LocalDateTable_aab0a798-ab41-4a9f-8c23-e6677817e21f.Date
+
+relationship 0621f283-97ac-7945-e929-59930d44666a
+	fromColumn: VW_VISITANTES.data_criacao
+	toColumn: VW_CALENDARIO.DATA
+
+relationship AutoDetected_4761f0ab-5932-4367-a5e4-4ab7547c4e64
+	fromColumn: VW_VISITANTES.tipo_lead
+	toColumn: DIM_TIPO_LEAD.tipo_lead
+
+relationship 80ed3a67-eac7-bb3b-60a0-712ce785f9f3
+	toCardinality: many
+	fromColumn: VW_LEADS_GROUP.email_usuario
+	toColumn: vw_dim_users_ajustado.email_usuario
+
+relationship 8334fe6c-ee06-0712-6b69-3549b802448f
+	toCardinality: many
+	fromColumn: VW_LEADS_GROUP.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship f73dffbc-4e58-afdd-c98b-77a12a69d163
+	toCardinality: many
+	fromColumn: vw_base_leads_historica_count.unidade
+	toColumn: dim_unidade_historica.unidade
+
+relationship 2f9371f9-2a63-0a18-9f1b-a7ecda419825
+	toCardinality: many
+	fromColumn: Tabela_Evasao_Pedrino.Data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 80907e11-d900-7151-3ba0-e303448ef108
+	toCardinality: many
+	fromColumn: vw_dim_curso.curso
+	toColumn: vw_dim_curso_2.curso
+
+relationship 21910d4b-65ee-911b-9abc-a2bce049a1cb
+	toCardinality: many
+	fromColumn: vw_dim_curso.data_curso
+	toColumn: VW_CALENDARIO.DATA_MES
+
+relationship a5386790-05d1-4fc0-8ed6-1438bfc9d3af
+	joinOnDateBehavior: datePartOnly
+	fromColumn: dim_unidade_historica.data_mes
+	toColumn: LocalDateTable_02e8a343-438e-4e85-9324-e4ae579af2c6.Date
+
+relationship c348f94c-018c-4920-a5dc-81c4428fd55a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: MesesAnos.DATA
+	toColumn: LocalDateTable_9bf67694-8369-490d-8412-f9788165844c.Date
+
+relationship f7777513-2fc7-2263-ba1b-68448f5a7ec3
+	fromColumn: dim_unidade_historica.data
+	toColumn: VW_CALENDARIO.DATA
+
+relationship AutoDetected_98c51cae-6f25-4a25-a681-21380be12d00
+	fromColumn: VW_VISITANTES.origem_do_contato
+	toColumn: vw_dim_origens.origem_do_contato
+
+relationship 4dcd45d1-1b54-e12f-5fad-d8012b3d4dca
+	fromColumn: VW_MATRICULAS.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship 65a0b513-99d8-f352-d8f6-01c5ab63c807
+	toCardinality: many
+	fromColumn: vw_ft_investimento_distribuido_tb.utm_campaign_agrupada
+	toColumn: DIM_UTM_CAMPAIGN.utm_campaign_agrupada
+
+relationship 185248e7-54bd-45d7-b241-b8fc2c34afb2
+	toCardinality: many
+	fromColumn: VW_LEADS_GROUP.utm_campaign_agrupada
+	toColumn: DIM_UTM_CAMPAIGN.utm_campaign_agrupada
+
+relationship e9058ab1-7907-ef93-7310-3e1e4419aeaa
+	toCardinality: many
+	fromColumn: VW_VISITANTES.utm_campaign_agrupada
+	toColumn: DIM_UTM_CAMPAIGN.utm_campaign_agrupada
+
+relationship d13442f8-2d84-1633-46d8-b62fe8981039
+	toCardinality: many
+	fromColumn: VW_MATRICULAS.utm_campaign_agrupada
+	toColumn: DIM_UTM_CAMPAIGN.utm_campaign_agrupada
+
+relationship AutoDetected_c53985a6-8b5f-4b7c-895d-6d73d8e7e440
+	fromColumn: VW_VISITANTES.url_agrupada
+	toColumn: vw_dim_url.url_agrupada
+
+relationship AutoDetected_cb94498f-0535-4a12-8b16-5ba40cc98298
+	fromColumn: VW_LEADS_GROUP.url_agrupada
+	toColumn: vw_dim_url.url_agrupada
+
+relationship cbac701e-3ed4-849b-71de-54851749d192
+	fromColumn: vw_dim_users_ajustado.data_dia
+	toColumn: VW_CALENDARIO.DATA
+
+relationship 44a9d613-a3d7-435a-6b51-0357a0bff204
+	fromColumn: VW_VISITANTES.hora
+	toColumn: DIM_HORA.'Cod Hora'
+
+relationship fc00edf1-cd31-e841-8085-f7397275eb7a
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: VW_MATRICULAS_LIQUIDAS.mes_fechamento
+	toColumn: VW_CALENDARIO.DATA
+

@@ -1,0 +1,30 @@
+table paramentro_hora_leads
+	lineageTag: f7eefa6c-5e49-4562-8a3a-8f50f0ea895d
+
+	measure Valor_paramento_hora_leads = ```
+			
+			    SELECTEDVALUE('paramentro_hora_leads'[paramento_hora_leads], HOUR(NOW()) -3)
+			
+			```
+		formatString: 0
+		lineageTag: 4be8c1f3-abe6-453c-9711-b1f0759c5b2f
+
+	column paramento_hora_leads
+		formatString: 0
+		lineageTag: b5c7b9cc-3b9a-490b-b2a2-8066c797edbe
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition paramentro_hora_leads = calculated
+		mode: import
+		source = GENERATESERIES(0, 23, 1)
+
+	annotation PBI_Id = bc3b1126df084b1883ecbf575999319c
+

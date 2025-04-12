@@ -1,0 +1,503 @@
+table MATRIZ_INDICADORES_SEMANA
+	lineageTag: e595d308-ff62-479b-b7b2-c385a1568d00
+
+	measure VALOR_MATRIZ_INDICADORES_SEMANA = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_SEMANA[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_SEMANA[Métrica])
+			
+			// Capturar os dias selecionados nas segmentações para cada semana
+			VAR DiaInicialSemana1 = MINX(ALLSELECTED(DiasSemana1[Value]), DiasSemana1[Value])
+			VAR DiaFinalSemana1 = MAXX(ALLSELECTED(DiasSemana1[Value]), DiasSemana1[Value])
+			
+			VAR DiaInicialSemana2 = MINX(ALLSELECTED(DiasSemana2[Value]), DiasSemana2[Value])
+			VAR DiaFinalSemana2 = MAXX(ALLSELECTED(DiasSemana2[Value]), DiasSemana2[Value])
+			
+			VAR DiaInicialSemana3 = MINX(ALLSELECTED(DiasSemana3[Value]), DiasSemana3[Value])
+			VAR DiaFinalSemana3 = MAXX(ALLSELECTED(DiasSemana3[Value]), DiasSemana3[Value])
+			
+			VAR DiaInicialSemana4 = MINX(ALLSELECTED(DiasSemana4[Value]), DiasSemana4[Value])
+			VAR DiaFinalSemana4 = MAXX(ALLSELECTED(DiasSemana4[Value]), DiasSemana4[Value])
+			
+			VAR DiaInicialSemana5 = MINX(ALLSELECTED(DiasSemana5[Value]), DiasSemana5[Value])
+			VAR DiaFinalSemana5 = MAXX(ALLSELECTED(DiasSemana5[Value]), DiasSemana5[Value])
+			
+			// Calcular as datas reais com base nos dias selecionados
+			VAR DataInicialSemana1 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaInicialSemana1)
+			VAR DataFinalSemana1 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaFinalSemana1)
+			
+			VAR DataInicialSemana2 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaInicialSemana2)
+			VAR DataFinalSemana2 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaFinalSemana2)
+			
+			VAR DataInicialSemana3 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaInicialSemana3)
+			VAR DataFinalSemana3 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaFinalSemana3)
+			
+			VAR DataInicialSemana4 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaInicialSemana4)
+			VAR DataFinalSemana4 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaFinalSemana4)
+			
+			VAR DataInicialSemana5 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaInicialSemana5)
+			VAR DataFinalSemana5 = DATE(YEAR(MIN(VW_CALENDARIO[DATA])), MONTH(MIN(VW_CALENDARIO[DATA])), DiaFinalSemana5)
+			
+			// Calcular valores brutos para cada semana
+			VAR ValorSemana1 = 
+			    CALCULATE(
+			        SWITCH(
+			            IndicadorSelecionado,
+			            "Matrículas", [Total Mat Geral],
+			            "Leads", [Total Leads],
+			            "Leads Pagos", [Total Leads Pago],
+			            "% Leads Pagos", [% Total Leads Pago],
+			            "Leads Não Pagos", [Total Leads Não Pago],
+			            "Conversão Geral", [Conversão Geral],
+			            "Investimento", [Total Investimento],
+			            "Investimento Alocado", [Total Investimento Alocado],
+			            "CPL", [Total CPL Pago],
+			            "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP]
+			        ),
+			        FILTER(
+			            VW_CALENDARIO,
+			            VW_CALENDARIO[DATA] >= DataInicialSemana1 && VW_CALENDARIO[DATA] <= DataFinalSemana1
+			        )
+			    )
+			
+			VAR ValorSemana2 = 
+			    CALCULATE(
+			        SWITCH(
+			            IndicadorSelecionado,
+			            "Matrículas", [Total Mat Geral],
+			            "Leads", [Total Leads],
+			            "Leads Pagos", [Total Leads Pago],
+			            "% Leads Pagos", [% Total Leads Pago],
+			            "Leads Não Pagos", [Total Leads Não Pago],
+			            "Conversão Geral", [Conversão Geral],
+			            "Investimento", [Total Investimento],
+			            "Investimento Alocado", [Total Investimento Alocado],
+			            "CPL", [Total CPL Pago],
+			             "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP]
+			        ),
+			        FILTER(
+			            VW_CALENDARIO,
+			            VW_CALENDARIO[DATA] >= DataInicialSemana2 && VW_CALENDARIO[DATA] <= DataFinalSemana2
+			        )
+			    )
+			
+			VAR ValorSemana3 = 
+			    CALCULATE(
+			        SWITCH(
+			            IndicadorSelecionado,
+			            "Matrículas", [Total Mat Geral],
+			            "Leads", [Total Leads],
+			            "Leads Pagos", [Total Leads Pago],
+			            "% Leads Pagos", [% Total Leads Pago],
+			            "Leads Não Pagos", [Total Leads Não Pago],
+			            "Conversão Geral", [Conversão Geral],
+			            "Investimento", [Total Investimento],
+			            "Investimento Alocado", [Total Investimento Alocado],
+			            "CPL", [Total CPL Pago],
+			             "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP]
+			        ),
+			        FILTER(
+			            VW_CALENDARIO,
+			            VW_CALENDARIO[DATA] >= DataInicialSemana3 && VW_CALENDARIO[DATA] <= DataFinalSemana3
+			        )
+			    )
+			
+			VAR ValorSemana4 = 
+			    CALCULATE(
+			        SWITCH(
+			            IndicadorSelecionado,
+			            "Matrículas", [Total Mat Geral],
+			            "Leads", [Total Leads],
+			            "Leads Pagos", [Total Leads Pago],
+			            "% Leads Pagos", [% Total Leads Pago],
+			            "Leads Não Pagos", [Total Leads Não Pago],
+			            "Conversão Geral", [Conversão Geral],
+			            "Investimento", [Total Investimento],
+			            "Investimento Alocado", [Total Investimento Alocado],
+			            "CPL", [Total CPL Pago],
+			            "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP]
+			        ),
+			        FILTER(
+			            VW_CALENDARIO,
+			            VW_CALENDARIO[DATA] >= DataInicialSemana4 && VW_CALENDARIO[DATA] <= DataFinalSemana4
+			        )
+			    )
+			
+			VAR ValorSemana5 = 
+			    CALCULATE(
+			        SWITCH(
+			            IndicadorSelecionado,
+			            "Matrículas", [Total Mat Geral],
+			            "Leads", [Total Leads],
+			            "Leads Pagos", [Total Leads Pago],
+			            "% Leads Pagos", [% Total Leads Pago],
+			            "Leads Não Pagos", [Total Leads Não Pago],
+			            "Conversão Geral", [Conversão Geral],
+			            "Investimento", [Total Investimento],
+			            "Investimento Alocado", [Total Investimento Alocado],
+			            "CPL", [Total CPL Pago],
+			             "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP]
+			        ),
+			        FILTER(
+			            VW_CALENDARIO,
+			            VW_CALENDARIO[DATA] >= DataInicialSemana5 && VW_CALENDARIO[DATA] <= DataFinalSemana5
+			        )
+			    )
+			
+			// Cálculo das variações (Δ S1/S2, Δ S2/S3, etc.)
+			VAR Variacao =
+			    IF(
+			        MetricaSelecionada = "Δ S1/S2", 
+			        IF(
+			            ValorSemana1 <> BLANK() && ValorSemana2 <> BLANK(),
+			            SWITCH(
+			                TRUE(),
+			                IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel","% Matrícula Meta Mês" }, 
+			                    (ValorSemana2 - ValorSemana1) * 100, // Variação absoluta em pontos percentuais
+			                IndicadorSelecionado = "CPL", 
+			                    ValorSemana2 - ValorSemana1, // Variação absoluta
+			                TRUE(), 
+			                    DIVIDE(ValorSemana2, ValorSemana1) - 1 // Variação relativa
+			            ),
+			            BLANK()
+			        ),
+			        IF(
+			            MetricaSelecionada = "Δ S2/S3", 
+			            IF(
+			                ValorSemana2 <> BLANK() && ValorSemana3 <> BLANK(),
+			                SWITCH(
+			                    TRUE(),
+			                    IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel" ,"% Matrícula Meta Mês"}, 
+			                        (ValorSemana3 - ValorSemana2) * 100,
+			                    IndicadorSelecionado = "CPL", 
+			                        ValorSemana3 - ValorSemana2,
+			                    TRUE(), 
+			                        DIVIDE(ValorSemana3, ValorSemana2) - 1
+			                ),
+			                BLANK()
+			            ),
+			            IF(
+			                MetricaSelecionada = "Δ S3/S4", 
+			                IF(
+			                    ValorSemana3 <> BLANK() && ValorSemana4 <> BLANK(),
+			                    SWITCH(
+			                        TRUE(),
+			                        IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel" ,"% Matrícula Meta Mês"}, 
+			                            (ValorSemana4 - ValorSemana3) * 100,
+			                        IndicadorSelecionado = "CPL", 
+			                            ValorSemana4 - ValorSemana3,
+			                        TRUE(), 
+			                            DIVIDE(ValorSemana4, ValorSemana3) - 1
+			                    ),
+			                    BLANK()
+			                ),
+			                IF(
+			                    MetricaSelecionada = "Δ S4/S5", 
+			                    IF(
+			                        ValorSemana4 <> BLANK() && ValorSemana5 <> BLANK(),
+			                        SWITCH(
+			                            TRUE(),
+			                            IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel","% Matrícula Meta Mês" }, 
+			                                (ValorSemana5 - ValorSemana4) * 100,
+			                            IndicadorSelecionado = "CPL", 
+			                                ValorSemana5 - ValorSemana4,
+			                            TRUE(), 
+			                                DIVIDE(ValorSemana5, ValorSemana4) - 1
+			                        ),
+			                        BLANK()
+			                    ),
+			                    BLANK()
+			                )
+			            )
+			        )
+			    )
+			
+			// Lógica principal para determinar o valor bruto ou variação
+			VAR ValorBruto =
+			    IF(
+			        LEFT(MetricaSelecionada, 1) = "S", // Se for uma semana individual (S1, S2, etc.)
+			        SWITCH(
+			            MetricaSelecionada,
+			            "S1", ValorSemana1,
+			            "S2", ValorSemana2,
+			            "S3", ValorSemana3,
+			            "S4", ValorSemana4,
+			            "S5", ValorSemana5,
+			            BLANK()
+			        ),
+			        IF(
+			            MetricaSelecionada = "Total", // Se for o valor total ("Total")
+			            SWITCH(
+			                IndicadorSelecionado,
+			                "Matrículas", [Total Mat Geral],
+			                "Leads", [Total Leads],
+			                "Leads Pagos", [Total Leads Pago],
+			                "% Leads Pagos", [% Total Leads Pago],
+			                "Leads Não Pagos", [Total Leads Não Pago],
+			                "Conversão Geral", [Conversão Geral],
+			                "Investimento", [Total Investimento],
+			                "Investimento Alocado", [Total Investimento Alocado],
+			                "CPL", [Total CPL Pago],
+			                 "% Matrícula Meta Móvel", [% Total Mat Meta BP Movel],
+			            "% Matrícula Meta Mês", [% Total Mat Meta BP],
+			                BLANK()
+			            ),
+			            Variacao // Se for uma variação (Δ S1/S2, etc.)
+			        )
+			    )
+			
+			// Formatação final do valor
+			RETURN
+			IF(
+			    CONTAINSSTRING(MetricaSelecionada, "Δ"), // Se for uma variação
+			    IF(
+			        IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel","% Matrícula Meta Mês" },
+			        FORMAT(ValorBruto, "0.0 p.p"), // Formato para variações em pontos percentuais
+			        IF(
+			            IndicadorSelecionado = "CPL",
+			            FORMAT(ValorBruto, "#,##0.0"), // Formato para variações de CPL com 1 casa decimal
+			            FORMAT(ValorBruto, "0.0%") // Formato para variações percentuais dos demais indicadores
+			        )
+			    ),
+			    IF(
+			        IndicadorSelecionado IN { "% Leads Pagos", "Conversão Geral", "% Matrícula Meta Móvel","% Matrícula Meta Mês" },
+			        FORMAT(ValorBruto, "0.0%"), // Formato percentual para semanas/totais de % Leads Pagos e Conversão Geral
+			        IF(
+			            IndicadorSelecionado = "CPL",
+			            FORMAT(ValorBruto, "#,##0.0"), // Formato para valores brutos de CPL com 1 casa decimal
+			            FORMAT(ValorBruto, "#,###") // Formato padrão para semanas/totais dos demais indicadores
+			        )
+			    )
+			)
+			```
+		lineageTag: 8ea24555-3a54-45d3-a165-9fd2f98a9d73
+
+	measure VARIACAO_MATRIZ_INDICADORES_SEMANA = ```
+			
+			VAR ValorTexto = TRIM([VALOR_MATRIZ_INDICADORES_SEMANA]) // Remove espaços extras
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_SEMANA[Métrica])
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_SEMANA[Indicador])
+			
+			// Verifica se o valor contém "p.p" ou "%" para definir o tratamento adequado
+			VAR ContemPP = SEARCH("p.p", ValorTexto, 1, 0) > 0
+			VAR ContemPorcento = SEARCH("%", ValorTexto, 1, 0) > 0
+			
+			// Remove os indicadores de texto para conversão numérica
+			VAR ValorLimpo = SUBSTITUTE(SUBSTITUTE(ValorTexto, " p.p", ""), "%", "")
+			
+			// Converte para número, mas só divide por 100 se for percentual ("%")
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(ValorLimpo) / IF(ContemPorcento, 100, 1) // Divide por 100 apenas para "%"
+			    )
+			
+			RETURN 
+			    IF(
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			        SWITCH(
+			            TRUE(),
+			            // Para variações (Δ)
+			            CONTAINSSTRING(MetricaSelecionada, "Δ"),
+			                IF(
+			                    IndicadorSelecionado = "CPL",
+			                    IF(
+			                        ValorNumerico > 0, 
+			                        "🔴 " & ValorTexto,  // Valor positivo → círculo vermelho
+			                        IF(
+			                            ValorNumerico < 0, 
+			                            "🟢 " & ValorTexto,  // Valor negativo → círculo verde
+			                            "🟡 " & ValorTexto   // Valor zero → círculo amarelo
+			                        )
+			                    ),
+			                    IF(
+			                        ValorNumerico > 0, 
+			                        "🟢 " & ValorTexto,  // Valor positivo → círculo verde
+			                        IF(
+			                            ValorNumerico < 0, 
+			                            "🔴 " & ValorTexto,  // Valor negativo → círculo vermelho
+			                            "🟡 " & ValorTexto   // Valor zero → círculo amarelo
+			                        )
+			                    )
+			                ),
+			            
+			            // Para todos os outros indicadores, mantém o formato original
+			            ValorTexto
+			        )
+			    )
+			```
+		lineageTag: 51a9b2b9-5742-4409-945f-88ae00d3bc62
+
+	measure MesSelecionado1 = SELECTEDVALUE(VW_CALENDARIO[DATA_MES], FORMAT(TODAY(), "MM"))
+		lineageTag: 4b70b0fc-aba5-404b-91ac-f443667e6f9f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Indicador
+		lineageTag: 36f1c59a-902d-4c53-afd4-7fa18a57367b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: 26ea9458-d839-4c5f-9401-49641770a8fb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: 8a6c3af6-fe11-4908-a47f-0dcab2b2331d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+		sortByColumn: Ordem_Métrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: 4d0bcadb-05ee-4550-8358-b9b68fe263af
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_SEMANA = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				        {"Matrículas", 1, "Total", 1}, // Total agora é o primeiro
+				        {"Matrículas", 1, "S1", 3},
+				        {"Matrículas", 1, "S2", 4},
+				        {"Matrículas", 1, "S3", 5},
+				        {"Matrículas", 1, "S4", 6},
+				        {"Matrículas", 1, "S5", 7},
+				        {"Matrículas", 1, "Δ S1/S2", 9},
+				        {"Matrículas", 1, "Δ S2/S3", 10},
+				        {"Matrículas", 1, "Δ S3/S4", 11},
+				        {"Matrículas", 1, "Δ S4/S5", 12},
+				        {"Leads", 2, "Total", 1}, // Total agora é o primeiro
+				        {"Leads", 2, "S1", 3},
+				        {"Leads", 2, "S2", 4},
+				        {"Leads", 2, "S3", 5},
+				        {"Leads", 2, "S4", 6},
+				        {"Leads", 2, "S5", 7},
+				        {"Leads", 2, "Δ S1/S2", 9},
+				        {"Leads", 2, "Δ S2/S3", 10},
+				        {"Leads", 2, "Δ S3/S4", 11},
+				        {"Leads", 2, "Δ S4/S5", 12},
+				        {"Leads Pagos", 3, "Total", 1}, // Total agora é o primeiro
+				        {"Leads Pagos", 3, "S1", 3},
+				        {"Leads Pagos", 3, "S2", 4},
+				        {"Leads Pagos", 3, "S3", 5},
+				        {"Leads Pagos", 3, "S4", 6},
+				        {"Leads Pagos", 3, "S5", 7},
+				        {"Leads Pagos", 3, "Δ S1/S2", 9},
+				        {"Leads Pagos", 3, "Δ S2/S3", 10},
+				        {"Leads Pagos", 3, "Δ S3/S4", 11},
+				        {"Leads Pagos", 3, "Δ S4/S5", 12},
+				        {"% Leads Pagos", 4, "Total", 1}, // Total agora é o primeiro
+				        {"% Leads Pagos", 4, "S1", 3},
+				        {"% Leads Pagos", 4, "S2", 4},
+				        {"% Leads Pagos", 4, "S3", 5},
+				        {"% Leads Pagos", 4, "S4", 6},
+				        {"% Leads Pagos", 4, "S5", 7},
+				        {"% Leads Pagos", 4, "Δ S1/S2", 9},
+				        {"% Leads Pagos", 4, "Δ S2/S3", 10},
+				        {"% Leads Pagos", 4, "Δ S3/S4", 11},
+				        {"% Leads Pagos", 4, "Δ S4/S5", 12},
+				        {"Leads Não Pagos", 5, "Total", 1}, // Total agora é o primeiro
+				        {"Leads Não Pagos", 5, "S1", 3},
+				        {"Leads Não Pagos", 5, "S2", 4},
+				        {"Leads Não Pagos", 5, "S3", 5},
+				        {"Leads Não Pagos", 5, "S4", 6},
+				        {"Leads Não Pagos", 5, "S5", 7},
+				        {"Leads Não Pagos", 5, "Δ S1/S2", 9},
+				        {"Leads Não Pagos", 5, "Δ S2/S3", 10},
+				        {"Leads Não Pagos", 5, "Δ S3/S4", 11},
+				        {"Leads Não Pagos", 5, "Δ S4/S5", 12},
+				        {"Conversão Geral", 6, "Total", 1}, // Total agora é o primeiro
+				        {"Conversão Geral", 6, "S1", 3},
+				        {"Conversão Geral", 6, "S2", 4},
+				        {"Conversão Geral", 6, "S3", 5},
+				        {"Conversão Geral", 6, "S4", 6},
+				        {"Conversão Geral", 6, "S5", 7},
+				        {"Conversão Geral", 6, "Δ S1/S2", 9},
+				        {"Conversão Geral", 6, "Δ S2/S3", 10},
+				        {"Conversão Geral", 6, "Δ S3/S4", 11},
+				        {"Conversão Geral", 6, "Δ S4/S5", 12},
+				        {"Investimento", 7, "Total", 1}, // Total agora é o primeiro
+				        {"Investimento", 7, "S1", 3},
+				        {"Investimento", 7, "S2", 4},
+				        {"Investimento", 7, "S3", 5},
+				        {"Investimento", 7, "S4", 6},
+				        {"Investimento", 7, "S5", 7},
+				        {"Investimento", 7, "Δ S1/S2", 9},
+				        {"Investimento", 7, "Δ S2/S3", 10},
+				        {"Investimento", 7, "Δ S3/S4", 11},
+				        {"Investimento", 7, "Δ S4/S5", 12},
+				        {"Investimento Alocado", 7, "Total", 1}, // Total agora é o primeiro
+				        {"Investimento Alocado", 7, "S1", 3},
+				        {"Investimento Alocado", 7, "S2", 4},
+				        {"Investimento Alocado", 7, "S3", 5},
+				        {"Investimento Alocado", 7, "S4", 6},
+				        {"Investimento Alocado", 7, "S5", 7},
+				        {"Investimento Alocado", 7, "Δ S1/S2", 9},
+				        {"Investimento Alocado", 7, "Δ S2/S3", 10},
+				        {"Investimento Alocado", 7, "Δ S3/S4", 11},
+				        {"Investimento Alocado", 7, "Δ S4/S5", 12},
+				        {"CPL", 8, "Total", 1}, // Total agora é o primeiro
+				        {"CPL", 8, "S1", 3},
+				        {"CPL", 8, "S2", 4},
+				        {"CPL", 8, "S3", 5},
+				        {"CPL", 8, "S4", 6},
+				        {"CPL", 8, "S5", 7},
+				        {"CPL", 8, "Δ S1/S2", 9},
+				        {"CPL", 8, "Δ S2/S3", 10},
+				        {"CPL", 8, "Δ S3/S4", 11},
+				        {"CPL", 8, "Δ S4/S5", 12},
+				        {"% Matrícula Meta Móvel", 9, "Total", 1}, // Total agora é o primeiro
+				        {"% Matrícula Meta Móvel", 9, "S1", 3},
+				        {"% Matrícula Meta Móvel", 9, "S2", 4},
+				        {"% Matrícula Meta Móvel", 9, "S3", 5},
+				        {"% Matrícula Meta Móvel", 9, "S4", 6},
+				        {"% Matrícula Meta Móvel", 9, "S5", 7},
+				        {"% Matrícula Meta Móvel", 9, "Δ S1/S2", 9},
+				        {"% Matrícula Meta Móvel", 9, "Δ S2/S3", 10},
+				        {"% Matrícula Meta Móvel", 9, "Δ S3/S4", 11},
+				        {"% Matrícula Meta Móvel", 9, "Δ S4/S5", 12},
+				        {"% Matrícula Meta Mês", 9, "Total", 1}, // Total agora é o primeiro
+				        {"% Matrícula Meta Mês", 9, "S1", 3},
+				        {"% Matrícula Meta Mês", 9, "S2", 4},
+				        {"% Matrícula Meta Mês", 9, "S3", 5},
+				        {"% Matrícula Meta Mês", 9, "S4", 6},
+				        {"% Matrícula Meta Mês", 9, "S5", 7},
+				        {"% Matrícula Meta Mês", 9, "Δ S1/S2", 9},
+				        {"% Matrícula Meta Mês", 9, "Δ S2/S3", 10},
+				        {"% Matrícula Meta Mês", 9, "Δ S3/S4", 11},
+				        {"% Matrícula Meta Mês", 9, "Δ S4/S5", 12}
+				    }
+				)
+
+	annotation PBI_Id = bf9abc056b1244fdbba86798d0d179b4
+

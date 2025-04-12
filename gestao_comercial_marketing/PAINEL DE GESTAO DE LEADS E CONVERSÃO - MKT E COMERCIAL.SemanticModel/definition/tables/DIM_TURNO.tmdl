@@ -1,0 +1,39 @@
+table DIM_TURNO
+	lineageTag: 1d87b4f8-b85b-42fa-9ab8-304f1721446d
+
+	column de_turno
+		dataType: string
+		lineageTag: f9fd59fb-ac06-4a5f-a495-5a9c4791250b
+		summarizeBy: none
+		sourceColumn: de_turno
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: 0a041496-a5fc-45bf-b3a3-69a8b2671298
+		summarizeBy: none
+		sourceColumn: turno
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TURNO = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "select * from plancomercial.PERSONE_ETL.dim_turno", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"de_turno", Text.Proper, type text}, {"turno", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

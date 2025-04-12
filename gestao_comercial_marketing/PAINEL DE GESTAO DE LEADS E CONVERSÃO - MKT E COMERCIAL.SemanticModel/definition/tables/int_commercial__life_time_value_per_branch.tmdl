@@ -1,0 +1,150 @@
+table int_commercial__life_time_value_per_branch
+	lineageTag: 87408f8f-642e-4b21-84a3-9779cb80a58c
+
+	column branch_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f90c62e-3be5-4148-ba18-1ede653fd8ff
+		summarizeBy: none
+		sourceColumn: branch_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_month
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9d5f7e01-ad8e-4c57-8341-0ea1b331d7ee
+		summarizeBy: none
+		sourceColumn: sale_month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column gross_sales
+		dataType: int64
+		formatString: 0
+		lineageTag: d1f399db-8569-4ee3-965e-4e8c8ca36d24
+		summarizeBy: sum
+		sourceColumn: gross_sales
+
+		annotation SummarizationSetBy = Automatic
+
+	column noshow
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 60ef49f7-9d55-4cf2-b07a-5936d0d8f533
+		summarizeBy: sum
+		sourceColumn: noshow
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_sales
+		dataType: double
+		lineageTag: 15b579a6-ea99-47d8-966a-0fae0c93f4a6
+		summarizeBy: sum
+		sourceColumn: net_sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column atp
+		dataType: double
+		lineageTag: 06548c4a-6aea-46c0-bac0-2c9c03041316
+		summarizeBy: sum
+		sourceColumn: atp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column expected_revenue
+		dataType: double
+		lineageTag: 03c364fd-c957-4f13-8d0b-c5bea8bb9f9a
+		summarizeBy: sum
+		sourceColumn: expected_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column type
+		dataType: string
+		lineageTag: 6aad13f2-84ba-4bb4-a22e-d4905101b81b
+		summarizeBy: none
+		sourceColumn: type
+
+		annotation SummarizationSetBy = Automatic
+
+	column time
+		dataType: int64
+		formatString: 0
+		lineageTag: 84b7484f-7f13-40eb-83ac-b75aa4b2eec3
+		summarizeBy: sum
+		sourceColumn: time
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_expected_revenue
+		dataType: double
+		lineageTag: 1b0a1539-8a7b-464b-85d1-37bc6884a501
+		summarizeBy: sum
+		sourceColumn: time_expected_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column permanence
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 9f073cf2-affa-434c-ad90-da9cbc15aedb
+		summarizeBy: sum
+		sourceColumn: permanence
+
+		annotation SummarizationSetBy = Automatic
+
+	column time_expected_active_revenue
+		dataType: double
+		lineageTag: 673678ab-3591-4774-83f8-f50c5aa7222c
+		summarizeBy: sum
+		sourceColumn: time_expected_active_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column time_expected_net_revenue
+		dataType: double
+		lineageTag: a8e5e3d8-9946-4a3e-8abb-2898b66f42af
+		summarizeBy: sum
+		sourceColumn: time_expected_net_revenue
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ltv
+		dataType: double
+		lineageTag: 0746f3fd-233b-48be-b353-b2fab53c685e
+		summarizeBy: sum
+		sourceColumn: ltv
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition int_commercial__life_time_value_per_branch = m
+		mode: import
+		queryGroup: CAC
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM `plancomercial.PERSONE_ETL.int_commercial__life_time_value_per_branch_2`", null, [EnableFolding=true])
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

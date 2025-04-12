@@ -1,0 +1,174 @@
+table MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA
+	lineageTag: 0811a5ef-fa7c-42be-ae15-50072bd664a5
+
+	measure VALOR_MATRIZ_META_DIA_UNIDADE_ATIVA = ```
+			
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA[Métrica])
+			
+			// Variáveis intermediárias para valores filtrados por status "Ativa"
+			VAR MatriculasMeta = DIVIDE([Total Mat Meta BP], [Total dias uteis])
+			VAR MatriculasReal = CALCULATE([PDU Matrículas], dim_unidade_historica[status] = "Ativa")
+			VAR MatriculasAting = DIVIDE(MatriculasReal, MatriculasMeta)
+			
+			VAR LeadsMeta = DIVIDE([Total Leads Meta], [Total dias uteis])
+			VAR LeadsReal = CALCULATE([PDU Leads], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsAting = DIVIDE(LeadsReal, LeadsMeta)
+			
+			VAR LeadsPagosMeta = DIVIDE([Total Leads Meta Pago], [Total dias uteis])
+			VAR LeadsPagosReal = CALCULATE([PDU Leads Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsPagosAting = DIVIDE(LeadsPagosReal, LeadsPagosMeta)
+			
+			VAR InvestimentoMeta = DIVIDE([Total Investimento Meta], [Total dias uteis])
+			VAR InvestimentoReal = CALCULATE(DIVIDE([Total Investimento], [Total dias uteis]), dim_unidade_historica[status] = "Ativa")
+			VAR InvestimentoAting = DIVIDE(InvestimentoReal, InvestimentoMeta)
+			
+			VAR ReceitaMeta = DIVIDE([Total Faturamento Meta BP], [Total dias uteis])
+			VAR ReceitaReal = CALCULATE(DIVIDE([Total Faturamento 1ª Mensalidade], [Total dias uteis]), dim_unidade_historica[status] = "Ativa")
+			VAR ReceitaAting = DIVIDE(ReceitaReal, ReceitaMeta)
+			
+			// Cálculo do valor bruto com base no indicador e métrica selecionados
+			VAR ValorBruto =
+			    SWITCH(
+			        TRUE(),
+			        // Matrículas por dia
+			        IndicadorSelecionado = "Matrículas por dia" && MetricaSelecionada = "Meta", MatriculasMeta,
+			        IndicadorSelecionado = "Matrículas por dia" && MetricaSelecionada = "Real", MatriculasReal,
+			        IndicadorSelecionado = "Matrículas por dia" && MetricaSelecionada = "% Ating", MatriculasAting,
+			        
+			        // Leads Total por dia
+			        IndicadorSelecionado = "Leads Total por dia" && MetricaSelecionada = "Meta", LeadsMeta,
+			        IndicadorSelecionado = "Leads Total por dia" && MetricaSelecionada = "Real", LeadsReal,
+			        IndicadorSelecionado = "Leads Total por dia" && MetricaSelecionada = "% Ating", LeadsAting,
+			        
+			        // Leads Pagos por dia
+			        IndicadorSelecionado = "Leads Pagos por dia" && MetricaSelecionada = "Meta", LeadsPagosMeta,
+			        IndicadorSelecionado = "Leads Pagos por dia" && MetricaSelecionada = "Real", LeadsPagosReal,
+			        IndicadorSelecionado = "Leads Pagos por dia" && MetricaSelecionada = "% Ating", LeadsPagosAting,
+			        
+			        // Investimento por dia
+			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "Meta", InvestimentoMeta,
+			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "Real", InvestimentoReal,
+			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "% Ating", InvestimentoAting,
+			        
+			        // Receita por dia
+			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "Meta", ReceitaMeta,
+			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "Real", ReceitaReal,
+			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "% Ating", ReceitaAting,
+			        
+			        // Caso padrão
+			        BLANK()
+			    )
+			
+			// Formatação condicional
+			RETURN 
+			    IF(
+			        MetricaSelecionada = "% Ating" || IndicadorSelecionado IN {"% Leads Pagos", "Conversão Geral"}, 
+			        FORMAT(ValorBruto, "0.0%"), 
+			        FORMAT(ValorBruto, "#,###")
+			    )
+			```
+		lineageTag: f87cb200-3168-46da-a7fd-b6e49e1c251a
+
+	measure '% Ating com Ícones MATRIZ DIA_UNIADE_ATIVA' = ```
+			
+			VAR ValorTexto = TRIM([VALOR_MATRIZ_META_DIA_UNIDADE_ATIVA]) // Remove espaços extras
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(SUBSTITUTE(ValorTexto, "%", "")) / 100  // Remove "%" e converte para número
+			    )
+			
+			RETURN 
+			    IF(
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			        IF(
+			            SELECTEDVALUE(MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA[Métrica]) = "% Ating",
+			            SWITCH(
+			                TRUE(),
+			                ValorNumerico >= 1, "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0, "🟡 " & ValorTexto,  // Entre 50% e 99.9% → círculo amarelo
+			                ValorNumerico < 0, "🔴 " & ValorTexto,  // Abaixo de 50% → círculo vermelho
+			                ValorTexto // Caso padrão
+			            ),
+			            ValorTexto // Mantém a formatação original para os demais indicadores
+			        )
+			    )
+			
+			
+			```
+		lineageTag: 8d64c2bd-0b7b-48df-bec8-f408f858697a
+
+	column Indicador
+		lineageTag: 718e1b63-e4c5-421e-ae74-57c9742a97a2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: 21195f50-5e3a-4746-89b3-1204e4a81fe3
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: a5f7d62b-3ddc-4720-975c-9aa72fde2244
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+		sortByColumn: Ordem_Métrica
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: 8cdc70ad-2ca3-4552-a89e-7a03d886a8c3
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				        {"Matrículas por dia", 1, "Meta", 1},
+				        {"Matrículas por dia", 1, "Real", 2},
+				        {"Matrículas por dia", 1, "% Ating", 3},
+				        {"Leads Total por dia", 2, "Meta", 1},
+				        {"Leads Total por dia", 2, "Real", 2},
+				        {"Leads Total por dia", 2, "% Ating", 3},
+				        {"Leads Pagos por dia", 3, "Meta", 1},
+				        {"Leads Pagos por dia", 3, "Real", 2},
+				        {"Leads Pagos por dia", 3, "% Ating", 3},
+				        {"Investimento por dia", 4, "Meta", 1},
+				        {"Investimento por dia", 4, "Real", 2},
+				        {"Investimento por dia", 4, "% Ating", 3},
+				        {"Receita por dia", 5, "Meta", 1},
+				        {"Receita por dia", 5, "Real", 2},
+				        {"Receita por dia", 5, "% Ating", 3}
+				    
+				
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = 139c2a2e8a81405a85fdd64afb8223b9
+

@@ -1,0 +1,197 @@
+table MATRIZ_INDICADORES_GRAFICO
+	lineageTag: b909cd22-f7df-4edb-9018-1837b1bd2327
+
+	measure VALOR_MATRIZ_GRAFICO_META = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Métrica])
+			VAR ValorBruto = 
+			    SWITCH(
+			        TRUE(),
+			
+			        IndicadorSelecionado = "% do tempo percorrido no mês" && MetricaSelecionada = "% Ating", [% D.U Real],
+			        
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating", [% Total Investimento],
+			
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating", [% Total Leads Meta Pago],
+			
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating", [% Total Leads Meta],
+			
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating", [% Total Mat Meta BP],
+			
+			
+			
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating", DIVIDE( [Total Faturamento Bruto Esperado],[Total Faturamento Meta BP]),
+			        BLANK()
+			
+			
+			
+			
+			
+			    )
+			
+			RETURN 
+			  ValorBruto
+			```
+		lineageTag: fecceead-f11c-4ef4-a0dc-f78c8a7c6c35
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% VALOR_MATRIZ_GRAFICO_META' = FORMAT([VALOR_MATRIZ_GRAFICO_META], "0.0%")
+		lineageTag: 03c69b51-20f0-40b7-bf14-f080a2c24a99
+
+	measure VALOR_MATRIZ_GRAFICO_MOVEL = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Métrica])
+			VAR ValorBruto = 
+			    SWITCH(
+			        TRUE(),
+			
+			        IndicadorSelecionado = "% do tempo percorrido no mês" && MetricaSelecionada = "% Ating", [% D.U Real],
+			        
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating", [% Total Investimento Meta Móvel Reduzido],
+			
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel Pago],
+			
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel],
+			
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating", [% Total Mat Meta BP Movel],
+			
+			
+			
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating", DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta Movel BP]),
+			        BLANK()
+			
+			
+			
+			
+			
+			    )
+			
+			RETURN 
+			  ValorBruto
+			```
+		lineageTag: 7ef6fe61-0474-49ec-a6d7-4eadd94fbef2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% VALOR_MATRIZ_GRAFICO_MOVEL' = FORMAT([VALOR_MATRIZ_GRAFICO_MOVEL], "0.0%")
+		lineageTag: f3ed385b-c6dc-4146-ae50-063978fb431d
+
+	measure Cor_Barra_Grafico_meta = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Métrica])
+			VAR Valor = VALUE([VALOR_MATRIZ_GRAFICO_META]) 
+			VAR DU_Real = [% D.U Real] -- Obtém o valor de DU Real no contexto atual
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(),
+			        -- Cada indicador é comparado individualmente com DU_Real
+			        IndicadorSelecionado = "% do tempo percorrido no mês" && MetricaSelecionada = "% Ating" && Valor >= 0, "#B3B3B3",
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating" && Valor >= DU_Real, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating" && Valor >= DU_Real, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating" && Valor >= DU_Real, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating" && Valor >= DU_Real, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating" && Valor >= DU_Real, "#A3DDB3",
+			
+			        -- Se for maior ou igual a DU Real, mantém verde
+			        "#FFCC99"
+			    )
+			
+			```
+		lineageTag: 1c769787-ad9c-47aa-ac3d-120aa6e31538
+
+	measure Cor_Barra_Grafico_movel = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO[Métrica])
+			VAR Valor = VALUE([VALOR_MATRIZ_GRAFICO_MOVEL]) 
+			VAR DU_Real = [% D.U Real] -- Obtém o valor de DU Real no contexto atual
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(),
+			        -- Cada indicador é comparado individualmente com DU_Real
+			        IndicadorSelecionado = "% do tempo percorrido no mês" && MetricaSelecionada = "% Ating" && Valor >= 0, "#B3B3B3",
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			
+			        -- Se for maior ou igual a DU Real, mantém verde
+			        "#FFCC99"
+			    )
+			
+			```
+		lineageTag: 4377dd54-62d6-44fe-bad5-065fee9aadb3
+
+	column Indicador
+		lineageTag: def5b551-95a5-495b-bae2-6f38584b665a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: c8a57de8-29b8-42a0-9a02-6052435f4b08
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: a453bdf8-3eab-475f-9950-e996fd499d57
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: d1484c99-d82c-4c0c-9b7a-84f6b4fb4eb2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_GRAFICO = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				
+				        {"% do tempo percorrido no mês", 1, "% Ating", 1},
+				
+				        {"% ating.  investimento feito", 2, "% Ating", },
+				
+				        {"% ating. Leads Pagos", 3, "% Ating", 1},
+				
+				        {"% ating. Leads Total", 4, "% Ating", 1},
+				
+				        {"% ating. meta Matrículas", 5, "% Ating", 1},
+				
+				        {"% ating. meta Receita", 6, "% Ating", 1}
+				    
+				
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = 26e3366d1834495abed2404f7bbb40c4
+

@@ -1,0 +1,1566 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 145.37003984922725
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 588.1582520000004,
+            "y": 0
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 1000,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 910.79225300000053,
+            "y": 0
+          },
+          "nodeIndex": "VW_LEADS_GROUP",
+          "nodeLineageTag": "2dd41ab9-36bb-44d4-8e27-9e9862d67599",
+          "size": {
+            "height": 1000,
+            "width": 250
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1205.7947360000005,
+            "y": 0
+          },
+          "nodeIndex": "VW_MATRICULAS",
+          "nodeLineageTag": "adaf8f7f-b98c-4c0c-a9ae-9b97c0731878",
+          "size": {
+            "height": 661,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 563.35639800000047,
+            "y": 1088.090548000001
+          },
+          "nodeIndex": "MEDIDAS",
+          "nodeLineageTag": "b4c6af6c-d272-415b-ae84-a4630cec32b4",
+          "size": {
+            "height": 251,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 2340.0098098645954,
+            "y": 255.38093769592967
+          },
+          "nodeIndex": "int_commercial__life_time_value_per_branch",
+          "nodeLineageTag": "87408f8f-642e-4b21-84a3-9779cb80a58c",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 2386.389807841646,
+            "y": 0
+          },
+          "nodeIndex": "Medida_LTV",
+          "nodeLineageTag": "594cb868-bf87-4115-af81-8bcce0123f65",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1777.7227430722651,
+            "y": 569.54527400000052
+          },
+          "nodeIndex": "DIM_HORA",
+          "nodeLineageTag": "49bf59c6-e4d2-4290-824f-744d14739ca5",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1785.8872101083973,
+            "y": 617.54527400000052
+          },
+          "nodeIndex": "DIM_TIPO_LEAD",
+          "nodeLineageTag": "489bd407-3e52-44a5-802b-338282589dee",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 2080.3977516115374,
+            "y": 0
+          },
+          "nodeIndex": "vw_ft_investimento_distribuido_tb",
+          "nodeLineageTag": "0694ce28-ebce-49da-af49-2e332c92d65a",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 2142.5088980015535,
+            "y": 860.90406825862885
+          },
+          "nodeIndex": "vw_ft_cac_full",
+          "nodeLineageTag": "3ef3f519-ef7e-454d-9cd7-220ca789e29c",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 2290.2393862167946,
+            "y": 700.77136200000075
+          },
+          "nodeIndex": "vw_base_leads_historica_count",
+          "nodeLineageTag": "cd76b18c-3fd7-43a6-8b3a-a6e556dffaad",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 2435.376610058438,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parametro_matricula_liquida",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2427.212143022306,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_Ticket_Medio",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2402.71874191391,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_total_custos",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2410.883208950042,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_Noshow",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2443.54107709457,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_Per6M",
+          "nodeLineageTag": "db80e7dc-8815-4c7f-80c0-a57cda60b63b",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2451.705544130702,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_PerAnual",
+          "nodeLineageTag": "73cf4003-c716-4dc1-9204-00ff000c0a0f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2459.870011166834,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro_PerTotal",
+          "nodeLineageTag": "74b02c29-169b-4582-96d4-e726016efd1d",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2468.0344782029661,
+            "y": 628.77136200000075
+          },
+          "nodeIndex": "vw_ft_base_meta_investimento",
+          "nodeLineageTag": "50b091b8-4493-42e1-9814-9c963f8da16e",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2476.1989452390981,
+            "y": 700.77136200000075
+          },
+          "nodeIndex": "vw_dim_origens",
+          "nodeLineageTag": "72d27360-6025-469e-acf4-bf598b82cd07",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2768.36341227523,
+            "y": 676.77136200000075
+          },
+          "nodeIndex": "vw_custo_ferramenta",
+          "nodeLineageTag": "7f752e64-9ac7-439d-8eaf-170590740bb3",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3060.5278793113621,
+            "y": 640.77136200000075
+          },
+          "nodeIndex": "vw_custo_operacional",
+          "nodeLineageTag": "3c7c259b-1304-48ca-bef6-5abe7a16b1d9",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3068.6923463474941,
+            "y": 688.77136200000075
+          },
+          "nodeIndex": "vw_custo_consolidado_unidade",
+          "nodeLineageTag": "60ce0b46-b82e-4542-b9bd-80d24be70b47",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3093.18574745589,
+            "y": 614.77136200000075
+          },
+          "nodeIndex": "vw_dim_users_ajustado",
+          "nodeLineageTag": "d6e1c8b8-8bd0-4728-8321-b563b5d563eb",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3101.3502144920221,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "Parâmetro",
+          "nodeLineageTag": "b3a2b019-4558-4d02-9b75-d119cd6c4073",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3109.5146815281541,
+            "y": 664.77136200000075
+          },
+          "nodeIndex": "Medida_simulacao",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3117.6791485642862,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "param_qtd_meses",
+          "nodeLineageTag": "f305b3c1-c935-400b-9de5-dc66a9472dd5",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3134.00808263655,
+            "y": 652.77136200000075
+          },
+          "nodeIndex": "param_qtd_semanas",
+          "nodeLineageTag": "617a6f79-f74b-44a3-962b-77798b5ad1cb",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3142.1725496726822,
+            "y": 616.77136200000075
+          },
+          "nodeIndex": "vw_ft_meta_bp_comercial",
+          "nodeLineageTag": "b072db6d-9496-4fff-b7b3-aa6bf5cac2ca",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 688.77136200000075
+          },
+          "nodeIndex": "vw_dim_curso",
+          "nodeLineageTag": "848559b7-68fc-4b6d-a510-979098e4bda6",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "parametro_hora_Venda",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "paramentro_hora_leads",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "VW_VISITANTES_GROUP",
+          "nodeLineageTag": "a8319f32-5b7d-42c3-9079-1cb9311b90b1",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "base_matricula_historica_count",
+          "nodeLineageTag": "c1f25736-dfc1-4c7f-ba22-115bc278bc5f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "Base_meio_pagamento",
+          "nodeLineageTag": "0dcf97e5-cfe1-424b-8d14-53afe4001dc9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "base_matricula_dia_Y-1",
+          "nodeLineageTag": "6b523df3-5076-4e61-ac22-26b97e6b8035",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TURNO",
+          "nodeLineageTag": "1d87b4f8-b85b-42fa-9ab8-304f1721446d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "Base_meio_pagamento_YoY_Dia",
+          "nodeLineageTag": "52874198-ac39-411f-87b3-9464ff0df0c3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2862.8161516726818,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TAXA_MATRICULA",
+          "nodeLineageTag": "f8c6a1f4-8738-4b41-8e2d-b52fd0a30174",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3224.8513030960312,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TIPO_PAGAMENTO",
+          "nodeLineageTag": "fa859169-bea1-4f54-8b47-44bc3f5a033a",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3586.8864545193805,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TIPO_PARCELA",
+          "nodeLineageTag": "346e0032-ea22-42e9-aaa8-f658a8176ce4",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MEDIDA_RVV",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Parâmetro_venda_rvv",
+          "nodeLineageTag": "2b464385-beae-4f82-a55a-2d1919aff497",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Parâmetro_ticket_meta",
+          "nodeLineageTag": "0f183c20-1fb9-4a7e-b265-3d275154c1a4",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Parâmetro_Ating_Proz",
+          "nodeLineageTag": "a63539a4-c3cd-4e66-9103-23c661986cbf",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Parâmetro_bonus_recorrencia",
+          "nodeLineageTag": "c4b47da5-62a3-405e-8c2f-a4791b9fbe42",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "DIM_CONFIG_PAGINAS",
+          "nodeLineageTag": "40b4bc79-de9c-499e-9cfe-b76a50783b8c",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "DIM_EMAIL_AUTORIZADO_PAGINAS_BI",
+          "nodeLineageTag": "61f3796d-1969-493e-a714-4f257488c3b5",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "vw_dim_curso_2",
+          "nodeLineageTag": "1c0cc206-c161-4789-b3bf-65dfa6579fc3",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Tabela_Evasao_Pedrino",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "VW_VISITANTES",
+          "nodeLineageTag": "01042d9f-cfec-42d3-a64b-df0826c18b90",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "vw_dim_url",
+          "nodeLineageTag": "2cc0c059-1405-48a1-b564-d84997d2bd3b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_MOVEL",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_FATURAMENTO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_TOTAL",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_DIA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Grafico",
+          "nodeLineageTag": "62e6893d-731b-4554-8434-72de7e9bc202",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_GRAFICO",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_TOTAL_UNIDADE_ATIVA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Qtd Últimos Dias",
+          "nodeLineageTag": "a651b206-2948-4f1f-92ca-b58825db5cbb",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "Data Dia Anterior",
+          "nodeLineageTag": "d3bb9d3a-2c27-4384-a95f-7c289a7a43ae",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "MATRIZ_INDICADORES_SEMANA",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "DiasSemana1",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3307.53005651938,
+            "y": 0
+          },
+          "nodeIndex": "DiasSemana2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5320.1858045665458,
+            "y": 214.37740199217689
+          },
+          "nodeIndex": "DiasSemana3",
+          "nodeLineageTag": "97b913e4-717c-4207-99b2-dbb62444eee6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5722.0280685203224,
+            "y": 214.37740199217689
+          },
+          "nodeIndex": "DiasSemana4",
+          "nodeLineageTag": "9ada8012-727b-48d6-a3d8-2bc7336a9c52",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6123.8703324740982,
+            "y": 214.37740199217689
+          },
+          "nodeIndex": "DiasSemana5",
+          "nodeLineageTag": "57fd778d-4098-4d31-ba05-990ab4c3f72d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 6525.7125964278748,
+            "y": 226.37740199217689
+          },
+          "nodeIndex": "MesesAnos",
+          "nodeLineageTag": "24532173-440b-4071-8c38-86a1c201796f",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "DIM_METRICAS_PBI",
+          "nodeLineageTag": "17bff908-9fdd-4355-ba08-55e99c73ce44",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "VW_MATRICULAS_LIQUIDAS",
+          "nodeLineageTag": "8f19b44b-646a-41fb-b056-db11471fdf45",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas as tabelas",
+      "zoomValue": 36.458681620346084,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "VW_LEADS_GROUP",
+          "nodeLineageTag": "2dd41ab9-36bb-44d4-8e27-9e9862d67599",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 259,
+            "y": 0
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 371
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 637,
+            "y": 211
+          },
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 773,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TIPO_LEAD",
+          "nodeLineageTag": "489bd407-3e52-44a5-802b-338282589dee",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1217,
+            "y": 553
+          },
+          "nodeIndex": "DIM_TURNO",
+          "nodeLineageTag": "1d87b4f8-b85b-42fa-9ab8-304f1721446d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 595,
+            "y": 259
+          },
+          "nodeIndex": "vw_dim_origens",
+          "nodeLineageTag": "72d27360-6025-469e-acf4-bf598b82cd07",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 629,
+            "y": 450
+          },
+          "nodeIndex": "vw_dim_url",
+          "nodeLineageTag": "2cc0c059-1405-48a1-b564-d84997d2bd3b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 356,
+            "y": 511
+          },
+          "nodeIndex": "vw_dim_users_ajustado",
+          "nodeLineageTag": "d6e1c8b8-8bd0-4728-8321-b563b5d563eb",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 602,
+            "y": 734
+          },
+          "nodeIndex": "DIM_HORA",
+          "nodeLineageTag": "49bf59c6-e4d2-4290-824f-744d14739ca5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1079,
+            "y": -8
+          },
+          "nodeIndex": "vw_dim_curso",
+          "nodeLineageTag": "848559b7-68fc-4b6d-a510-979098e4bda6",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "LEADS",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 7,
+            "y": 0
+          },
+          "nodeIndex": "VW_VISITANTES",
+          "nodeLineageTag": "01042d9f-cfec-42d3-a64b-df0826c18b90",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 338,
+            "y": 3
+          },
+          "nodeIndex": "DIM_TIPO_LEAD",
+          "nodeLineageTag": "489bd407-3e52-44a5-802b-338282589dee",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 756,
+            "y": 218
+          },
+          "nodeIndex": "vw_dim_origens",
+          "nodeLineageTag": "72d27360-6025-469e-acf4-bf598b82cd07",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 407,
+            "y": 239
+          },
+          "nodeIndex": "vw_dim_url",
+          "nodeLineageTag": "2cc0c059-1405-48a1-b564-d84997d2bd3b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 909,
+            "y": 0
+          },
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 693,
+            "y": 0
+          },
+          "nodeIndex": "DIM_HORA",
+          "nodeLineageTag": "49bf59c6-e4d2-4290-824f-744d14739ca5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "VISITANTES",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 0,
+        "y": 845.59988834333728
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 6
+          },
+          "nodeIndex": "VW_MATRICULAS",
+          "nodeLineageTag": "adaf8f7f-b98c-4c0c-a9ae-9b97c0731878",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 385.5826032084633
+          },
+          "nodeIndex": "DIM_HORA",
+          "nodeLineageTag": "49bf59c6-e4d2-4290-824f-744d14739ca5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 375.9612583372749,
+            "y": 0
+          },
+          "nodeIndex": "DIM_TIPO_LEAD",
+          "nodeLineageTag": "489bd407-3e52-44a5-802b-338282589dee",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 728.05055798751494
+          },
+          "nodeIndex": "DIM_TURNO",
+          "nodeLineageTag": "1d87b4f8-b85b-42fa-9ab8-304f1721446d",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 1193.1304965763504
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1118.6798269321728,
+            "y": 0
+          },
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 898.57989030813849
+          },
+          "nodeIndex": "vw_dim_curso",
+          "nodeLineageTag": "848559b7-68fc-4b6d-a510-979098e4bda6",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 378.77992463175264,
+            "y": 237.60262274837936
+          },
+          "nodeIndex": "vw_dim_origens",
+          "nodeLineageTag": "72d27360-6025-469e-acf4-bf598b82cd07",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 721.24787941080422,
+            "y": 241.830622190096
+          },
+          "nodeIndex": "vw_dim_url",
+          "nodeLineageTag": "2cc0c059-1405-48a1-b564-d84997d2bd3b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 428.106584785114,
+            "y": 425.04393133115241
+          },
+          "nodeIndex": "vw_dim_users_ajustado",
+          "nodeLineageTag": "d6e1c8b8-8bd0-4728-8321-b563b5d563eb",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 919.96385317148849,
+            "y": 564.56791290780313
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "MATRICULAS",
+      "zoomValue": 70.95554390096882,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 30
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 6,
+            "y": 0
+          },
+          "nodeIndex": "vw_ft_investimento_distribuido_tb",
+          "nodeLineageTag": "0694ce28-ebce-49da-af49-2e332c92d65a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 386,
+            "y": 9
+          },
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 373,
+            "y": 219
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 34,
+            "y": 53
+          },
+          "nodeIndex": "VW_MATRICULAS_LIQUIDAS",
+          "nodeLineageTag": "8f19b44b-646a-41fb-b056-db11471fdf45",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 415,
+            "y": -22
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 2",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 5,
+            "y": 7
+          },
+          "nodeIndex": "vw_ft_meta_bp_comercial",
+          "nodeLineageTag": "b072db6d-9496-4fff-b7b3-aa6bf5cac2ca",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 317,
+            "y": 0
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 829,
+            "y": 19
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": -33,
+            "y": -21
+          },
+          "nodeIndex": "dim_unidade_historica",
+          "nodeLineageTag": "609f39d5-aa00-45c0-934f-a5b3cdd14f85",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 359,
+            "y": -8
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 4",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Layout 4",
+  "defaultDiagram": "Todas as tabelas"
+}

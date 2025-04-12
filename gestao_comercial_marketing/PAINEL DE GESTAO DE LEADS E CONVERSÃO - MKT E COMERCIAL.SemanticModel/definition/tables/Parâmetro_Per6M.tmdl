@@ -1,0 +1,28 @@
+table Parâmetro_Per6M
+	lineageTag: db80e7dc-8815-4c7f-80c0-a57cda60b63b
+
+	measure 'Valor Parâmetro_Per6M' = SELECTEDVALUE('Parâmetro_Per6M'[Parâmetro_Per6M], 0)
+		lineageTag: 6c844a3b-601b-4c42-877d-bf73ff3a5573
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Parâmetro_Per6M
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 466b356f-6893-4b01-9b73-c4a9760d923f
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_Per6M = calculated
+		mode: import
+		source = GENERATESERIES(-1,1,0.001)
+
+	annotation PBI_Id = eb5a8ac3f3af40d4838af33251d7a9c3
+

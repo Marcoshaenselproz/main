@@ -1,0 +1,26 @@
+table param_qtd_semanas
+	lineageTag: 617a6f79-f74b-44a3-962b-77798b5ad1cb
+
+	measure 'Valor qtd_semanas' = SELECTEDVALUE('param_qtd_semanas'[qtd_semanas])
+		formatString: 0
+		lineageTag: 4298ef11-02d7-4118-89c9-a73a7950c1da
+
+	column qtd_semanas
+		formatString: 0
+		lineageTag: d48f0f14-96a3-40d6-9bfd-1914680fc696
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition param_qtd_semanas = calculated
+		mode: import
+		source = GENERATESERIES(1, 10, 1)
+
+	annotation PBI_Id = 83a5793fd4ae43d99cae8a703536a838
+

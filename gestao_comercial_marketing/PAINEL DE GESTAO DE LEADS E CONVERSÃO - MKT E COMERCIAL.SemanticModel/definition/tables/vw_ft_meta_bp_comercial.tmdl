@@ -1,0 +1,125 @@
+table vw_ft_meta_bp_comercial
+	lineageTag: b072db6d-9496-4fff-b7b3-aa6bf5cac2ca
+
+	column data_dia
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f7a7e2ca-dba2-4291-b07e-4a76b0a3fb71
+		summarizeBy: none
+		sourceColumn: data_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: cef2edfc-367e-460c-b2c2-77e7a4c6b432
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column email
+		dataType: string
+		lineageTag: beb2a170-5eea-434f-abea-31082d43f0b2
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	column meta_dia
+		dataType: double
+		lineageTag: 29bac46e-28d8-4c3a-b660-d5a591c437b2
+		summarizeBy: sum
+		sourceColumn: meta_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_bp_dia
+		dataType: double
+		lineageTag: abce9b72-140b-4592-8d92-e4eceeff7afc
+		summarizeBy: sum
+		sourceColumn: meta_bp_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_comercial_dia
+		dataType: double
+		lineageTag: b808352d-90d5-44d4-811f-af777d846b23
+		summarizeBy: sum
+		sourceColumn: meta_comercial_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_leads_totais_dia
+		dataType: double
+		lineageTag: 665eab1d-65cc-42cb-819e-98e34f83dfa6
+		summarizeBy: sum
+		sourceColumn: meta_leads_totais_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_leads_pago_dia
+		dataType: double
+		lineageTag: 9e2f52b5-9c56-4941-8b16-8710562b4961
+		summarizeBy: sum
+		sourceColumn: meta_leads_pago_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_leads_nao_pago_dia
+		dataType: double
+		lineageTag: e0d91f33-c465-44d5-98cb-185965ae7c64
+		summarizeBy: sum
+		sourceColumn: meta_leads_nao_pago_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_faturamento_dia
+		dataType: double
+		lineageTag: e4035ad1-d937-469c-8bea-b05503fc9512
+		summarizeBy: sum
+		sourceColumn: meta_faturamento_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column meta_faturamento_dia_bp
+		dataType: double
+		lineageTag: 1880c57d-3ab2-450b-ad47-79e1adca66ed
+		summarizeBy: sum
+		sourceColumn: meta_faturamento_dia_bp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_ft_meta_bp_comercial = m
+		mode: import
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_ft_meta_bp_comercial", null, [EnableFolding=true]),
+				
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"email", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

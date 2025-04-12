@@ -1,0 +1,756 @@
+table VW_MATRICULAS
+	lineageTag: adaf8f7f-b98c-4c0c-a9ae-9b97c0731878
+
+	column nome_usuario
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: a13871d3-33a1-44e0-97e8-b755f1fbfeaa
+		summarizeBy: none
+		sourceColumn: nome_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_usuario
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 945eb884-2216-4f46-ba54-2c984c0a8fd5
+		summarizeBy: none
+		sourceColumn: email_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_fechamento
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 8a658b45-eaab-4f1e-be53-732cf4bfcf79
+		summarizeBy: none
+		sourceColumn: mes_fechamento
+
+		variation Variation
+			isDefault
+			relationship: ddef7fbb-ccac-45dd-84f1-27b6a6a57b8d
+			defaultHierarchy: LocalDateTable_4e51ed17-c883-4512-84b8-910f06b7571f.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column origem_matricula
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 5500c274-acd5-4825-8017-5336892b1792
+		summarizeBy: none
+		sourceColumn: origem_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_criacao
+		dataType: dateTime
+		formatString: DD/MM
+		sourceProviderType: date
+		lineageTag: 688b9de8-b5ff-4abb-b736-7e91649aaa6c
+		summarizeBy: none
+		sourceColumn: data_criacao
+
+		variation Variation
+			isDefault
+			relationship: 649cbf90-90ab-49da-b87a-8971a2000950
+			defaultHierarchy: LocalDateTable_ec0c5cb2-9fdc-4162-b4ee-fcf9f42ddbea.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column hora_criacao
+		dataType: int64
+		formatString: 0
+		lineageTag: c43e5abc-dae7-4463-aa70-a5903c5b6231
+		summarizeBy: sum
+		sourceColumn: hora_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_criacao
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 02ea7a5a-b4bf-4817-988e-d221f56724b0
+		summarizeBy: none
+		sourceColumn: mes_criacao
+
+		variation Variation
+			isDefault
+			relationship: d776ef75-06e3-4922-a872-015ec8ffc82a
+			defaultHierarchy: LocalDateTable_47b8b2cb-15d0-4fb2-9fc2-7718434be2dd.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column origem_do_contato
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: e8bbb2f9-b5e4-41d2-9440-23ded722254d
+		summarizeBy: none
+		sourceColumn: origem_do_contato
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 204c2fdc-2feb-4a5c-93b4-25907930c65f
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: b140db79-f043-4a92-9c96-b949c2b085e2
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 9e1539b9-46e2-418f-8759-9398c5ffa285
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_matriculas
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: eb6c4683-0535-455f-a098-fcd2413df0de
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 27e6aa53-384e-40cf-9578-596ecc95c804
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 92dc7c8c-0cd1-4636-b32a-f916208382bb
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor_mensalidade
+		dataType: double
+		lineageTag: a4345f55-d410-4698-af22-8b4a1905207e
+		summarizeBy: sum
+		sourceColumn: valor_mensalidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column id_aluno
+		dataType: string
+		lineageTag: 82359f58-3854-4008-a281-83bd05552686
+		summarizeBy: none
+		sourceColumn: id_aluno
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_matricula
+		dataType: string
+		lineageTag: 4425d1f2-f924-43ed-aa96-fa976280a80d
+		summarizeBy: none
+		sourceColumn: numero_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: ea947ee4-36bd-419f-a761-67161775f984
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 20216fe6-80bc-45b9-984a-488fe8ffea2e
+		summarizeBy: none
+		sourceColumn: utm_campaign
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato_agrupada
+		dataType: string
+		lineageTag: 15aba150-2aff-49ae-8a7c-3ae5e9d21970
+		summarizeBy: none
+		sourceColumn: origem_do_contato_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_saida
+		dataType: string
+		lineageTag: 2b993abd-7084-4b5d-a31a-1b1b4f696cd3
+		summarizeBy: none
+		sourceColumn: status_saida
+
+		annotation SummarizationSetBy = Automatic
+
+	column complemento
+		dataType: string
+		lineageTag: 202d41e5-f5d3-407f-a1a0-ddc38d70dc81
+		summarizeBy: none
+		sourceColumn: complemento
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_grupo
+		dataType: string
+		lineageTag: 896d5869-3e39-4e06-883d-6ce7a247ca6b
+		summarizeBy: none
+		sourceColumn: mes_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_grupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 24fe0678-e298-493a-979e-808b99779a93
+		summarizeBy: sum
+		sourceColumn: ano_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_final
+		dataType: string
+		lineageTag: 3d41a85a-659d-46cf-8d30-788e57ae1b1d
+		summarizeBy: none
+		sourceColumn: grupo_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo
+		dataType: string
+		lineageTag: 5b7b32ce-03a4-44ed-bb8f-2e6a0ba441c0
+		summarizeBy: none
+		sourceColumn: grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_status_saida
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: dbe3f3ba-53f5-47b6-a61c-45cfcfa04728
+		summarizeBy: none
+		sourceColumn: data_status_saida
+
+		variation Variation
+			isDefault
+			relationship: 35feaa83-3096-408f-a5f4-04b32e30b2c9
+			defaultHierarchy: LocalDateTable_2d333da1-9e8f-4b43-9d4a-6de662a5cf70.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column id_curso
+		dataType: string
+		lineageTag: a56826e8-9b64-4775-bc16-de175743c4ef
+		summarizeBy: none
+		sourceColumn: id_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_contrato
+		dataType: string
+		lineageTag: a7821eb9-02d1-4c70-9169-ec82821d877e
+		summarizeBy: none
+		sourceColumn: status_contrato
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_final
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3274d8f2-26df-42bf-b014-c0ebf46f4504
+		summarizeBy: none
+		sourceColumn: data_final
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column hora_final
+		dataType: int64
+		formatString: 0
+		lineageTag: bae77c28-4951-4edb-a3c0-232717e7c0de
+		summarizeBy: none
+		sourceColumn: hora_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column usuario
+		dataType: string
+		lineageTag: cb8e8f22-cb11-4136-a2ca-bcaf2b2f53d4
+		summarizeBy: none
+		sourceColumn: usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cpf_usuario
+		dataType: string
+		lineageTag: 7f201910-d7b0-438d-9707-b62e6749e0c4
+		summarizeBy: none
+		sourceColumn: Cpf_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel_usuario_ajustado
+		dataType: string
+		lineageTag: 2451eb72-2cb4-44cc-8e69-c4bc2544aea4
+		summarizeBy: none
+		sourceColumn: nivel_usuario_ajustado
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel_curso
+		dataType: string
+		lineageTag: 9f790b6b-e05d-47e1-a0f0-94d49aaf57dd
+		summarizeBy: none
+		sourceColumn: nivel_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cpf_aluno
+		dataType: string
+		lineageTag: 79c2e096-2452-459d-b86a-f16319a1569b
+		summarizeBy: none
+		sourceColumn: Cpf_aluno
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_aluno
+		dataType: string
+		lineageTag: 07195082-f9aa-4e5b-a130-b93bbecf8a0a
+		summarizeBy: none
+		sourceColumn: email_aluno
+
+		annotation SummarizationSetBy = Automatic
+
+	column telefone_aluno
+		dataType: string
+		lineageTag: 2a7e2b6a-3408-4595-bb9e-1f420e7ecf10
+		summarizeBy: none
+		sourceColumn: telefone_aluno
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada_final
+		dataType: string
+		lineageTag: 79eeb4c1-add7-41fe-9a86-d2d3ac9dbecd
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column url
+		dataType: string
+		lineageTag: fea6521e-e59c-4bc3-af20-1ad6539c25fe
+		summarizeBy: none
+		sourceColumn: url
+
+		annotation SummarizationSetBy = Automatic
+
+	column motivo_da_saida
+		dataType: string
+		lineageTag: d1e09960-81e1-4388-bc90-d5cff92ea298
+		summarizeBy: none
+		sourceColumn: motivo_da_saida
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_pagamento
+		dataType: string
+		lineageTag: e8ca0213-a73a-4346-b786-5c04f6b3ac8a
+		summarizeBy: none
+		sourceColumn: tipo_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_pagamento
+		dataType: string
+		lineageTag: be3529a2-553f-4251-a45d-23507bb76d90
+		summarizeBy: none
+		sourceColumn: status_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column recorrencia
+		dataType: string
+		lineageTag: c3cc1fd2-f62c-41f5-875f-d53f60e269b9
+		summarizeBy: none
+		sourceColumn: recorrencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column doc_RG_CPF_CNH
+		dataType: string
+		lineageTag: 5c3a87c0-592e-4fd3-a129-a50d763a2a7e
+		summarizeBy: none
+		sourceColumn: doc_RG_CPF_CNH
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_documentacao_final
+		dataType: string
+		lineageTag: 57bcda81-2c23-46ed-a8b2-11c5ab246f91
+		summarizeBy: none
+		sourceColumn: status_documentacao_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column doc_escolaridade
+		dataType: string
+		lineageTag: f9152b4a-f9fa-4b82-b0bf-57aab076f45c
+		summarizeBy: none
+		sourceColumn: doc_escolaridade
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_documentacao
+		dataType: string
+		lineageTag: a93c5629-c987-43c8-a378-022daf3c086b
+		summarizeBy: none
+		sourceColumn: status_documentacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicidade_matricula
+		dataType: string
+		lineageTag: d335c470-0a55-4d96-ac78-41034385289b
+		summarizeBy: none
+		sourceColumn: duplicidade_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_do_contato_agrupada_final
+		dataType: string
+		lineageTag: ecc42fde-65a2-4818-aac9-522d16cbd2cf
+		summarizeBy: none
+		sourceColumn: origem_do_contato_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column venda_nok
+		dataType: int64
+		formatString: 0
+		lineageTag: aae2220f-3899-4f59-930b-66426fe425de
+		summarizeBy: sum
+		sourceColumn: venda_nok
+
+		annotation SummarizationSetBy = Automatic
+
+	column venda_ok
+		dataType: int64
+		formatString: 0
+		lineageTag: b8f107f1-7f4b-4e21-93cf-e79d5c9c0b15
+		summarizeBy: sum
+		sourceColumn: venda_ok
+
+		annotation SummarizationSetBy = Automatic
+
+	column parcelas
+		dataType: int64
+		formatString: 0
+		lineageTag: 7e8b6da1-c6d7-4bf3-b8d1-e8b58b4dc636
+		summarizeBy: sum
+		sourceColumn: parcelas
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_faturamento_medio
+		dataType: double
+		lineageTag: 6ea07b66-f8bd-488f-94ee-41494cf4509a
+		summarizeBy: sum
+		sourceColumn: total_faturamento_medio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venda_validas
+		dataType: int64
+		formatString: 0
+		lineageTag: 146df94a-5a01-43e1-ad3a-06f179c97608
+		summarizeBy: sum
+		sourceColumn: venda_validas
+
+		annotation SummarizationSetBy = Automatic
+
+	column cupom_extraido
+		dataType: string
+		lineageTag: b1ebb770-bf18-4c0c-8de8-ea00efb6cde4
+		summarizeBy: none
+		sourceColumn: cupom_extraido
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_cupom_pag
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3d3347e2-43d7-48f9-b87c-139aad4405ea
+		summarizeBy: none
+		sourceColumn: data_cupom_pag
+
+		variation Variation
+			isDefault
+			relationship: ced8ff66-dcda-49e0-acff-e1ac33b0fe94
+			defaultHierarchy: LocalDateTable_ff84b8d2-588a-4f39-b721-0280eab57e10.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column taxa_bruta
+		dataType: double
+		lineageTag: 25f87f32-63bc-41c7-8f66-b28af684a6b1
+		summarizeBy: sum
+		sourceColumn: taxa_bruta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column taxa_liquida
+		dataType: double
+		lineageTag: bdb053a6-4de6-4b53-9955-60dc6ede00a5
+		summarizeBy: sum
+		sourceColumn: taxa_liquida
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_taxa_pag
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b6b2a111-70bf-4e96-8de5-1a989bb2cc94
+		summarizeBy: none
+		sourceColumn: data_taxa_pag
+
+		variation Variation
+			isDefault
+			relationship: 9fd6ecaa-5a17-4db1-87ed-4fecfa3104cb
+			defaultHierarchy: LocalDateTable_08bdf049-ae9e-4bf0-be1b-df19ed88fffb.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column primeira_origem
+		dataType: string
+		lineageTag: cccd3d85-9a02-4c39-8e13-e3e8eae8ab68
+		summarizeBy: none
+		sourceColumn: primeira_origem
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faturamento_pagamento_RVV_15_porcento
+		dataType: double
+		lineageTag: 48b671e3-5137-4a76-a3cd-2ddd09329e44
+		summarizeBy: sum
+		sourceColumn: Faturamento_pagamento_RVV_15_porcento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Faturamento_pagamento_RVV_1_porcento
+		dataType: double
+		lineageTag: a00854a0-90ec-461a-9709-885828cf8cbf
+		summarizeBy: sum
+		sourceColumn: Faturamento_pagamento_RVV_1_porcento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column doc_certificado
+		dataType: string
+		lineageTag: 6f3e9ff2-7bc1-44b4-aa14-8763483b1fe7
+		summarizeBy: none
+		sourceColumn: doc_certificado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Faturamento_pagamento_RVV_3_porcento
+		dataType: double
+		lineageTag: 1d94e304-d4c5-4598-90a3-3d426f615181
+		summarizeBy: sum
+		sourceColumn: Faturamento_pagamento_RVV_3_porcento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column perc_desc_taxa
+		dataType: double
+		lineageTag: 5fd69d31-11ac-40c2-8dd3-828a3e5bde6f
+		summarizeBy: sum
+		sourceColumn: perc_desc_taxa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column perc_mensal_taxa_liquida
+		dataType: double
+		lineageTag: 41b6844b-de6f-4780-a580-8a02ea303d31
+		summarizeBy: sum
+		sourceColumn: perc_mensal_taxa_liquida
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column status_perc_mensal_taxa_liquida
+		dataType: string
+		lineageTag: e3333b76-752d-48ce-b269-d4bbb6828d20
+		summarizeBy: none
+		sourceColumn: status_perc_mensal_taxa_liquida
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_perc_desc_taxa
+		dataType: string
+		lineageTag: 1acb8989-c297-4fe8-904d-9a53950dfe9e
+		summarizeBy: none
+		sourceColumn: status_perc_desc_taxa
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_faturamento
+		dataType: double
+		lineageTag: 0a9c2e69-30b5-4621-ba65-d8f281bc7965
+		summarizeBy: sum
+		sourceColumn: total_faturamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column status_venda_paga
+		dataType: string
+		lineageTag: 0cd00902-bd78-4a22-8471-7c3414788c2d
+		summarizeBy: none
+		sourceColumn: status_venda_paga
+
+		annotation SummarizationSetBy = Automatic
+
+	column venda_cancelada
+		dataType: int64
+		formatString: 0
+		lineageTag: a16490b8-3a61-4da4-9aee-5736fd67a717
+		summarizeBy: sum
+		sourceColumn: venda_cancelada
+
+		annotation SummarizationSetBy = Automatic
+
+	column venda_pendente
+		dataType: int64
+		formatString: 0
+		lineageTag: 70bbfe17-0435-4635-a79c-2b1f271316fb
+		summarizeBy: sum
+		sourceColumn: venda_pendente
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_final_completa
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 3d50ae4e-1535-4e69-b151-a7f1cd658ce3
+		summarizeBy: none
+		sourceColumn: hora_final_completa
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column tipo_pagamento_final
+		dataType: string
+		lineageTag: 7fe1f2e5-8c97-4c51-8212-6ea083d7fedc
+		summarizeBy: none
+		sourceColumn: tipo_pagamento_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column duplicidades_numero_matricula
+		dataType: int64
+		formatString: 0
+		lineageTag: c947a584-f3e5-4328-9169-57f9bb00d153
+		summarizeBy: sum
+		sourceColumn: duplicidades_numero_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_inadimplencia
+		dataType: string
+		lineageTag: 6be36b56-aaf1-4100-9936-abc2da34f277
+		summarizeBy: none
+		sourceColumn: status_inadimplencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_matriculas_sem_ocorrencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 4cb361c2-a753-4c45-997b-0120d336eac0
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas_sem_ocorrencia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_MATRICULAS = m
+		mode: import
+		source =
+				//let
+				    //Fonte = GoogleBigQuery.Database(),
+				    //plancomercial = Fonte{[Name="plancomercial"]}[Data],
+				    //PERSONE_ETL_Schema = plancomercial{[Name="PERSONE_ETL",Kind="Schema"]}[Data],
+				    //vw_ft_inscricoes_final_View = PERSONE_ETL_Schema{[Name="vw_ft_inscricoes_consolidada",Kind="View"]}[Data],
+				
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.tb_ft_inscricoes_final", null, [EnableFolding=true]),
+				
+				
+				    #"Tipo Alterado1" = Table.TransformColumnTypes(Fonte,{{"id_aluno", Int64.Type}, {"numero_matricula", Int64.Type}, {"mes_fechamento", type date}, {"data_criacao", type date}, {"mes_criacao", type date}, {"nome", type text}, {"unidade", type text}, {"curso", type text}, {"turno", type text}, {"nome_usuario", type text}, {"email_usuario", type text}, {"utm_campaign", type text}, {"utm_campaign_agrupada", type text}, {"origem_matricula", type text}, {"origem_do_contato", type text}, {"origem_do_contato_agrupada", type text}, {"tipo_lead", type text}, {"qtde_matriculas", Int64.Type}, {"hora_final_completa", type time}}),
+				    #"Tipo Alterado com Localidade1" = Table.TransformColumnTypes(#"Tipo Alterado1", {{"valor_mensalidade", type number}}, "en-US"),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade1", {{"valor_mensalidade", type number}}, "en-US"),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Tipo Alterado com Localidade",{{"hora_criacao", Int64.Type}, {"id_aluno", type text}, {"numero_matricula", type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"status_contrato", Text.Proper, type text}, {"origem_matricula", Text.Proper, type text}, {"grupo", Text.Proper, type text}, {"complemento", Text.Proper, type text}, {"mes_grupo", Text.Proper, type text}, {"grupo_final", Text.Proper, type text}, {"usuario", Text.Proper, type text}, {"nome_usuario", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"Cpf_usuario", Text.Proper, type text}, {"nivel_usuario_ajustado", Text.Proper, type text}, {"nivel_curso", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}, {"status_saida", Text.Proper, type text}, {"motivo_da_saida", Text.Proper, type text}, {"nome", Text.Proper, type text}, {"Cpf_aluno", Text.Proper, type text}, {"email_aluno", Text.Proper, type text}, {"telefone_aluno", Text.Proper, type text}, {"origem_do_contato", Text.Proper, type text}, {"origem_do_contato_agrupada", Text.Proper, type text}, {"origem_do_contato_agrupada_final", Text.Proper, type text}, {"utm_campaign", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"utm_campaign_agrupada_final", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}, {"url", Text.Proper, type text}, {"doc_RG_CPF_CNH", Text.Proper, type text}, {"doc_escolaridade", Text.Proper, type text}, {"status_documentacao", Text.Proper, type text}, {"status_documentacao_final", Text.Proper, type text}, {"duplicidade_matricula", Text.Proper, type text}, {"cupom_extraido", Text.Proper, type text}, {"recorrencia", Text.Proper, type text}, {"tipo_pagamento", Text.Proper, type text}, {"status_pagamento", Text.Proper, type text}, {"primeira_origem", Text.Proper, type text}, {"doc_certificado", Text.Proper, type text}, {"status_venda_paga", Text.Proper, type text}, {"status_inadimplencia", Text.Proper, type text}}),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"hora_final", Int64.Type}})
+				in
+				    #"Tipo Alterado2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

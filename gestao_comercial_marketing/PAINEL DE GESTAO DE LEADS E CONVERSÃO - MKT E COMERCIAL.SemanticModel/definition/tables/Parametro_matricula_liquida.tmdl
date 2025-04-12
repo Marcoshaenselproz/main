@@ -1,0 +1,28 @@
+table Parametro_matricula_liquida
+	lineageTag: 1fdba58b-7380-456c-b3ca-8bd36df269f2
+
+	measure 'Valor Parâmetro 2' = SELECTEDVALUE('Parametro_matricula_liquida'[Parâmetro],[Total Mat Geral])
+		lineageTag: c0f458db-39dc-4fa4-821c-22bf50838197
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Parâmetro
+		dataType: double
+		formatString: #,0
+		lineageTag: 97e3fd3e-ba41-43f1-99bf-3bdbdb94a7cb
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parametro_matricula_liquida = calculated
+		mode: import
+		source = GENERATESERIES(0, 10000, 10)
+
+	annotation PBI_Id = 9176b51e5db740099ab6e44d84b8cbc5
+

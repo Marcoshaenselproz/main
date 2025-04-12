@@ -1,0 +1,190 @@
+table 'Medidas Pedrino'
+	lineageTag: 738167ff-eafc-4f26-900b-ffa8e7d4cb98
+
+	measure 'Total Mat Liquida Ativa' = SUM(VW_MATRICULAS_LIQUIDAS[qtde_matriculas])
+		formatString: #,0
+		lineageTag: 247c09f7-5ea2-4b20-8c57-4c6e99db0240
+
+	measure 'Conversão Geral Liquida Ativa' =
+			
+			VAR leads = CALCULATE([Total Leads],dim_unidade_historica[ultimo_status]="Ativa")
+			RETURN
+			DIVIDE([Total Mat Liquida Ativa],leads)
+		formatString: 0%;-0%;0%
+		lineageTag: 86ffae8e-9045-4a31-8a0b-d8bcfab9e027
+
+	measure 'Total Leads Ativas' =
+			
+			
+			VAR leads = CALCULATE([Total Leads],dim_unidade_historica[ultimo_status]="Ativa")
+			RETURN
+			leads
+		formatString: #,0
+		lineageTag: 61c49156-fddc-4d12-bea8-3870d72669f6
+
+	measure 'Total custos Consolidados Ativas' =
+			
+			
+			VAR custo = CALCULATE([Total Custos Consolidado],dim_unidade_historica[ultimo_status]="Ativa")
+			RETURN
+			custo
+		formatString: #,0
+		lineageTag: eb0e3c2b-0e8e-476a-9b7a-942c85efb32f
+
+	measure 'Total CAC FULL Ativas' =
+			
+			VAR cac = DIVIDE([Total custos Consolidados Ativas],[Total Mat Liquida Ativa])
+			RETURN
+			cac
+		formatString: #,0
+		lineageTag: 5766795f-e7b5-44f5-ae20-a4cd46604881
+
+	measure 'PPC Mat Ativas' = DIVIDE([Total Mat Liquida Ativa],[Total Consultores Ativos])
+		formatString: #,0.0
+		lineageTag: 3ee2f2b6-f037-4ed4-8169-e1f5e6926a04
+
+	measure 'PPC Mat Ano Ativa' = ```
+			
+			VAR AnoSelecionado = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR Hoje = TODAY()
+			VAR AnoAtual = YEAR(Hoje)
+			VAR DiaDoAno = DATEDIFF(DATE(AnoAtual, 1, 1), Hoje, DAY) -- Dias desde 1º de janeiro até hoje
+			VAR MesesPassados = DiaDoAno / 30 -- Aproximação da quantidade de meses decorridos
+			
+			VAR Divisor = 
+			    IF(AnoSelecionado = AnoAtual, MesesPassados, 12)
+			
+			VAR TotalMatTrim = 
+			    IF(
+			        NOT ISBLANK(AnoSelecionado),
+			        SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = AnoSelecionado), [Total Mat Liquida Ativa]) / Divisor
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    IF(
+			        NOT ISBLANK(AnoSelecionado),
+			        AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = AnoSelecionado), [Total Consultores Ativos])
+			    )
+			
+			RETURN
+			DIVIDE(TotalMatTrim, ConsultoresAtivosTrim, 0)
+			
+			```
+		formatString: #,0.0
+		lineageTag: a7c3ee51-06ad-47cf-92cd-890a911882fa
+
+	measure 'PPC Mat Trimestre Ativa' = ```
+			
+			VAR AnoSelecionado = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR TrimestreSelecionado = SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM])
+			VAR Hoje = TODAY()
+			VAR AnoAtual = YEAR(Hoje)
+			
+			-- Calcula o primeiro dia do trimestre selecionado
+			VAR InicioTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 1, 1),
+			        "Q2", DATE(AnoSelecionado, 4, 1),
+			        "Q3", DATE(AnoSelecionado, 7, 1),
+			        "Q4", DATE(AnoSelecionado, 10, 1)
+			    )
+			
+			-- Calcula o último dia do trimestre (ou hoje, caso seja o trimestre atual do ano atual)
+			VAR FimTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 3, 31),
+			        "Q2", DATE(AnoSelecionado, 6, 30),
+			        "Q3", DATE(AnoSelecionado, 9, 30),
+			        "Q4", DATE(AnoSelecionado, 12, 31)
+			    )
+			
+			-- Se for o ano atual e um trimestre em andamento, usa a data de hoje como fim
+			VAR DiasTrimestre = 
+			    IF(
+			        AnoSelecionado = AnoAtual && Hoje < FimTrimestre,
+			        DATEDIFF(InicioTrimestre, Hoje, DAY), 
+			        DATEDIFF(InicioTrimestre, FimTrimestre, DAY) + 1
+			    )
+			
+			-- Conversão para fração de meses (considerando 30 dias por mês)
+			VAR MesesAjustados = DiasTrimestre / 30
+			
+			-- Define o divisor correto
+			VAR Divisor = IF(AnoSelecionado = AnoAtual, MesesAjustados, 3)
+			
+			VAR TotalMatTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Mat Liquida Ativa]) / Divisor
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Consultores Ativos])
+			    )
+			
+			RETURN
+			DIVIDE(TotalMatTrim, ConsultoresAtivosTrim, 0)
+			
+			```
+		formatString: #,0.0
+		lineageTag: a238e496-f184-497a-9e02-fbfb94d2d0c6
+
+	measure 'Total Mat Liquida Ativas Y-1' = CALCULATE([Total Mat Liquida Ativa],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		formatString: #,0
+		lineageTag: dd21a7b7-b342-45c8-87e4-76925bab9cfc
+
+	measure 'PPC Mat Trimestre Ativa Y-1' =
+			
+			CALCULATE([PPC Mat Trimestre Ativa],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		formatString: #,0.0
+		lineageTag: 7b1ed2af-edf1-42d4-acde-3c7b1b36fb90
+
+	measure 'PPC Mat Trimestre Ativa YoY' = DIVIDE([PPC Mat Trimestre Ativa],[PPC Mat Trimestre Ativa Y-1])-1
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: ac6cf67a-4614-4a7c-bc78-79fc79d2f4be
+
+	measure 'Total Cac Full Ativas Y-1' =
+			
+			
+			var cac = [Total CAC FULL Ativas]
+			var cacy = CALCULATE([Total Cac Full],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+		lineageTag: 8fc9d64a-467f-42c5-9de1-6786fa4107fe
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total CAC Full Ativas YoY' =
+			
+			VAR cac = [Total CAC FULL Ativas]
+			var cacy =
+			 SWITCH(TRUE(),
+			 ISBLANK([Total Cac Full Ativas Y-1]),[Total Cac Full Ativas Y-1],DIVIDE([Total CAC FULL Ativas], [Total Cac Full Ativas Y-1],0)-1)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e83fe163-0de3-452d-b9c9-04edddf213e9
+
+	column Column
+		formatString: 0
+		lineageTag: e30999b1-5f2f-40b3-83aa-c061e2392c49
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Medidas Pedrino' = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = a12dc0de52d04e28b9a4f3e77578174c
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

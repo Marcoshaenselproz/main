@@ -1,0 +1,183 @@
+table Tabela_Evasao_Pedrino
+	lineageTag: da216eaa-5b73-444d-92bc-116f20b3a577
+
+	column 'Inscrições / Vendas'
+		dataType: int64
+		formatString: #,0
+		lineageTag: a518c9bd-9319-4f0e-a689-9c48430693d5
+		summarizeBy: none
+		sourceColumn: Inscrições / Vendas
+
+		annotation SummarizationSetBy = User
+
+	column Matriculas
+		dataType: int64
+		formatString: #,0
+		lineageTag: 4e08e1b9-ad79-405d-939d-9f29571cf42f
+		summarizeBy: none
+		sourceColumn: Matriculas
+
+		annotation SummarizationSetBy = User
+
+	column '% matriculas enturmadas'
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 454ba610-c4a4-40ee-84f2-68d6ab8ca257
+		summarizeBy: sum
+		sourceColumn: % matriculas enturmadas
+
+		annotation SummarizationSetBy = Automatic
+
+	column Enturmado
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1874a4bc-8184-43a9-8608-86dee98b168c
+		summarizeBy: sum
+		sourceColumn: Enturmado
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enturmado no mês_inscrito (+)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 8dde8795-500f-4824-ab18-3abd7273295f
+		summarizeBy: sum
+		sourceColumn: Enturmado no mês_inscrito (+)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Saldo_mês_anterior (+)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 39af670f-7266-43f4-bd63-f344f947d592
+		summarizeBy: sum
+		sourceColumn: Saldo_mês_anterior (+)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Enturmados em meses anteriores (+)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7698dcdc-97fd-43c0-949c-70b3f13fde09
+		summarizeBy: sum
+		sourceColumn: Enturmados em meses anteriores (+)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total enturmados (=)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 4f6ebccb-8bb3-412d-bfb5-285a9f6b795d
+		summarizeBy: sum
+		sourceColumn: Total enturmados (=)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Evasão (-)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: c79a1ff5-c702-4429-b4f0-e992102cb8d6
+		summarizeBy: sum
+		sourceColumn: Evasão (-)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Saídas_comunicada (-)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3a38980a-b2eb-45a1-923e-625c74729bda
+		summarizeBy: sum
+		sourceColumn: Saídas_comunicada (-)
+
+		annotation SummarizationSetBy = Automatic
+
+	column %evasão
+		dataType: double
+		formatString: 0%;-0%;0%
+		lineageTag: 111329f7-0a55-451e-9fad-5233662e3c7a
+		summarizeBy: sum
+		sourceColumn: %evasão
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Formados (-)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: a0f8b646-e0e9-4928-b1a5-bc63a7074c43
+		summarizeBy: sum
+		sourceColumn: Formados (-)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Saldo final (=)'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 6dc3196e-c522-4d1a-a384-0d2f85ac429c
+		summarizeBy: sum
+		sourceColumn: Saldo final (=)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total de boletos ativos'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 9a255f1a-2788-4ea4-806a-1734c15d4bac
+		summarizeBy: sum
+		sourceColumn: Total de boletos ativos
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ticket médio '
+		dataType: double
+		formatString: #,0
+		lineageTag: ffac553d-74a9-48d9-b7c0-4148edf49f18
+		summarizeBy: sum
+		sourceColumn: "Ticket médio "
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bba1141f-52a3-4dc1-bc89-a368fab8bc5f
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Saldo_anos_anterior
+		dataType: double
+		lineageTag: 8829f748-606f-452e-b158-023a0a2710c7
+		summarizeBy: sum
+		sourceColumn: Saldo_anos_anterior
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Tabela_Evasao_Pedrino = m
+		mode: import
+		source =
+				let
+				    Fonte = Excel.Workbook(Web.Contents("https://prozedu-my.sharepoint.com/personal/sabrina_favorin_prozeducacao_com_br/Documents/Evas%C3%A3o_Pedrino.xlsx"), null, true),
+				    Painel_final_Sheet = Fonte{[Item="Painel_final",Kind="Sheet"]}[Data],
+				    #"Linhas Filtradas1" = Table.SelectRows(Painel_final_Sheet, each [Column1] <> null and [Column1] <> ""),
+				    #"Tabela Transposta" = Table.Transpose(#"Linhas Filtradas1"),
+				    #"Outras Colunas Removidas1" = Table.SelectColumns(#"Tabela Transposta",{"Column2", "Column4", "Column5", "Column6", "Column7", "Column8", "Column9", "Column10", "Column11", "Column12", "Column13", "Column14", "Column15", "Column16", "Column17", "Column18", "Column19", "Column20"}),
+				    #"Cabeçalhos Promovidos" = Table.PromoteHeaders(#"Outras Colunas Removidas1", [PromoteAllScalars=true]),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Cabeçalhos Promovidos", each ([Mês] <> null) and ([#"Inscrições / Vendas"] <> null)),
+				    #"Preenchido Abaixo" = Table.FillDown(#"Linhas Filtradas",{"Ano"}),
+				    #"Personalização Adicionada" = Table.AddColumn(#"Preenchido Abaixo", "Data", each Text.From([Mês]) & "/" & Text.From([Ano])),
+				    #"Tipo Alterado2" = Table.TransformColumnTypes(#"Personalização Adicionada",{{"Data", type date}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Tipo Alterado2",{"Inscrições / Vendas", "Matriculas", "% matriculas enturmadas", "Enturmado", "Enturmado no mês_inscrito (+)", "Saldo_mês_anterior (+)", "Enturmados em meses anteriores (+)", "Total enturmados (=)", "Evasão (-)", "Saídas_comunicada (-)", "%evasão", "Formados (-)", "Saldo final (=)", "Total de boletos ativos", "Ticket médio ", "Saldo_base", "Data"}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Outras Colunas Removidas",{{"Inscrições / Vendas", Int64.Type}, {"Matriculas", Int64.Type}, {"% matriculas enturmadas", type number}, {"Enturmado", Int64.Type}, {"Enturmado no mês_inscrito (+)", Int64.Type}, {"Saldo_mês_anterior (+)", Int64.Type}, {"Enturmados em meses anteriores (+)", Int64.Type}, {"Total enturmados (=)", Int64.Type}, {"Evasão (-)", Int64.Type}, {"Saídas_comunicada (-)", Int64.Type}, {"%evasão", type number}, {"Formados (-)", Int64.Type}, {"Saldo final (=)", Int64.Type}, {"Total de boletos ativos", Int64.Type}, {"Ticket médio ", type number}, {"Saldo_base", type number}, {"Data", type date}}),
+				    #"Colunas Renomeadas" = Table.RenameColumns(#"Tipo Alterado",{{"Saldo_base", "Saldo_anos_anterior"}})
+				in
+				    #"Colunas Renomeadas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

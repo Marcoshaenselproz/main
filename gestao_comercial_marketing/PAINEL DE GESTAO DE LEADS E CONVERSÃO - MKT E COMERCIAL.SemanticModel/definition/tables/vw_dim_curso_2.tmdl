@@ -1,0 +1,99 @@
+table vw_dim_curso_2
+	lineageTag: 1c0cc206-c161-4789-b3bf-65dfa6579fc3
+
+	column data_curso
+		dataType: dateTime
+		formatString: mmm
+		lineageTag: bcbb565f-4d77-47ea-ad0c-6f642e8a8ca8
+		summarizeBy: none
+		sourceColumn: data_curso
+
+		variation Variation
+			isDefault
+			relationship: 640c9bf6-1fd0-4fd7-bf75-cfc7f0b36ddc
+			defaultHierarchy: LocalDateTable_aab0a798-ab41-4a9f-8c23-e6677817e21f.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column ano_curso
+		dataType: int64
+		formatString: 0
+		lineageTag: 938cf313-0724-4c01-bf92-3fe4972a1da9
+		summarizeBy: none
+		sourceColumn: ano_curso
+
+		annotation SummarizationSetBy = User
+
+	column de_curso
+		dataType: string
+		lineageTag: d892b124-8371-47ca-b001-b54b0f46989c
+		summarizeBy: none
+		sourceColumn: de_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: f6d8d380-4cda-4e51-9a41-978441206814
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_curso
+		dataType: string
+		lineageTag: 2716b472-2c62-4969-95ba-eff5fe3c48ef
+		summarizeBy: none
+		sourceColumn: cluster_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso_ofertado
+		dataType: string
+		lineageTag: ee62fd15-3533-48ee-afa1-aef67f377e70
+		summarizeBy: none
+		sourceColumn: curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel_curso
+		dataType: string
+		lineageTag: ddc3a420-32c7-4100-8ec3-65bcb401e009
+		summarizeBy: none
+		sourceColumn: nivel_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultimo_curso_ofertado
+		dataType: string
+		lineageTag: d035822d-763a-4410-bca6-173bbaab5520
+		summarizeBy: none
+		sourceColumn: ultimo_curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla_curso
+		dataType: string
+		lineageTag: 174baff5-ad71-420b-b1f6-3e3fd4653ea5
+		summarizeBy: none
+		sourceColumn: sigla_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_dim_curso_2 = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = vw_dim_curso
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

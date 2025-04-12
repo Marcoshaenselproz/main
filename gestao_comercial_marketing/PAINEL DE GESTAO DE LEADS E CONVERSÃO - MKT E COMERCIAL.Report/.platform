@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "PAINEL DE GESTAO DE LEADS E CONVERSÃO - MKT E COMERCIAL"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "861c1223-0a1b-424b-ac28-a4933b250716"
+  }
+}

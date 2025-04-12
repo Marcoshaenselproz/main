@@ -1,0 +1,167 @@
+table Base_meio_pagamento
+	lineageTag: 0dcf97e5-cfe1-424b-8d14-53afe4001dc9
+
+	measure 'Medida 7'
+		lineageTag: 5378f5d9-80c2-40b9-8122-ccb014eb7b36
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'PPC Mat Trimestre 2' = ```
+			
+			VAR AnoSelecionado = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR TrimestreSelecionado = SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM])
+			VAR Hoje = TODAY()
+			VAR AnoAtual = YEAR(Hoje)
+			
+			-- Calcula o primeiro dia do trimestre selecionado
+			VAR InicioTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 1, 1),
+			        "Q2", DATE(AnoSelecionado, 4, 1),
+			        "Q3", DATE(AnoSelecionado, 7, 1),
+			        "Q4", DATE(AnoSelecionado, 10, 1)
+			    )
+			
+			-- Calcula o último dia do trimestre (ou hoje, caso seja o trimestre atual do ano atual)
+			VAR FimTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 3, 31),
+			        "Q2", DATE(AnoSelecionado, 6, 30),
+			        "Q3", DATE(AnoSelecionado, 9, 30),
+			        "Q4", DATE(AnoSelecionado, 12, 31)
+			    )
+			
+			-- Se for o ano atual e um trimestre em andamento, usa a data de hoje como fim
+			VAR DiasTrimestre = 
+			    IF(
+			        AnoSelecionado = AnoAtual && Hoje < FimTrimestre,
+			        DATEDIFF(InicioTrimestre, Hoje, DAY), 
+			        DATEDIFF(InicioTrimestre, FimTrimestre, DAY) + 1
+			    )
+			
+			-- Conversão para fração de meses (considerando 30 dias por mês)
+			VAR MesesAjustados = DiasTrimestre / 30
+			
+			-- Define o divisor correto
+			VAR Divisor = IF(AnoSelecionado = AnoAtual, MesesAjustados, 3)
+			
+			VAR TotalMatTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Mat Geral]) / Divisor
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Consultores Ativos])
+			    )
+			
+			RETURN
+			DIVIDE(TotalMatTrim, ConsultoresAtivosTrim, 0)
+			
+			```
+		lineageTag: 0bab71b6-63e6-44bf-a206-7adca7bf4061
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column unidade
+		dataType: string
+		lineageTag: 1eb7bec5-e441-4d8e-aa8f-ba7faa83cd47
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: b28e4f68-ce88-4c12-b4c5-5b85d2f8d3c5
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_pagamento
+		dataType: string
+		lineageTag: 9ef63924-3812-4bff-a5fa-cf90b7849f21
+		summarizeBy: none
+		sourceColumn: tipo_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_pagamento
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3da947f4-252b-4499-ba43-61d6c15ba623
+		summarizeBy: none
+		sourceColumn: mes_pagamento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column valor_pago
+		dataType: double
+		lineageTag: ba8d8017-9a36-4973-ad78-f453a5d4a716
+		summarizeBy: sum
+		sourceColumn: valor_pago
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column status
+		dataType: string
+		lineageTag: 43d88683-4f30-404b-968c-a91205a72c43
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_installment
+		dataType: string
+		lineageTag: e0c3db3e-9a74-457a-9a92-c767e10d6242
+		summarizeBy: none
+		sourceColumn: is_installment
+
+		annotation SummarizationSetBy = Automatic
+
+	column enrollment_fee
+		dataType: string
+		lineageTag: a4d98f4c-e4ba-4538-bfa5-2d4b547783f5
+		summarizeBy: none
+		sourceColumn: enrollment_fee
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: 7d9b8d45-faa6-4b42-9a1c-05bea2fd7bc0
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_pagamento_final
+		dataType: string
+		lineageTag: 2df00c34-695d-44ff-be9a-cac0140192b4
+		summarizeBy: none
+		sourceColumn: tipo_pagamento_final
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Base_meio_pagamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "select #(lf)branch_name as unidade,#(lf)course_name as curso,#(lf)shift_name as turno,#(lf)tipo_baixa_correto as tipo_pagamento,#(lf)tipo_baixa_correto_final as tipo_pagamento_final,#(lf)--payment_date as data_pagamento,#(lf)--payment_status,#(lf)date_trunc(payment_date,month) as mes_pagamento,#(lf)status,#(lf)is_installment,#(lf)enrollment_fee,#(lf)sum(payment_value) as valor_pago#(lf)#(lf)from plancomercial.PERSONE_ETL.ft_meios_pagamentos#(lf)#(lf)group by 1,2,3,4,5,6,7,8,9", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"tipo_pagamento", Text.Proper, type text}, {"status", Text.Proper, type text}, {"is_installment", Text.Proper, type text}, {"enrollment_fee", Text.Proper, type text}, {"tipo_pagamento_final", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

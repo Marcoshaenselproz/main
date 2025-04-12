@@ -1,0 +1,26 @@
+table Parâmetro_venda_rvv
+	lineageTag: 2b464385-beae-4f82-a55a-2d1919aff497
+
+	measure 'Valor Parâmetro_venda_rvv' = SELECTEDVALUE('Parâmetro_venda_rvv'[Parâmetro_venda_rvv])
+		formatString: 0
+		lineageTag: 38597149-1a40-479b-b77f-29867769ffc0
+
+	column Parâmetro_venda_rvv
+		formatString: 0
+		lineageTag: b76ac8de-9f4c-4059-b3f8-5731a876fb53
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_venda_rvv = calculated
+		mode: import
+		source = GENERATESERIES(0, 200, 1)
+
+	annotation PBI_Id = 15b8b3747d9e4c77a6b1fff262191c3d
+

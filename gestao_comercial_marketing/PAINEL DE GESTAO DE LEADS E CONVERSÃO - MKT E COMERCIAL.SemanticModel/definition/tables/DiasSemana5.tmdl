@@ -1,0 +1,20 @@
+table DiasSemana5
+	lineageTag: 57fd778d-4098-4d31-ba05-990ab4c3f72d
+
+	column Value
+		formatString: 0
+		lineageTag: 552194cd-defd-4cd1-b870-87b26dcf42ef
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DiasSemana5 = calculated
+		mode: import
+		source =
+				
+				GENERATESERIES(1, 31, 1)
+
+	annotation PBI_Id = 48f9aede12f549a18875115674dc2466
+

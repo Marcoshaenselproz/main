@@ -1,0 +1,25 @@
+table DIM_TIPO_PARCELA
+	lineageTag: 346e0032-ea22-42e9-aaa8-f658a8176ce4
+
+	column is_installment
+		dataType: string
+		lineageTag: 3bbe1851-3bff-40e8-9c4a-1c2996a6095d
+		summarizeBy: none
+		sourceColumn: is_installment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TIPO_PARCELA = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8k3NK07MyUxJTElVitWJVnLMK0lNzixITE7MV4qNBQA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [is_installment = _t]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"is_installment", type text}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

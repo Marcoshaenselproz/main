@@ -1,0 +1,118 @@
+table DIM_HORA
+	lineageTag: 49bf59c6-e4d2-4290-824f-744d14739ca5
+
+	column Hora
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 515ac72e-13e9-4d6e-901a-44e4880c6840
+		summarizeBy: none
+		sourceColumn: Hora
+		sortByColumn: 'Cod Hora'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Cod Hora'
+		dataType: int64
+		formatString: 0
+		lineageTag: dfb13073-e655-4e10-8f40-3245418d068f
+		summarizeBy: none
+		sourceColumn: Cod Hora
+		sortByColumn: Classificador
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Desc Hora'
+		dataType: string
+		lineageTag: cf9a335d-8819-418a-80f4-708ba5b468e1
+		summarizeBy: none
+		sourceColumn: Desc Hora
+		sortByColumn: 'Cod Hora'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Período
+		dataType: string
+		lineageTag: b3add714-10c0-4dfa-aeff-523bffdd44ec
+		summarizeBy: none
+		sourceColumn: Período
+		sortByColumn: Classificador
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classificador
+		dataType: int64
+		formatString: 0
+		lineageTag: 92322b05-072d-44b7-98aa-37bf409a0596
+		summarizeBy: none
+		sourceColumn: Classificador
+
+		annotation SummarizationSetBy = User
+
+	column tipo_hora
+		dataType: string
+		lineageTag: 392c10c0-1b67-486a-bd7c-dd2d99eb8706
+		summarizeBy: none
+		sourceColumn: tipo_hora
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_acum
+		dataType: string
+		lineageTag: e32310f7-b6c1-4f25-b8f6-595c57f5ed86
+		summarizeBy: none
+		sourceColumn: hora_acum
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_acum_1
+		dataType: string
+		lineageTag: 17a025cf-129f-4591-9b80-80132b77dca9
+		summarizeBy: none
+		sourceColumn: hora_acum_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_atual_lead
+		dataType: int64
+		formatString: 0
+		lineageTag: eea31376-b56c-46f1-bc05-41bd7891a7f4
+		summarizeBy: sum
+		sourceColumn: hora_atual_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora_atual_venda
+		dataType: int64
+		formatString: 0
+		lineageTag: 1961b307-d3b3-4cb9-95cc-20fc7c89782c
+		summarizeBy: sum
+		sourceColumn: hora_atual_venda
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_HORA = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_hora", null, [EnableFolding=true]),
+				    #"Colunas Renomeadas" = Table.RenameColumns(Fonte,{{"hora", "Hora"}, {"cod_hora", "Cod Hora"}, {"desc_hora", "Desc Hora"}, {"periodo", "Período"}, {"classificador", "Classificador"}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Colunas Renomeadas",{{"Desc Hora", Text.Proper, type text}, {"Período", Text.Proper, type text}, {"tipo_hora", Text.Proper, type text}, {"hora_acum", Text.Proper, type text}, {"hora_acum_1", Text.Proper, type text}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"hora_atual_lead", Int64.Type}, {"hora_atual_venda", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

@@ -1,0 +1,72 @@
+table base_matricula_historica_count
+	lineageTag: c1f25736-dfc1-4c7f-ba22-115bc278bc5f
+
+	column data_final
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c12a7bf0-d694-48ce-b169-581091165c68
+		summarizeBy: none
+		sourceColumn: data_final
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: 5bd12914-1e98-4f79-8f71-18db15af5f5e
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: 7c190250-87f5-4c3c-92b3-d989fa6041eb
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_matriculas
+		dataType: int64
+		formatString: 0
+		lineageTag: 46b84b1e-c669-4f97-9d27-58f873f7e47b
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_usuario
+		dataType: string
+		lineageTag: b0bfb391-65d0-4477-a406-71980b2a122b
+		summarizeBy: none
+		sourceColumn: email_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 780e3df8-3708-407e-811f-18d4c514bb7c
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	partition base_matricula_historica_count = m
+		mode: import
+		source =
+				//let
+				  //  Fonte = GoogleBigQuery.Database(),
+				    //plancomercial = Fonte{[Name="plancomercial"]}[Data],
+				    ///dados_historico_Schema = plancomercial{[Name="dados_historico",Kind="Schema"]}[Data],
+				let
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT #(lf)  PARSE_DATE('%d/%m/%Y', mes_fechamento) AS data_final,#(lf)  unidade,#(lf)  curso,#(lf)email_usuario,#(lf)tipo_lead,#(lf)  SUM(CAST(qtde_matriculas AS INT64)) AS qtde_matriculas#(lf)FROM plancomercial.dados_historico.base_matricula_historica_total#(lf)GROUP BY 1, 2, 3,4, 5", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,40 @@
+table base_matricula_dia_Y-1
+	lineageTag: 6b523df3-5076-4e61-ac22-26b97e6b8035
+
+	column data_final
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d6b79eb1-4a90-4750-906b-ffe4b9b6f0ad
+		summarizeBy: none
+		sourceColumn: data_final
+
+		variation Variation
+			isDefault
+			relationship: 9773eb15-ee62-4cae-a690-28f428e9622f
+			defaultHierarchy: LocalDateTable_e113f0d2-a35a-4da7-a69d-ed6ebf1c7a49.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column qtde_matriculas
+		dataType: int64
+		formatString: 0
+		lineageTag: 961f8fce-8e17-44df-99fa-ca7eb053ff16
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition base_matricula_dia_Y-1 = m
+		mode: import
+		source =
+				let
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM `plancomercial.PERSONE_ETL.vw_ft_vendas_historico_dia_group`", null, [EnableFolding=true])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

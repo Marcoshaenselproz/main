@@ -1,0 +1,22 @@
+table DiasSemana2
+	lineageTag: 31fdc829-2aa8-48d6-bc15-55b004594965
+
+	column Value
+		formatString: 0
+		lineageTag: 561ee1a5-ca6c-46fc-a7d8-2181b8630724
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DiasSemana2 = calculated
+		mode: import
+		source = ```
+				
+				GENERATESERIES(1, 31, 1)
+				
+				```
+
+	annotation PBI_Id = 13b2445c97064c7c9e5acbc3634b5534
+

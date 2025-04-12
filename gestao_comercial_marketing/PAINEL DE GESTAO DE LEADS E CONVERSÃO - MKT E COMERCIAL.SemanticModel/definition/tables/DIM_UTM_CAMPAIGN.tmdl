@@ -1,0 +1,41 @@
+table DIM_UTM_CAMPAIGN
+	lineageTag: 303395de-3f60-41b0-a58c-501de11451b4
+
+	column utm_campaign_agrupada
+		dataType: string
+		lineageTag: 89b38252-bda5-447d-98fc-02c93c5ab4be
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada
+
+		annotation SummarizationSetBy = Automatic
+
+	column utm_campaign_agrupada_final
+		dataType: string
+		lineageTag: 8df2bac9-7c75-4830-b561-5650fd7fc676
+		summarizeBy: none
+		sourceColumn: utm_campaign_agrupada_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_lead
+		dataType: string
+		lineageTag: 1c86f50f-cb68-4e08-ab0b-d9e25accf89d
+		summarizeBy: none
+		sourceColumn: tipo_lead
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_UTM_CAMPAIGN = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.Static_Data.dim_utm_campaign_group", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"utm_campaign_agrupada", Text.Proper, type text}, {"utm_campaign_agrupada_final", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

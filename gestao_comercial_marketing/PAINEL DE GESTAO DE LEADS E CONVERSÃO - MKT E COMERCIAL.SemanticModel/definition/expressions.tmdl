@@ -1,0 +1,201 @@
+expression vw_custo_consolidado_unidade_group = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.CAC.vw_custo_consolidado_unidade_group", null, [EnableFolding=true]),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}})
+		in
+		    #"Colocar Cada Palavra Em Maiúscula"
+		```
+	lineageTag: b77287b6-94e6-4af9-8058-c090b897c6a5
+	queryGroup: CAC
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Exception
+
+expression Relatório_atendimentos =
+		let
+		    Fonte = PowerPlatform.Dataflows(null),
+		    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+		    #"e353c2d0-b34b-4e81-be59-09a10e312358" = Workspaces{[workspaceId="e353c2d0-b34b-4e81-be59-09a10e312358"]}[Data],
+		    #"580212c7-3319-477c-ba4d-1e7a6a6e7b44" = #"e353c2d0-b34b-4e81-be59-09a10e312358"{[dataflowId="580212c7-3319-477c-ba4d-1e7a6a6e7b44"]}[Data],
+		    Atendimentos_ = #"580212c7-3319-477c-ba4d-1e7a6a6e7b44"{[entity="Atendimentos",version=""]}[Data],
+		    #"Linhas Filtradas" = Table.SelectRows(Atendimentos_, each ([tag] <> ""))
+		in
+		    #"Linhas Filtradas"
+	lineageTag: b5727a62-0e5a-46ec-a54c-f340ae9b8d72
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression RangeStart = #datetime(2021, 1, 1, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 10f4ca17-c3c9-4d2a-85b2-d2c76050c33b
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = DateTime
+
+expression RangeEnd = #datetime(2025, 12, 31, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: 99758a86-5d87-4a93-b676-73e744c36603
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = DateTime
+
+expression Contatos_asc =
+		let
+		    Fonte = PowerPlatform.Dataflows(null),
+		    Workspaces = Fonte{[Id="Workspaces"]}[Data],
+		    #"e353c2d0-b34b-4e81-be59-09a10e312358" = Workspaces{[workspaceId="e353c2d0-b34b-4e81-be59-09a10e312358"]}[Data],
+		    #"224a1536-fa2e-4cda-b5e0-8026ff8f3dc8" = #"e353c2d0-b34b-4e81-be59-09a10e312358"{[dataflowId="224a1536-fa2e-4cda-b5e0-8026ff8f3dc8"]}[Data],
+		    Contatos_asc_ = #"224a1536-fa2e-4cda-b5e0-8026ff8f3dc8"{[entity="Contatos_asc",version=""]}[Data],
+		    #"Coluna Duplicada1" = Table.DuplicateColumn(Contatos_asc_, "data_criacao", "data_criacao - Copiar"),
+		    #"Início do Mês Calculado" = Table.TransformColumns(#"Coluna Duplicada1",{{"data_criacao - Copiar", Date.StartOfMonth, type date}}),
+		    #"Colunas Renomeadas" = Table.RenameColumns(#"Início do Mês Calculado",{{"data_criacao - Copiar", "mes_criacao"}})
+		in
+		    #"Colunas Renomeadas"
+	lineageTag: bc64a24b-32e2-4b2c-b77e-8b50bcd019b2
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression Quadrante_RVV =
+		let
+		    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("ZY9NCsIwEIWvMgTcZZG/ilm48QTVbe0iliAubCGmG/FCuvYGuZiTpAlCYQgzj/e9R7qOHBWhRDSUsQ0uSlOt49KaqwHjwxuq1MQH7T1FSkaBLdROragq8eRAf8JEdJcyvS6rEt8mTGSMp6BSh3OeGZN2DzwrIpfw5D6E7zg/gMMLTnaYnAufcbgZPBcqR+DIkpi+9g8LdLduesLFeOvgbr2pVE4pzZnsfw==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Quadrante = _t, #"Mínimo#(lf)Faixa" = _t, #"Máximo#(lf)Faixa" = _t, OBS = _t, Faixa = _t, Quarter = _t]),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"Quadrante", type text}, {"Mínimo#(lf)Faixa", Percentage.Type}, {"Máximo#(lf)Faixa", Percentage.Type}, {"OBS", type text}, {"Faixa", Percentage.Type}, {"Quarter", type text}})
+		in
+		    #"Tipo Alterado"
+	lineageTag: 017a2969-de0c-4167-9449-9e1164db0fc4
+	queryGroup: DEPARA
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression vw_ft_recorrencia = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_ft_recorrencia", null, [EnableFolding=true]),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"status_contrato", Text.Proper, type text}, {"origem_matricula", Text.Proper, type text}, {"email_aluno", Text.Proper, type text}, {"cpf_aluno", Text.Proper, type text}, {"cadastro_usuario", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"grupo", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}, {"utm_campaign", Text.Proper, type text}, {"utm_campaign_agrupada", Text.Proper, type text}, {"utm_campaign_agrupada_final", Text.Proper, type text}, {"origem_do_contato", Text.Proper, type text}, {"origem_do_contato_agrupada", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}, {"status_pagamento", Text.Proper, type text}, {"tipo_pagamento", Text.Proper, type text}}),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"student_id", type text}})
+		in
+		    #"Tipo Alterado"
+		```
+	lineageTag: e7794c23-a834-41ca-87cb-60f1d819602f
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression DIM_UNIDADE = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.dim_unidade_bq", null, [EnableFolding=true]),
+		
+		    #"Colunas Renomeadas" = Table.RenameColumns(Fonte,{{"id_unidade", "ID_UNIDADE"}, {"dsc_unidade", "DSC_UNIDADE"}, {"cluster", "CLUSTER"}, {"dsc_territorio", "DSC_TERRITORIO"}, {"dsc_regional", "DSC_REGIONAL"}, {"status", "STATUS"}, {"dsc_regional_II", "DSC_REGIONAL II"}, {"dsc_territorio_II", "DSC_TERRITORIO II"}, {"dsc_unidade_II", "DSC_UNIDADE II"}, {"grupo_comercial", "GRUPO_COMERCIAL"}, {"sigla", "SIGLA"}}),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Colunas Renomeadas",{{"ID_UNIDADE", Text.Proper, type text}, {"DSC_UNIDADE", Text.Proper, type text}, {"CLUSTER", Text.Proper, type text}, {"DSC_TERRITORIO", Text.Proper, type text}, {"DSC_REGIONAL", Text.Proper, type text}, {"STATUS", Text.Proper, type text}, {"DSC_REGIONAL II", Text.Proper, type text}, {"DSC_TERRITORIO II", Text.Proper, type text}, {"DSC_UNIDADE II", Text.Proper, type text}, {"GRUPO_COMERCIAL", Text.Proper, type text}, {"SIGLA", Text.Proper, type text}})
+		in
+		    #"Colocar Cada Palavra Em Maiúscula"
+		```
+	lineageTag: e1f59681-8a8b-4a9d-8ac5-7b4e962ee287
+	queryGroup: DEPARA
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression Base_Titulos_reprovados =
+		let
+		    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "select * from plancomercial.pincel_to_plann_comercial.ft_titulos_reprovados", null, [EnableFolding=true]),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"payment_type", Text.Proper, type text}, {"card_brand", Text.Proper, type text}, {"status", Text.Proper, type text}, {"last_getnet_error", Text.Proper, type text}, {"depart_name", Text.Proper, type text}, {"status_cursando", Text.Proper, type text}})
+		in
+		    #"Colocar Cada Palavra Em Maiúscula"
+	lineageTag: 9ad5077c-3e9e-4ff1-ad90-d6574488a8c2
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression 'Erros em VW_MATRICULAS' =
+		let
+		Fonte = VW_MATRICULAS,
+		  #"Incompatibilidades de Tipo Detectadas" = let
+		    tableWithOnlyPrimitiveTypes = Table.SelectColumns(Fonte, Table.ColumnsOfType(Fonte, {type nullable number, type nullable text, type nullable logical, type nullable date, type nullable datetime, type nullable datetimezone, type nullable time, type nullable duration})),
+		    recordTypeFields = Type.RecordFields(Type.TableRow(Value.Type(tableWithOnlyPrimitiveTypes))),
+		    fieldNames = Record.FieldNames(recordTypeFields),
+		    fieldTypes = List.Transform(Record.ToList(recordTypeFields), each [Type]),
+		    pairs = List.Transform(List.Positions(fieldNames), (i) => {fieldNames{i}, (v) => if v = null or Value.Is(v, fieldTypes{i}) then v else error [Message = "O tipo do valor não corresponde ao tipo da coluna.", Detail = v], fieldTypes{i}})
+		in
+		    Table.TransformColumns(Fonte, pairs),
+		  #"Índice Adicionado" = Table.AddIndexColumn(#"Incompatibilidades de Tipo Detectadas", "Número da Linha" ,1),
+		  #"Erros Mantidos" = Table.SelectRowsWithErrors(#"Índice Adicionado", {"numero_matricula", "id_curso", "id_aluno", "status_contrato", "mes_fechamento", "data_final", "hora_final", "hora_final_completa", "data_criacao", "hora_criacao", "mes_criacao", "origem_matricula", "grupo", "complemento", "mes_grupo", "ano_grupo", "grupo_final", "usuario", "nome_usuario", "email_usuario", "Cpf_usuario", "nivel_usuario_ajustado", "nivel_curso", "unidade", "curso", "turno", "status_saida", "motivo_da_saida", "data_status_saida", "nome", "Cpf_aluno", "email_aluno", "telefone_aluno", "primeira_origem", "origem_do_contato", "origem_do_contato_agrupada", "origem_do_contato_agrupada_final", "utm_campaign", "utm_campaign_agrupada", "utm_campaign_agrupada_final", "tipo_lead", "url", "doc_RG_CPF_CNH", "doc_escolaridade", "doc_certificado", "status_documentacao", "status_documentacao_final", "duplicidade_matricula", "cupom_extraido", "data_cupom_pag", "recorrencia", "taxa_bruta", "taxa_liquida", "data_taxa_pag", "perc_desc_taxa", "perc_mensal_taxa_liquida", "status_perc_mensal_taxa_liquida", "Faturamento_pagamento_RVV_15_porcento", "Faturamento_pagamento_RVV_3_porcento", "Faturamento_pagamento_RVV_1_porcento", "status_perc_desc_taxa", "valor_mensalidade", "tipo_pagamento", "tipo_pagamento_final", "status_pagamento", "status_inadimplencia", "parcelas", "total_faturamento_medio", "total_faturamento", "venda_nok", "venda_ok", "venda_cancelada", "venda_pendente", "venda_validas", "status_venda_paga", "qtde_matriculas", "duplicidades_numero_matricula"}),
+		  #"Colunas Reordenadas" = Table.ReorderColumns(#"Erros Mantidos", {"Número da Linha", "numero_matricula", "id_curso", "id_aluno", "status_contrato", "mes_fechamento", "data_final", "hora_final", "hora_final_completa", "data_criacao", "hora_criacao", "mes_criacao", "origem_matricula", "grupo", "complemento", "mes_grupo", "ano_grupo", "grupo_final", "usuario", "nome_usuario", "email_usuario", "Cpf_usuario", "nivel_usuario_ajustado", "nivel_curso", "unidade", "curso", "turno", "status_saida", "motivo_da_saida", "data_status_saida", "nome", "Cpf_aluno", "email_aluno", "telefone_aluno", "primeira_origem", "origem_do_contato", "origem_do_contato_agrupada", "origem_do_contato_agrupada_final", "utm_campaign", "utm_campaign_agrupada", "utm_campaign_agrupada_final", "tipo_lead", "url", "doc_RG_CPF_CNH", "doc_escolaridade", "doc_certificado", "status_documentacao", "status_documentacao_final", "duplicidade_matricula", "cupom_extraido", "data_cupom_pag", "recorrencia", "taxa_bruta", "taxa_liquida", "data_taxa_pag", "perc_desc_taxa", "perc_mensal_taxa_liquida", "status_perc_mensal_taxa_liquida", "Faturamento_pagamento_RVV_15_porcento", "Faturamento_pagamento_RVV_3_porcento", "Faturamento_pagamento_RVV_1_porcento", "status_perc_desc_taxa", "valor_mensalidade", "tipo_pagamento", "tipo_pagamento_final", "status_pagamento", "status_inadimplencia", "parcelas", "total_faturamento_medio", "total_faturamento", "venda_nok", "venda_ok", "venda_cancelada", "venda_pendente", "venda_validas", "status_venda_paga", "qtde_matriculas", "duplicidades_numero_matricula"})
+		in
+		  #"Colunas Reordenadas"
+	lineageTag: c57d4d35-62a8-4f01-b22a-1c1ae4e16622
+	queryGroup: 'Erros na Consulta - 12/03/2025 10:19:55'
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression VW_LEADS_GROUP_SEM_CONSULTOR =
+		let
+		    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.VW_LEADS_GROUP_SEM_CONSULTOR", null, [EnableFolding=true]),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"id_contato", type text}, {"nome", type text}, {"phone", type text}, {"email", type text}, {"unidade", type text}, {"curso", type text}, {"origem_matricula", type text}, {"primeira_origem", type text}, {"origem_do_contato", type text}, {"origem_do_contato_agrupada", type text}, {"origem_do_contato_agrupada_final", type text}, {"utm_campaign", type text}, {"utm_campaign_agrupada", type text}, {"utm_campaign_agrupada_final", type text}, {"tipo_lead", type text}, {"atendimento_n1", type text}, {"atendimento_n1_agrupada", type text}, {"atendimento_n2", type text}, {"tags", type text}}),
+		    #"Duplicatas Removidas" = Table.Distinct(#"Tipo Alterado", {"id_contato"})
+		in
+		    #"Duplicatas Removidas"
+	lineageTag: b6c8d0d5-348c-4bd6-8580-e8a585c44346
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression VW_ATENDIMENTOS_GROUP = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.VW_ATENDIMENTOS_GROUP_AGENTE#(lf)where data_atendimento >= DATE_SUB(CURRENT_DATE(), INTERVAL 3 MONTH)", null, [EnableFolding=true]),
+		
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"agente", Text.Proper, type text}, {"tabulacao_n1", Text.Proper, type text}, {"tabulacao_n2", Text.Proper, type text}}),
+		    #"Valor Substituído" = Table.ReplaceValue(#"Colocar Cada Palavra Em Maiúscula",0,null,Replacer.ReplaceValue,{"total_atendimentos", "total_atendimentos_unicos", "total_atendimentos_falados", "total_atendimentos_falados_validos", "total_atendimentos_whatsapp", "total_atendimentos_telefonia"}),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(#"Valor Substituído",{{"hora_atendimento", Int64.Type}, {"mes_atendimento", type date}})
+		in
+		    #"Tipo Alterado"
+		```
+	lineageTag: 880101a5-11b9-40c6-ae9e-171d7fd871fb
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression VW_LEADS_SEM_ATENDIMENTO = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.VW_LEADS_SEM_ATENDIMENTO", null, [EnableFolding=true]),
+		    #"Duplicatas Removidas" = Table.Distinct(Fonte, {"id_contato"}),
+		    #"Tipo Alterado" = Table.TransformColumnTypes(#"Duplicatas Removidas",{{"id_contato", type text}, {"email", type text}, {"email_usuario", type text}, {"telefone", type text}, {"unidade", type text}, {"curso", type text}, {"canal_entrada", type text}, {"canal_entrada_final", type text}, {"canal_conversao", type text}, {"tipo_lead", type text}}),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"id_contato", Text.Proper, type text}, {"email", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"telefone", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"canal_entrada", Text.Proper, type text}, {"canal_entrada_final", Text.Proper, type text}, {"canal_conversao", Text.Proper, type text}, {"tipo_lead", Text.Proper, type text}})
+		in
+		    #"Colocar Cada Palavra Em Maiúscula"
+		```
+	lineageTag: bb630999-95d8-4108-96a4-be2949680c41
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
+expression DIM_COLABORADORES_ID = ```
+		let    
+		Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_colaboradores", null, [EnableFolding=true]),
+		
+		    #"Texto em Maiúscula" = Table.TransformColumns(Fonte,{{"usuario", Text.Upper, type text}, {"email", Text.Upper, type text}}),
+		    #"Texto em Maiúscula1" = Table.TransformColumns(#"Texto em Maiúscula",{{"usuario", Text.Upper, type text}, {"email", Text.Upper, type text}, {"status", Text.Upper, type text}, {"cargo", Text.Upper, type text}, {"tipo_cargo", Text.Upper, type text}, {"cadastro", Text.Upper, type text}, {"periodo", Text.Upper, type text}, {"cpf", Text.Upper, type text}, {"grupo", Text.Upper, type text}}),
+		    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Texto em Maiúscula1",{{"usuario", Text.Proper, type text}, {"email", Text.Proper, type text}, {"status", Text.Proper, type text}, {"cargo", Text.Proper, type text}, {"tipo_cargo", Text.Proper, type text}, {"periodo", Text.Proper, type text}, {"grupo", Text.Proper, type text}, {"gestao", Text.Proper, type text}})
+		in
+		    #"Colocar Cada Palavra Em Maiúscula"
+		```
+	lineageTag: 106340fc-21b1-42bf-9b30-7ec6ad6988d1
+	queryGroup: DEPARA
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

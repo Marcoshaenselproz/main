@@ -1,0 +1,45 @@
+table VW_VISITANTES_GROUP
+	lineageTag: a8319f32-5b7d-42c3-9079-1cb9311b90b1
+
+	column data_criacao
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 5ce3411c-b8fd-4286-bc1d-1f7bff9c6080
+		summarizeBy: none
+		sourceColumn: data_criacao
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total
+		dataType: int64
+		formatString: 0
+		lineageTag: 07f5d066-7f09-4487-8abe-0014d16deb29
+		summarizeBy: sum
+		sourceColumn: total
+
+		annotation SummarizationSetBy = Automatic
+
+	column hora
+		dataType: int64
+		formatString: 0
+		lineageTag: 293ca901-b2b2-4f48-90c5-45cb2e49c02a
+		summarizeBy: none
+		sourceColumn: hora
+
+		annotation SummarizationSetBy = Automatic
+
+	partition VW_VISITANTES_GROUP = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.VW_VISITANTES_GROUP_HOUR", null, [EnableFolding=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"hora", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

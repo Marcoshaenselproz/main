@@ -1,0 +1,109 @@
+table vw_dim_users_ajustado
+	lineageTag: d6e1c8b8-8bd0-4728-8321-b563b5d563eb
+
+	column email_usuario
+		dataType: string
+		lineageTag: 84120282-6de4-48f1-89df-8dbb594ddce5
+		summarizeBy: none
+		sourceColumn: email_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_usuario
+		dataType: string
+		lineageTag: a6d3f484-48c7-43af-9cc2-a41d9c68b665
+		summarizeBy: none
+		sourceColumn: nome_usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column cargo
+		dataType: string
+		lineageTag: 10086dcc-d219-47f9-82a4-64b46d5fa179
+		summarizeBy: none
+		sourceColumn: cargo
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_usuario_final
+		dataType: string
+		lineageTag: b522816c-4732-47fd-b93f-9b6a1b92274c
+		summarizeBy: none
+		sourceColumn: status_usuario_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_dia
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a129b83a-0f8d-4178-89f5-1a9092f34bee
+		summarizeBy: none
+		sourceColumn: data_dia
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column status_pincel
+		dataType: string
+		lineageTag: 09a7704c-4dae-4731-ad28-ec4c5138416b
+		summarizeBy: none
+		sourceColumn: status_pincel
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_senior
+		dataType: string
+		lineageTag: f6e4c19d-faa8-4e99-8d8d-7b0cbc2ab79b
+		summarizeBy: none
+		sourceColumn: status_senior
+
+		annotation SummarizationSetBy = Automatic
+
+	column periodo
+		dataType: string
+		lineageTag: fcd48c4e-d033-4e3b-8569-766f053b416f
+		summarizeBy: none
+		sourceColumn: periodo
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo
+		dataType: string
+		lineageTag: 451c81c1-dee0-4614-888d-9e11a9f4668d
+		summarizeBy: none
+		sourceColumn: grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column gestao
+		dataType: string
+		lineageTag: 52b5a7da-65fd-4e3e-8a76-b30ece146bc2
+		summarizeBy: none
+		sourceColumn: gestao
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_cargo
+		dataType: string
+		lineageTag: 6fc00285-0617-4d51-84b8-207ece835a48
+		summarizeBy: none
+		sourceColumn: tipo_cargo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_dim_users_ajustado = m
+		mode: import
+		queryGroup: DEPARA
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT#(lf)data_dia,#(lf)nome_usuario,#(lf)email_usuario,#(lf)cargo,#(lf)tipo_cargo,#(lf)periodo,#(lf)grupo,#(lf)gestao,#(lf)status_pincel,#(lf)status_senior,#(lf)status_usuario_final#(lf)#(lf) FROM plancomercial.PERSONE_ETL.ft_carteira_comercial", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"nome_usuario", Text.Proper, type text}, {"email_usuario", Text.Proper, type text}, {"status_usuario_final", Text.Proper, type text}, {"cargo", Text.Proper, type text}, {"status_senior", Text.Proper, type text}, {"status_pincel", Text.Proper, type text}, {"periodo", Text.Proper, type text}, {"grupo", Text.Proper, type text}, {"gestao", Text.Proper, type text}, {"tipo_cargo", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

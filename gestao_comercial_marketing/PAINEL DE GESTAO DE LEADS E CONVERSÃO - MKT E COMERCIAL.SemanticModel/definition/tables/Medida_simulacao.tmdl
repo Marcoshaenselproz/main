@@ -1,0 +1,25 @@
+table Medida_simulacao
+	lineageTag: f1d88a8b-72d9-493e-b7b0-d37e253b977c
+
+	measure 'Título do Gráfico' =
+			
+			"Vendas dos Últimos " & param_qtd_meses[Valor qtd_meses] & " meses por mês/ano."
+		lineageTag: bd896ea5-72eb-4841-9462-9c9fd58516fd
+
+	column Column
+		formatString: 0
+		lineageTag: a7b4255c-0a9b-4a9d-a63c-992917b3a09f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medida_simulacao = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = cedb9fcd22864d40b1b39d22a0dd45e1
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

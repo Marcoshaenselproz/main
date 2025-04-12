@@ -1,0 +1,63 @@
+table vw_custo_consolidado_unidade
+	lineageTag: 60ce0b46-b82e-4542-b9bd-80d24be70b47
+
+	column mes_data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 605d7fe6-c850-482d-9f3c-6a9796d45642
+		summarizeBy: none
+		sourceColumn: mes_data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: aac03dbc-3c01-49a7-a3a6-8b53d4804ef4
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column custo_total
+		dataType: double
+		lineageTag: a60c5955-586e-453d-9d15-6bdbaaa344ea
+		summarizeBy: sum
+		sourceColumn: custo_total
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tipo_custo
+		dataType: string
+		lineageTag: 7a31c4ff-8258-4457-80ec-d190c0ed530d
+		summarizeBy: none
+		sourceColumn: tipo_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_custo_agrupado
+		dataType: string
+		lineageTag: 05809910-6a18-4696-9e59-e7de359bbb21
+		summarizeBy: none
+		sourceColumn: tipo_custo_agrupado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_custo_consolidado_unidade = m
+		mode: import
+		queryGroup: CAC
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.ft_custos_consolidados", null, [EnableFolding=true]),
+				
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"tipo_custo", Text.Proper, type text}, {"tipo_custo_agrupado", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

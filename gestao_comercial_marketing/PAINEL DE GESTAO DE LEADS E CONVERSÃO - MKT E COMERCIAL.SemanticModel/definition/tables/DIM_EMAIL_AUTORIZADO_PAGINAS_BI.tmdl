@@ -1,0 +1,25 @@
+table DIM_EMAIL_AUTORIZADO_PAGINAS_BI
+	lineageTag: 61f3796d-1969-493e-a714-4f257488c3b5
+
+	column email
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 863cbf6d-6a9e-4e66-8ea6-50e078410a42
+		summarizeBy: none
+		sourceColumn: email
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_EMAIL_AUTORIZADO_PAGINAS_BI = m
+		mode: import
+		queryGroup: DEPARA
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.dim_email_autorizado", null, [EnableFolding=true])
+				in
+				    Fonte
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

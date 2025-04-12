@@ -1,0 +1,26 @@
+table Parâmetro_total_custos
+	lineageTag: e45789ee-da0e-4a75-901e-e63585c4fb92
+
+	measure 'Valor Parâmetro' = SELECTEDVALUE('Parâmetro_total_custos'[Parâmetro])
+		formatString: 0
+		lineageTag: 999d1fba-d26a-466b-9b9e-220bb8a6c598
+
+	column Parâmetro
+		formatString: 0%;-0%;0%
+		lineageTag: a8c3aec5-26d4-4f64-9c3c-628131c57f11
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_total_custos = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.001)
+
+	annotation PBI_Id = 38e258be4b5f440dacc3b4b4ab956074
+

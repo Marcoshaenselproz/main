@@ -1,0 +1,1363 @@
+table Medida_LTV
+	lineageTag: 594cb868-bf87-4115-af81-8bcce0123f65
+
+	measure '% Noshow Simulado' = ```
+			
+			VAR Media = 
+			    1 - AVERAGE(int_commercial__life_time_value_per_branch[noshow])
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGE(int_commercial__life_time_value_per_branch[noshow]),
+			        FILTER(
+			            ALL(dim_unidade_historica),
+			            dim_unidade_historica[regional] = MAX(dim_unidade_historica[regional])
+			        )
+			    )
+			
+			var noshowsim = IF(ISBLANK(Media), media_regional, Media) + 'Parâmetro_Noshow'[Valor noshow]
+			
+			RETURN 
+			SWITCH(TRUE(),
+			noshowsim > 1, 1,
+			noshowsim < 0, 0, 
+			noshowsim)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 302834e2-fb84-4631-9149-dcd647f4e244
+
+	measure 'LTV/CAC Total' = [Total Ltv Total] / [Total Cac Full]
+		formatString: #,0.0
+		lineageTag: 539758a5-f903-4df4-9261-0f8cf79c48ad
+
+	measure 'LTV/CAC 6 Meses' = [Total Ltv 6 Meses] / [Total Cac Full]
+		formatString: #,0.0
+		lineageTag: b97f96fe-bb73-459b-9c77-6da618a00663
+
+	measure 'LTV/CAC Anual' = [Total Ltv Annual] / [Total Cac Full]
+		formatString: #,0.0
+		lineageTag: e4d4b2aa-cc84-4d5c-a968-eed44c593056
+
+	measure 'Margem de Contribuição' =
+			
+			SWITCH(TRUE(),
+			ISBLANK([Total CAC Full YoY]),BLANK(),
+			0.55)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 54ea5b89-cfa8-4a02-8b36-13f2c5181d1c
+
+	measure 'Total Mat Liquida LTV Projecao Simulado' =
+			
+			var matliq = ROUND([Total Mat Liquida LTV Projecao],0) * [% Noshow Simulado]
+			var matliq2 = ROUND([Total Mat Projeção],0)
+			var matfinal = matliq + matliq2
+			RETURN
+			matfinal
+		formatString: #,0
+		lineageTag: 4432a77b-fe0f-4658-8c19-270b06337d05
+
+	measure 'Mat LTV' =
+			
+			CALCULATE(
+			    SUMX(
+			        SUMMARIZE(
+			            int_commercial__life_time_value_per_branch,
+			            int_commercial__life_time_value_per_branch[sale_month],
+			            int_commercial__life_time_value_per_branch[gross_sales],
+			            "UniqueSales", MAX(int_commercial__life_time_value_per_branch[gross_sales])
+			        ),
+			        [UniqueSales]
+			    ),
+			    TREATAS(
+			        VALUES(VW_CALENDARIO[DATA_MES]),
+			        int_commercial__life_time_value_per_branch[sale_month]
+			    )
+			)
+		formatString: 0
+		lineageTag: cf380829-b6f8-4754-9f12-05e60386c703
+
+	measure 'Permanencia Annual' = ```
+			
+			
+			VAR regional = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR Media = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Annual"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        )
+			    )
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Annual"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        ),
+			        FILTER(
+			            ALL(dim_unidade_historica),
+			            dim_unidade_historica[regional] = regional
+			        )
+			    )
+			
+			    var per = IF(ISBLANK(Media), media_regional, Media)
+			
+			var perpar = IF(ISBLANK(Media), media_regional, Media) + 'Parâmetro_PerAnual'[Valor Parâmetro_PerAnual]
+			RETURN 
+			SWITCH(TRUE(),
+			ISBLANK([Total Cac Full]),[Total Cac Full],
+			perpar > 1, 1,
+			perpar < 0, 0,
+			perpar)
+			    
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 43929f9f-ceba-4099-974d-2f8c38f1f9f2
+
+	measure 'Permanencia Total' = ```
+			
+			
+			VAR regional = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR Media = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Complete"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        )
+			    )
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Complete"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        ),
+			        FILTER(
+			            ALL(dim_unidade_historica),
+			            dim_unidade_historica[regional] = regional
+			        )
+			    )
+			var per = IF(ISBLANK(Media), media_regional, Media)
+			var perpar = IF(ISBLANK(Media), media_regional, Media) + 'Parâmetro_PerTotal'[Valor Parâmetro_PerTotal]
+			RETURN 
+			SWITCH(TRUE(),
+			ISBLANK([Total Cac Full]),[Total Cac Full],
+			perpar > 1, 1,
+			perpar < 0, 0,
+			perpar)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: ddf35210-29ff-40e9-9e81-30c8e61678f1
+
+	measure 'Permanencia 6 Meses' = ```
+			
+			VAR regional = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR Media = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Semester"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        )
+			    )
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGEX(
+			            FILTER(
+			                int_commercial__life_time_value_per_branch,
+			                int_commercial__life_time_value_per_branch[type] = "Semester"
+			            ),
+			            int_commercial__life_time_value_per_branch[permanence]
+			        ),
+			        FILTER(
+			            ALL(dim_unidade_historica),
+			            dim_unidade_historica[regional] = regional
+			        )
+			    )
+			var per = IF(ISBLANK(Media), media_regional, Media)
+			var perpar = IF(ISBLANK(Media), media_regional, Media) + 'Parâmetro_Per6M'[Valor Parâmetro_Per6M]
+			RETURN 
+			SWITCH(TRUE(),
+			ISBLANK([Total Cac Full]),[Total Cac Full],
+			perpar > 1, 1,
+			perpar < 0, 0,
+			perpar)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: f6ff0c11-7998-4329-848b-a2244eca7064
+
+	measure 'Receita Esperada' = [Total Mat Liquida LTV Simulado] * [Ticket Médio Simulado]
+		formatString: #,0
+		lineageTag: d10a34fd-5a14-434c-ba1d-11604ad7f785
+
+	measure 'Receita Esperada Anualmente' =
+			
+			([Receita Esperada] * 12)
+		formatString: #,0
+		lineageTag: 6d10b518-1727-46a8-877a-1b1ac83d6bdc
+
+	measure 'Receita Esperada ativa Anual' =
+			
+			[Receita Esperada Anualmente] * [Permanencia Annual]
+		formatString: #,0
+		lineageTag: a328b1ef-594b-4ea9-89ee-efeb0939ab55
+
+	measure 'Receita Esperada ativa Total' =
+			
+			[Receita Esperada Total] * [Permanencia Total]
+		formatString: #,0
+		lineageTag: b870cbf0-96dc-4aa7-9da4-c987c2ed2737
+
+	measure 'Receita Esperada ativa 6 Meses' =
+			
+			[Receita Esperada 6 Meses] * [Permanencia 6 Meses]
+		formatString: #,0
+		lineageTag: 4f5b616a-f112-4841-ad37-70a3291671d9
+
+	measure 'Receita Esperada com Margem Anual' =
+			
+			[Receita Esperada ativa Anual]*[Margem de Contribuição]
+		formatString: #,0
+		lineageTag: 62316239-066c-4800-97f1-432017a81284
+
+	measure 'Receita Esperada com Margem Total' = [Receita Esperada ativa Total]*[Margem de Contribuição]
+		formatString: #,0
+		lineageTag: f9d4f61f-245a-4b93-ab2c-93947e934f67
+
+	measure 'Receita Esperada com Margem 6 Meses' = [Receita Esperada ativa 6 Meses] *[Margem de Contribuição]
+		formatString: #,0
+		lineageTag: 5b434cd9-8448-4600-9d0c-b66dbcbfaef2
+
+	measure 'Receita Esperada Total' =
+			
+			([Receita Esperada] * [MediaTempoRegional])
+		formatString: #,0
+		lineageTag: 7d8dd0b6-2ea2-421a-a2c2-633388917137
+
+	measure 'Receita Esperada 6 Meses' =
+			
+			([Receita Esperada] * 6)
+		formatString: #,0
+		lineageTag: efdd2d13-4247-4e4a-b473-ff0b0fc04c32
+
+	measure 'Ticket Médio Simulado' = ```
+			
+			VAR media = AVERAGE(int_commercial__life_time_value_per_branch[atp])
+			VAR mediapar = media * 'Parâmetro_Ticket_Medio'[Valor Parâmetro_Ticket]
+			VAR mediafinal = media + mediapar
+			
+			VAR media_regional = CALCULATE(AVERAGE(int_commercial__life_time_value_per_branch[atp]), FILTER(ALL(dim_unidade_historica),dim_unidade_historica[regional]=MAX(dim_unidade_historica[regional])))
+			var media_regional_par = media_regional * 'Parâmetro_Ticket_Medio'[Valor Parâmetro_Ticket]
+			var mediaregionalfinal = media_regional + media_regional_par
+			
+			RETURN 
+			IF(ISBLANK(mediafinal), mediaregionalfinal, mediafinal)
+			```
+		formatString: #,0
+		lineageTag: faa20ced-bd34-470c-b814-ae4369b063c5
+
+	measure 'Total Ltv' = MAX(int_commercial__life_time_value_per_branch[ltv])
+		formatString: #,0
+		lineageTag: 91d7125e-d54f-4b0d-93e9-644095532fcc
+
+	measure 'Total Ltv Annual' = DIVIDE([Receita Liquida Anual],[Total Mat Liquida LTV Simulado])
+		formatString: #,0
+		lineageTag: 109290a6-9e41-495c-91b4-eeceb0bf1e37
+
+	measure 'Total Ltv Total' = DIVIDE([Receita Liquida Total],[Total Mat Liquida LTV Simulado])
+		formatString: #,0
+		lineageTag: 8baebfcf-9d68-4eed-ba32-b71d6aa06a88
+
+	measure 'Total Ltv 6 Meses' = DIVIDE([Receita Liquida 6 Meses],[Total Mat Liquida LTV Simulado])
+		formatString: #,0
+		lineageTag: 55a734b7-a58c-4dbe-b7c0-69c56ef6c68d
+
+	measure 'Total Investimento' =
+			
+			VAR utm_camp_invest = SELECTEDVALUE(vw_ft_investimento_distribuido_tb[utm_campaign_agrupada])
+			VAR utm_camp = SELECTEDVALUE(DIM_UTM_CAMPAIGN[utm_campaign_agrupada])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR sig = SELECTEDVALUE(dim_unidade_historica[sigla])
+			VAR invest = SUMX(vw_ft_investimento_distribuido_tb,vw_ft_investimento_distribuido_tb[investimento])
+			RETURN
+			invest
+		formatString: #,0
+		lineageTag: c8ffbc26-00ea-4dd6-b747-39d639564af3
+
+	measure 'Total Custo Central' = ```
+			
+			var custocentral = SUM(vw_ft_cac_full[central])
+			RETURN
+			custocentral
+			
+			```
+		formatString: #,0
+		lineageTag: 68defbf8-52c0-4929-af77-30531b2138a4
+
+	measure 'Total Custo Comercial' = ```
+			
+			
+			var custocom = SUM(vw_ft_cac_full[comercial]) 
+			var custocomm1 = CALCULATE(SUM(vw_ft_cac_full[comercial]),DATEADD(VW_CALENDARIO[DATA],-1,MONTH))
+			
+			RETURN
+			custocom
+			```
+		formatString: #,0
+		lineageTag: 91807bb7-a49a-41a1-8ffc-948120ad7d0f
+
+	measure 'Total Custo Marketing' =
+			
+			
+			
+			var customkt = SUM(vw_ft_cac_full[marketing])
+			var customktm1 = CALCULATE(SUM(vw_ft_cac_full[marketing]),DATEADD(VW_CALENDARIO[DATA],-1,MONTH))
+			
+			RETURN
+			customkt
+		formatString: #,0
+		lineageTag: 52dea9c2-2716-49bf-8d80-1dc659158192
+
+	measure 'Total Custo Midia On' = ```
+			
+			 VAR Midia_ON = [Total Investimento]
+			    RETURN
+			    Midia_ON
+			```
+		formatString: #,0
+		lineageTag: 87eaddf3-8ea6-47c6-8b1d-2b563d2d3158
+
+	measure 'Total Investimento Projeção Reduzido' = ```
+			
+			VAR INVEST = [Total Investimento Reduzido]
+			VAR INVESTCORRIDA = CALCULATE(DIVIDE(INVEST,([Total dias uteis corridos]),0)) * ([Total dias uteis restante])
+			RETURN 
+			
+			INVEST + INVESTCORRIDA
+			```
+		lineageTag: 77fa79b7-f6ab-411a-aadf-ec9c68a54795
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Custo Salario Canal' = ```
+			
+			 VAR Com = [Total Custo Comercial]
+			 VAR Cen = [Total Custo Central]
+			 RETURN
+			 Com + Cen
+			```
+		formatString: #,0
+		lineageTag: ab995b72-e894-4fb6-925f-92dd9289b933
+
+	measure 'Total Custos Simulado' =
+			
+			var cen = [Total Custo Central]
+			var com = [Total Custo Comercial]
+			var mkt = [Total Custo Marketing]
+			var midiaon =[Total Custo Midia On]
+			
+			var totalcust = cen + com + mkt + midiaon
+			var totalcustpar = (cen + com + mkt + midiaon) * 'Parâmetro_total_custos'[Valor Parâmetro]
+			var totalcustofinal = totalcust + totalcustpar
+			RETURN
+			
+			
+			totalcustofinal
+		formatString: #,0
+		lineageTag: 192b2d94-7618-4da1-a2ba-360552267c63
+
+	measure 'Total Cac Full' = ```
+			
+			var ttcusto = [Total Custos Consolidado]
+			VAR Mat = [Total Mat Geral]
+			
+			RETURN
+			DIVIDE(ttcusto,Mat)
+			
+			```
+		formatString: #,0
+		lineageTag: dc5c4950-a54f-47d6-86e7-b102d0e229a7
+
+	measure MediaTempoRegional = ```
+			
+			VAR media = 
+			    CALCULATE(
+			        AVERAGE(int_commercial__life_time_value_per_branch[time]),
+			        int_commercial__life_time_value_per_branch[type] = "Complete"
+			    )
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGE(int_commercial__life_time_value_per_branch[time]),
+			        int_commercial__life_time_value_per_branch[type] = "Complete",
+			        ALL(dim_unidade_historica),
+			        dim_unidade_historica[regional] = MAX(dim_unidade_historica[regional])
+			    )
+			RETURN 
+			    IF(ISBLANK(media), ROUND(media_regional,0), media)
+			
+			```
+		lineageTag: c7728a68-bd84-4536-9c4a-0e7e875ef412
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total CPL Pago' =
+			
+			
+			VAR TOTAL = DIVIDE([Total Investimento],[Total Leads Pago],0)
+			RETURN
+			IF(NOT ISBLANK(TOTAL) && TOTAL <> 0 ,TOTAL)
+		formatString: #,0
+		lineageTag: 0c25a235-cb3f-45b7-a859-0ee2e3e47064
+
+	measure 'Total Custo Central/Comercial' = ([Total Custo Central] + [Total Custo Comercial])
+		formatString: #,0
+		lineageTag: ad506b0a-a1b4-4345-9152-5d3ef06c1bef
+
+	measure 'Total Cac Full Y-1' = ```
+			
+			
+			var cac = [Total Cac Full]
+			var cacy = CALCULATE([Total Cac Full],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 711a1f27-f154-4663-8132-8ad823697f52
+
+	measure 'Total CAC Full YoY' =
+			
+			VAR cac = [Total Cac Full]
+			var cacy =
+			 SWITCH(TRUE(),
+			 ISBLANK([Total Cac Full Y-1]),[Total Cac Full Y-1],DIVIDE([Total Cac Full], [Total Cac Full Y-1],0)-1)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+		formatString: 0%;-0%;0%
+		lineageTag: 76b5aea3-c812-4ae5-a9f2-2d40e3457e23
+
+	measure 'Share Custos Midia On' = DIVIDE([Total Custo Midia On],[Total Custos Simulado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 8028df22-b939-4ce9-ad99-d138100eb49f
+
+	measure 'Share Custos Marketing' = DIVIDE([Total Custo Marketing],[Total Custos Simulado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 9581689a-d8cc-4317-867c-5a178f262fbd
+
+	measure 'Share Custos Central/Comercial' = DIVIDE([Total Custo Central/Comercial],[Total Custos Simulado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: e835c9cd-74c3-4c79-8d68-41a8be370dce
+
+	measure 'Total CPL Pago 2' =
+			
+			VAR leadpago = CALCULATE([Total Leads Historica],DIM_TIPO_LEAD[tipo_lead]="pago")
+			var totalinvest = [Total Investimento]
+			RETURN
+			DIVIDE(totalinvest,leadpago,0)
+		lineageTag: d8314abd-f8ae-4b31-9ce6-7c4aa806268d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Meta LTV/CAC 3x' = 3
+		formatString: #,0.0
+		lineageTag: 26b82551-e4c3-4815-b571-aeda14781212
+
+	measure 'Total Meta RL 6M 3x' = ```
+			
+			var metaltvcac6m = ([Total Meta LTV/CAC 3x]/[LTV/CAC 6 Meses]-1)
+			VAR RL6M = [Receita Liquida 6 Meses]
+			
+			RETURN
+			RL6M * metaltvcac6m + RL6M
+			
+			```
+		formatString: #,0
+		lineageTag: 9555a67e-69d0-4878-b953-d9b014849413
+
+	measure 'Total Meta LTV/CAC 5X' = 5
+		formatString: 0.0
+		lineageTag: 238047a1-732f-4bec-ab85-3105dd98db78
+
+	measure 'Total Meta CAC 5X' = [Total Cac Full] * [Total Meta LTV/CAC 5X]
+		formatString: #,0
+		lineageTag: f2675a11-fcf3-4037-a04f-c6f1978c17c9
+
+	measure 'Total Mat Geral Projeção Simulado' =
+			
+			var matliq = ROUND([Total Mat Projeção],0) * Parametro_matricula_liquida[Valor Parâmetro 2]
+			var matliq2 = ROUND([Total Mat Projeção],0)
+			var matfinal = matliq + matliq2
+			RETURN
+			matfinal
+		formatString: #,0
+		lineageTag: 86b1249a-90de-4020-a162-f19bd6bdffb1
+
+	measure '% Total CAC Full MoM' =
+			
+			VAR cac = [Total Cac Full]
+			var cacy =
+			 SWITCH(TRUE(),
+			 ISBLANK([Total Cac Full M-1]),[Total Cac Full M-1],(DIVIDE([Total Cac Full], [Total Cac Full M-1],0)-1))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+		formatString: 0%;-0%;0%
+		lineageTag: 9c7ddf3b-c177-41a9-9900-d35d519ef748
+
+	measure 'Total Cac Full M-1' =
+			
+			
+			var cac = [Total Cac Full]
+			var cacy = CALCULATE([Total Cac Full],DATEADD(VW_CALENDARIO[DATA],-1,MONTH))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(cac),cac,cacy)
+		formatString: #,0
+		lineageTag: 9be3c87f-9c40-45a2-9c51-44a4749791be
+
+	measure '% RL 6 Meses' = DIVIDE([Receita Esperada com Margem 6 Meses], [Receita Esperada 6 Meses],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 94c28c4c-c8a9-44dd-9d7d-be5ca8603ac5
+
+	measure '% RL Anual' = DIVIDE([Receita Esperada com Margem Anual], [Receita Esperada Anualmente],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 70e4eff3-e308-429d-be30-b381805db10c
+
+	measure '% RL Total' = DIVIDE([Receita Esperada com Margem Total], [Receita Esperada Total],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 49602b96-3b28-4a4e-af9a-ed9808e2660e
+
+	measure 'Total Meta RL 6M 5x' = ```
+			
+			var metaltvcac6m = ([Total Meta LTV/CAC 5X]/[LTV/CAC 6 Meses]-1)
+			VAR RL6M = [Receita Liquida 6 Meses]
+			
+			RETURN
+			RL6M * metaltvcac6m + RL6M
+			
+			```
+		formatString: #,0
+		lineageTag: 3ecae984-d945-4b17-b7b6-6577c2ba4ffe
+
+	measure 'Total Meta RL Anual 3x' = ```
+			
+			var metaltvcacY = ([Total Meta LTV/CAC 3x]/[LTV/CAC Anual]-1)
+			VAR RLY = [Receita Liquida Anual]
+			
+			RETURN
+			RLY * metaltvcacY + RLY
+			
+			```
+		formatString: #,0
+		lineageTag: 72254f14-4948-45ea-91a2-41575e6448ca
+
+	measure 'Total Meta RL Total 3x' = ```
+			
+			var metaltvcactt = ([Total Meta LTV/CAC 3x]/[LTV/CAC Total]-1)
+			VAR RLTT = [Receita Liquida Total]
+			
+			RETURN
+			RLTT * metaltvcactt + RLTT
+			
+			```
+		formatString: #,0
+		lineageTag: 1a18629f-1338-4e78-876e-d7fe28e9403e
+
+	measure 'Total Meta RL Anual 5x' =
+			
+			var metaltvcacY = ([Total Meta LTV/CAC 5X]/[LTV/CAC Anual]-1)
+			VAR RLY = [Receita Liquida Anual]
+			
+			RETURN
+			RLY * metaltvcacY + RLY
+		formatString: #,0
+		lineageTag: 58f45d9e-9c79-48df-8f86-194e462e1ff2
+
+	measure 'Total Meta RL Total 5x' =
+			
+			var metaltvcactt = ([Total Meta LTV/CAC 5x]/[LTV/CAC Total]-1)
+			VAR RLTT = [Receita Liquida Total]
+			
+			RETURN
+			RLTT * metaltvcactt + RLTT
+		formatString: #,0
+		lineageTag: 84bf0db1-7c48-42e7-874a-5043228aedf7
+
+	measure 'Total Mat Geral Projeção' =
+			
+			var matliq2 = ROUND([Total Mat Projeção],0)
+			
+			RETURN
+			matliq2
+		lineageTag: 0a3ad9de-0945-48b9-8728-b3f4204708e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Liquida LTV Projecao' =
+			
+			var matliq2 = ROUND([Total Mat Projeção] * [% Noshow Real],0)
+			
+			RETURN
+			matliq2
+		lineageTag: c855f89a-4be8-46f8-b615-63f99857fbbd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Geral Simulado' =
+			
+			var matliq = ROUND([Total Mat Geral],0) * Parametro_matricula_liquida[Valor Parâmetro 2]
+			var matliq2 = ROUND([Total Mat Geral],0)
+			var matliq3 = Parametro_matricula_liquida[Valor Parâmetro 2]
+			var matfinal = matliq + matliq2
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Mat Geral]),BLANK(),matliq3)
+		lineageTag: 89ad67e9-015f-4eac-8f82-8166e37b447b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Liquida LTV Simulado' =
+			
+			var matliq = ROUND([Total Mat Geral Simulado],0) * (1- [% Noshow Simulado])
+			RETURN
+			matliq
+		formatString: #,0
+		lineageTag: e58dcebe-349a-45d8-a75a-89fbd9df409d
+
+	measure 'Total Mat Liquida LTV' = ROUND([Total Mat Geral],0) * (1-[% Noshow Real])
+		formatString: #,0
+		lineageTag: fc2583e3-07ca-436f-8617-b05d205c24c1
+
+	measure 'Ticket Médio Real' = ```
+			
+			VAR media = AVERAGE(int_commercial__life_time_value_per_branch[atp])
+			VAR mediapar = media * 'Parâmetro_Ticket_Medio'[Valor Parâmetro_Ticket]
+			VAR mediafinal = media + mediapar
+			
+			VAR mediaregional = CALCULATE(AVERAGE(int_commercial__life_time_value_per_branch[atp]), FILTER(ALL(dim_unidade_historica),dim_unidade_historica[regional]=MAX(dim_unidade_historica[regional])))
+			var media_regional_par = mediaregional * 'Parâmetro_Ticket_Medio'[Valor Parâmetro_Ticket]
+			var mediaregionalfinal = mediaregional + media_regional_par
+			
+			RETURN 
+			IF(ISBLANK(media), mediaregional, media)
+			```
+		formatString: #,0
+		lineageTag: 3610b297-0d9f-4ddb-9742-2b789efbe30f
+
+	measure '% Noshow Real' = ```
+			
+			VAR Media = 
+			    1 - AVERAGE(int_commercial__life_time_value_per_branch[noshow])
+			VAR media_regional = 
+			    CALCULATE(
+			        AVERAGE(int_commercial__life_time_value_per_branch[noshow]),
+			        FILTER(
+			            ALL(dim_unidade_historica),
+			            dim_unidade_historica[regional] = MAX(dim_unidade_historica[regional])
+			        )
+			    )
+			
+			RETURN 
+			IF(ISBLANK(Media), media_regional, Media)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 07c800da-4346-493c-88a9-86c6799ab5eb
+
+	measure 'Total Custos' =
+			
+			CALCULATE(SUM(vw_custo_consolidado_unidade[custo_total]),vw_custo_consolidado_unidade[tipo_custo] = "Cac_Comercial_Final" || vw_custo_consolidado_unidade[tipo_custo] = "Ferramenta" || vw_custo_consolidado_unidade[tipo_custo] = "Investimento" )
+		formatString: #,0
+		lineageTag: 7099cba6-d405-47f7-bc40-cb00afc29ad1
+
+	measure 'Receita Liquida 6 Meses' = ([Total Mat Liquida LTV Simulado] * [Ticket Médio Simulado] * 6 * [Margem de Contribuição] * [Permanencia 6 Meses])
+		formatString: #,0
+		lineageTag: c343c6ae-34e4-4336-b160-b3ec278faa00
+
+	measure 'Receita Liquida Anual' = (([Total Mat Liquida LTV Simulado] * [Ticket Médio Simulado] * 6 * [Margem de Contribuição] * [Permanencia Annual]) + [Receita Liquida 6 Meses])
+		formatString: #,0
+		lineageTag: a8281286-3237-440f-a127-685d1ce013b3
+
+	measure 'Receita Liquida Total' =
+			
+			var mattotal = [Total Mat Liquida LTV Simulado]
+			var tkt = [Ticket Médio Simulado]
+			var marg = [Margem de Contribuição]
+			var per = [Permanencia Total]
+			
+			var tempo = IF([MediaTempoRegional]<12,12,[MediaTempoRegional]) - 12
+			var final = (mattotal * tkt * tempo * marg * per ) + [Receita Liquida Anual]
+			
+			RETURN
+			final
+		formatString: #,0
+		lineageTag: 74c385aa-b055-4582-ac1b-c41802c4b36a
+
+	measure 'Total Investimento Meta Reduzido Zerado' =
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Meta]/1000,BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Meta]/1000,BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Meta]/1000,BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: #,0.0
+		lineageTag: 1b28d444-757f-41a1-91e1-04ae72ea2a13
+
+	measure 'Total Investimento Acum Reduzido' = CALCULATE([Total Investimento Reduzido],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 864ece50-b32c-4454-9d1b-108547d6b391
+
+	measure 'Total Investimento Meta Acum Reduzido' = CALCULATE([Total Investimento Meta Reduzido],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0.0
+		lineageTag: bc257332-76f1-479c-bc2a-c9d4c830a9ae
+
+	measure 'Total Investimento Projeção ACUM' = ```
+			
+			
+			VAR INVEST = calculate([Total Investimento Projeção Reduzido],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+			VAR INVESTCORRIDA = CALCULATE(DIVIDE(INVEST,([Total dias uteis corridos]),0)) * ([Total dias uteis restante])
+			var investfinal = INVEST + INVESTCORRIDA
+			
+			RETURN 
+			SWITCH(TRUE(),
+			ISBLANK(INVEST),investfinal,INVEST)
+			
+			```
+		lineageTag: 37d4579b-2e47-484d-b5ab-c38fbb499690
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Acum Zerado Reduzido' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Acum Reduzido],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Acum Reduzido],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Acum Reduzido],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: #,0.0
+		lineageTag: 63411b15-a79d-475d-b6e3-6c5d98362d78
+
+	measure 'Total Investimento Reduzido' = [Total Investimento]/1000
+		formatString: #,0.0
+		lineageTag: ffde2574-755a-4e18-a180-683ef8ce6e2d
+
+	measure 'Total Investimento Meta Acum Reduzido Zerado' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Meta Acum Reduzido],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Meta Acum Reduzido],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Meta Acum Reduzido],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: #,0
+		lineageTag: b54408f5-4e68-4b21-b7d0-78617be74992
+
+	measure '% Total Investimento Meta Acum Reduzido Zerado' = DIVIDE([Total Investimento Acum Zerado Reduzido],[Total Investimento Meta Acum Reduzido Zerado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 4bf4d8c5-a1f5-4fba-a234-ac5b1adb6274
+
+	measure '% Total Investimento Reduzido' = DIVIDE([Total Investimento Reduzido],[Total Investimento Meta Reduzido Zerado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 21c15f38-b0d5-4ba8-b6b7-4bf31e52507d
+
+	measure 'Total Investimento Alocado Reduzido' = CALCULATE([Total Investimento Alocado]/1000)
+		formatString: #,0.0
+		lineageTag: ce578fab-6b52-453f-b63e-d7becc8965cf
+
+	measure 'Total Investimento Geral Reduzido' = CALCULATE([Total Investimento Geral]/1000)
+		formatString: #,0.0
+		lineageTag: 64ed1c85-0a32-4bcd-8ca6-ce27bf0fec1d
+
+	measure 'Total Investimento Projeção Acum Zerado' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]> MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Projeção ACUM],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Projeção ACUM],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Projeção ACUM],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: 0
+		lineageTag: 52533e7b-7c57-4ad4-b679-ecad356c107e
+
+	measure 'Total Investimento Meta Movel Reduzido' =
+			
+			VAR MetasPorDia = DIVIDE([Total Investimento Meta Reduzido Zerado], [Total dias uteis Ajustado], 0)
+			VAR DiasCorridos = [Total dias uteis corridos Ajustado]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+		lineageTag: 2203dd6c-6618-4391-a392-ba9c6a669a0c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Investimento Meta Móvel Reduzido' = DIVIDE([Total Investimento Reduzido],[Total Investimento Meta Movel Reduzido],0)
+		formatString: 0%;-0%;0%
+		lineageTag: edaa15f8-74c6-4d4e-8b60-5e0e8a92a829
+
+	measure 'Total Investimento Alocado Share' = DIVIDE([Total Investimento Alocado Reduzido],[Total Investimento Reduzido])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 347d3456-639c-416b-98a5-0d4ef428e1c0
+
+	measure 'Total Investimento Geral Share' = DIVIDE([Total Investimento Geral Reduzido],[Total Investimento Reduzido])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 43c73932-1c32-4654-9edc-442ea30de5b6
+
+	measure 'Total Investimento Alocado' = CALCULATE([Total Investimento],vw_ft_investimento_distribuido_tb[tipo]="Alocado")
+		formatString: #,0
+		lineageTag: b7e2f153-39af-458f-8018-ba0400149d65
+
+	measure 'Total Investimento Geral' = CALCULATE([Total Investimento],vw_ft_investimento_distribuido_tb[tipo]="Geral")
+		formatString: #,0
+		lineageTag: eba806dc-77af-43f8-91da-6b3e41fad7d9
+
+	measure '% Total Mat Geral x Simulado' = DIVIDE([Total Mat Geral Simulado], [Total Mat Geral])-1
+		formatString: 0%;-0%;0%
+		lineageTag: 4183271e-2bd8-45d9-966d-43a05d595ada
+
+	measure 'Total Investimento Meta' =
+			
+			
+			var meta = CALCULATE(SUM(vw_ft_base_meta_investimento[meta_investimento_pdu]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(meta) || meta = 0,BLANK(),meta)
+		formatString: #,0
+		lineageTag: b25744f8-5f1c-427f-8088-580d84d7fcc2
+
+	measure 'Total Custo Take' = ```
+			
+			var custotake = SUM(vw_ft_cac_full[take])
+			RETURN
+			custotake
+			
+			```
+		formatString: #,0
+		lineageTag: 446e2240-45b8-4c08-8d9f-8f54bba367f9
+
+	measure 'Total Custo Persone' = ```
+			
+			var custo = SUM(vw_ft_cac_full[persone])
+			RETURN
+			custo
+			
+			```
+		formatString: #,0
+		lineageTag: c31ccf21-a859-4e94-8059-6d52860b50a1
+
+	measure 'Total Custo Data Soul' = ```
+			
+			var custo = SUM(vw_ft_cac_full[data_soul])
+			RETURN
+			custo
+			
+			```
+		formatString: #,0
+		lineageTag: e2f6c33f-db60-4c3f-9722-85d9cbb6b8e2
+
+	measure 'Total Custo RD CRM' = ```
+			
+			var custo = SUM(vw_ft_cac_full[rd_crm])
+			RETURN
+			custo
+			
+			```
+		formatString: #,0
+		lineageTag: 4255e90f-93e5-4cc6-b742-a56b59ec1400
+
+	measure 'Total Custo RD MKT' = ```
+			
+			var custo = SUM(vw_ft_cac_full[rd_mkt])
+			RETURN
+			custo
+			
+			```
+		formatString: #,0
+		lineageTag: 579eb38d-f67f-4e7a-8f4d-35cd8eceb01a
+
+	measure 'Total custo operacional' = ```
+			
+			
+			SUM(vw_custo_operacional[custo_operacional])
+			
+			```
+		formatString: #,0
+		lineageTag: a48a1166-f408-485d-840c-01e40d3f6024
+
+	measure 'Total Custo Ferramenta' = ```
+			
+			SUM(vw_custo_ferramenta[total_custo_ferramenta])
+			
+			
+			
+			```
+		lineageTag: 1fbc1384-5008-404c-9b88-79723edd4fe7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Custos Reduzido' =
+			
+			DIVIDE([Total Custos],1000)
+		formatString: #,0.0
+		lineageTag: 18ea4f04-ca03-4e7e-b9bb-19c4eccaa1ec
+
+	measure 'Total Investimento Meta Zerado' =
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxyear = CALCULATE(MAX(VW_CALENDARIO[COD_ANO]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			VAR Codano =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Meta],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Meta],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Meta],BLANK())
+			var invest4 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) <= maxyear,
+			        [Total Investimento Meta],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3,
+			     NOT(ISBLANK(Codano)),invest4
+			    )
+		lineageTag: 2776cf27-cf35-4a76-a07d-a8888cc21315
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Meta Movel' =
+			
+			VAR MetasPorDia = DIVIDE([Total Investimento Meta], [Total dias uteis Ajustado], 0)
+			VAR DiasCorridos = [Total dias uteis corridos Ajustado]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+		lineageTag: a5e81183-8e60-459e-8974-44b8ed3ea0ce
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Projeção' = ```
+			
+			VAR INVEST = [Total Investimento]
+			VAR INVESTCORRIDA = CALCULATE(DIVIDE(INVEST,([Total dias uteis corridos]),0)) * ([Total dias uteis restante])
+			RETURN 
+			
+			INVEST + INVESTCORRIDA
+			```
+		formatString: #,0
+		lineageTag: 73037116-b4e7-42d8-8442-32c37dd544a1
+
+	measure 'Total Investimento Meta Acum YTD' = TOTALYTD([Total Investimento Meta],VW_CALENDARIO[DATA],ALLSELECTED(VW_CALENDARIO))
+		lineageTag: f03a3b61-6e63-431e-9044-073166135c31
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Meta Acum' = CALCULATE([Total Investimento Meta],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		lineageTag: ae505f48-9a13-45d7-a694-9f1c1c91c187
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Meta Reduzido' = ```
+			
+			VAR meta = 
+			    CALCULATE(
+			        SUM(vw_ft_base_meta_investimento[meta_investimento_pdu]),
+			        ALL(VW_CALENDARIO[MTD_FECHAMENTO])
+			    ) / 1000
+			RETURN
+			    IF(
+			        ISBLANK(meta) || meta = 0,
+			        BLANK(),
+			        meta
+			    )
+			```
+		formatString: 0
+		lineageTag: 25806729-541b-468a-b9d0-3745a7d692b8
+
+	measure 'Total Investimento Meta Acum Zerado' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Meta Acum],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Meta Acum],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Meta Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		lineageTag: 3716c2f0-4a2b-4025-8bef-a6219fd934e0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Investimento Meta Acum Zerado' = DIVIDE([Total Investimento Acum Zerado],[Total Investimento Meta Acum Zerado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 9a88672f-c5d2-4deb-9b09-f18de2058dcb
+
+	measure 'Total Investimento Acum Zerado' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Investimento Acum],BLANK()
+			            )
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Investimento Acum],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Investimento Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		lineageTag: 43d9758c-b8df-45c6-82d9-ac834d44d560
+
+	measure 'Total Investimento Acum' = CALCULATE([Total Investimento],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		lineageTag: f2d0dd66-cf4d-4aef-a632-f37fc3db8d86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Investimento' = DIVIDE([Total Investimento],[Total Investimento Meta],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 394bb825-06fa-42c7-9108-3192357b3478
+
+	measure 'Total Investimento Saving' = [Total Investimento Meta]-[Total Investimento]
+		formatString: #,0
+		lineageTag: 8d102bf5-8b8e-49da-8942-7447136ca85b
+
+	measure 'Total custo operacional reduzido' = ```
+			
+			[Total custo operacional]/1000
+			
+			```
+		formatString: #,0.0
+		lineageTag: 1b77b9ac-2216-4718-993c-bba6f406fd1c
+
+	measure 'Total Custo Ferramento reduzido' = [Total Custo Ferramenta]/1000
+		formatString: #,0.0
+		lineageTag: 9e865a29-8cf6-4a28-acca-0eb7283a2d1d
+
+	measure '% Total Investimento -1' =
+			
+			
+			var invest = DIVIDE([Total Investimento],[Total Investimento Meta],0)-1
+			RETURN
+			SWITCH(TRUE(),
+			invest <= -1,BLANK(),invest)
+		formatString: 0%;-0%;0%
+		lineageTag: 0b7c9c9f-09f2-4555-8424-02239205a1c6
+
+	measure '% Total Investimento Meta Acum Zerado -1' =
+			
+			
+			VAR meta = DIVIDE([Total Investimento Acum Zerado],[Total Investimento Meta Acum Zerado],0)-1
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Investimento]),BLANK(),meta)
+		formatString: 0%;-0%;0%
+		lineageTag: 68d1feb4-1183-43d8-9dab-7e927fa903c2
+
+	measure '% Total Investimento Meta Móvel Alocado Reduzido' = DIVIDE([Total Investimento Alocado Reduzido],[Total Investimento Meta Movel Reduzido],0)
+		formatString: 0%;-0%;0%
+		lineageTag: ba8c13cb-1945-4787-b46e-571e990bd262
+
+	measure '% Total Investimento Alocado Reduzido' = DIVIDE([Total Investimento Alocado Reduzido],[Total Investimento Meta Reduzido Zerado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 0c8dc2b4-a3f7-430a-a5e8-ab3e45a9ffbc
+
+	measure 'Total CPL Pago Alocado' = DIVIDE([Total Investimento Alocado],[Total Leads Pago],0)
+		lineageTag: 9f1c1eb1-e38e-45bd-bfec-f1e51b384e41
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Custos Consolidado' =
+			
+			SUM(vw_custo_consolidado_unidade[custo_total])
+		formatString: #,0
+		lineageTag: f18b7d1f-86f2-4cea-a341-3f403627a59a
+
+	measure 'Total Custos Consolidado Reduzido' =
+			
+			DIVIDE([Total Custos Consolidado],1000)
+		formatString: #,0.0
+		lineageTag: 13cd308d-77b1-445a-a7b6-d40311ce6bca
+
+	measure 'Total Investimento UTM' =
+			
+			VAR utm_camp_invest = SELECTEDVALUE(vw_ft_investimento_distribuido_tb[utm_campaign_agrupada])
+			VAR utm_camp = SELECTEDVALUE(DIM_UTM_CAMPAIGN[utm_campaign_agrupada])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR sig = SELECTEDVALUE(dim_unidade_historica[sigla])
+			VAR invest = SUMX(vw_ft_investimento_distribuido_tb,vw_ft_investimento_distribuido_tb[investimento])
+			VAR invest_utm = SUMX(vw_ft_investimento_distribuido_tb,vw_ft_investimento_distribuido_tb[investimento_utm])
+			RETURN
+			SWITCH(TRUE(),
+			NOT ISBLANK(utm_camp),invest_utm,
+			NOT ISBLANK(utm_camp_invest),invest_utm,
+			
+			invest)
+		lineageTag: 0d4a8d62-6e44-46d0-bf06-41ee3b756585
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Custos Consolidado Y-1' = CALCULATE([Total Custos Consolidado],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		formatString: #,0
+		lineageTag: 854a5f61-5b4a-4793-98a3-c482a2ebee61
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Custos Consolidaddo YoY' = DIVIDE([Total Custos Consolidado],[Total Custos Consolidado Y-1])-1
+		formatString: 0%;-0%;0%
+		lineageTag: c8b3e9a6-1c1e-4611-8fde-39ff0a4bd73a
+
+	measure 'Total CPL Meta Pago' = DIVIDE([Total Investimento Meta],[Total Leads Meta Pago],0)
+		lineageTag: 7c37063d-fcbf-4ecf-b482-9965e65704a7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total CPL Meta Pago Dif' = ```
+			
+			VAR Total = [Total CPL Pago] - [Total CPL Meta Pago] 
+			RETURN FORMAT(Total, "+0.0;-0.0;0.0")
+			
+			```
+		lineageTag: 7909c442-4ce9-4234-ba29-5d5f5435da85
+
+	measure 'Total CPL Meta Movel Pago Dif' = ```
+			
+			VAR Total = [Total CPL Pago] - [Total CPL Meta Movel Pago] 
+			RETURN FORMAT(Total, "+0.0;-0.0;0.0")
+			```
+		lineageTag: fa59872c-63af-43cb-bd74-cd58e8f56832
+
+	measure '% Total Investimento Meta Móvel' = DIVIDE([Total Investimento],[Total Investimento Meta Movel],0)
+		formatString: 0%;-0%;0%
+		lineageTag: f1fd0a8d-117a-4a8d-9f18-ff64060e623d
+
+	measure 'Total Investimento Meta Facebook' = [Total Investimento Meta]* 0.10
+		lineageTag: a79a95e2-55ec-4f4a-b4cd-726beddd8c78
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: aae17872-21e5-4e87-98fa-925efef9364d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medida_LTV = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = b8f7a37d9e1f4710ab6c80576d757d6a
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -1,0 +1,64 @@
+table vw_custo_ferramenta
+	lineageTag: 7f752e64-9ac7-439d-8eaf-170590740bb3
+
+	column mes_data
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 19219ca9-0158-48eb-a5f9-8bca334b5f8d
+		summarizeBy: none
+		sourceColumn: mes_data
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column descricao_custo
+		dataType: string
+		lineageTag: 2240cf86-1303-4afb-a913-9170fa50cbf9
+		summarizeBy: none
+		sourceColumn: descricao_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column origem_custo
+		dataType: string
+		lineageTag: f6027f82-e900-4b7f-a2dc-88963219a6c5
+		summarizeBy: none
+		sourceColumn: origem_custo
+
+		annotation SummarizationSetBy = Automatic
+
+	column total_custo_ferramenta
+		dataType: double
+		lineageTag: 4359c783-9e69-4078-b5ee-603e30325a56
+		summarizeBy: sum
+		sourceColumn: total_custo_ferramenta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column categoria
+		dataType: string
+		lineageTag: e50d48de-3d1f-4033-8175-4ef287d6a262
+		summarizeBy: none
+		sourceColumn: categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_custo_ferramenta = m
+		mode: import
+		queryGroup: CAC
+		source =
+				let
+				      Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.CAC.vw_custo_ferramenta", null, [EnableFolding=true]),
+				
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"origem_custo", Text.Proper, type text}, {"descricao_custo", Text.Proper, type text}, {"categoria", Text.Proper, type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula1" = Table.TransformColumns(#"Colocar Cada Palavra Em Maiúscula",{{"origem_custo", Text.Proper, type text}, {"categoria", Text.Proper, type text}, {"descricao_custo", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

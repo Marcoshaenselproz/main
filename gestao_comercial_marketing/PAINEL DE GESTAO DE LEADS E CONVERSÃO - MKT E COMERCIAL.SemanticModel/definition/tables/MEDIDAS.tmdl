@@ -1,0 +1,4876 @@
+table MEDIDAS
+	lineageTag: b4c6af6c-d272-415b-ae84-a4630cec32b4
+
+	measure DataBase = MAX(VW_LEADS_GROUP[DATA_CRIACAO])
+		formatString: DD/MM
+		lineageTag: b415c8b1-cd3e-4fe5-b197-413179d48828
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure DataBase_Fechada = MAX(VW_LEADS_GROUP[DATA_CRIACAO]) -1
+		formatString: DD/MM
+		lineageTag: a49cb56b-64f4-487d-8bf6-54a10917d843
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure Espaço =
+			
+			VAR mat = [Total Mat Valida]
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(mat),mat,BLANK())
+		formatString: 0
+		lineageTag: a1daee80-6651-4066-98d5-4aa77296f6e8
+
+	measure Divider = "|"
+		lineageTag: 2177900e-fc7d-465e-8d9c-737c91af0a99
+
+	measure '% Leads Falados Válidos Geral' = DIVIDE([Total Atendimentos Leads Falados Validos],[Total Leads],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 88709477-83fd-415f-9fd2-1c9825412c5f
+
+	measure '% Leads Falados Geral' = DIVIDE([Total Atendimentos Leads Falados],[Total Leads],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 22db368e-1639-4f9b-8c99-d1995184e03e
+
+	measure 'Total Atendimentos por Leads' = ```
+			DIVIDE([Total Atendimentos Leads],[Total Leads],0) 
+			```
+		formatString: #,0.00
+		lineageTag: 188a5297-2d6a-4b32-a1ca-5b50d7519f1e
+
+	measure 'Total Mat Meta BP' =
+			
+			
+			
+			VAR meta = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_bp_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(meta) || meta = 0,BLANK(),
+			meta
+			)
+		formatString: #,0
+		lineageTag: d89fe054-f518-4ee7-89f8-0863e3791846
+
+	measure '% Matrículas Mês' = DIVIDE([Total Mat/Leads], [Total Mat Geral],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 77cd1d53-a4c4-43a4-995b-fc6af309e86e
+
+	measure 'Total Faturamento' = ```
+			
+			CALCULATE(
+			    SUM(VW_MATRICULAS[total_faturamento]),
+			    FILTER(
+			        VW_MATRICULAS, 
+			        NOT CONTAINS(VW_MATRICULAS,VW_MATRICULAS[motivo_da_saida],"Cancelado"
+			    )
+			),FILTER(VW_MATRICULAS,VW_MATRICULAS[status_contrato]="Matriculado"))
+			```
+		formatString: #,0
+		lineageTag: f4be13a8-3ab2-4384-a610-f8ce9d47685a
+
+	measure 'Total Mat Valida' = ```
+			
+			CALCULATE(SUM(VW_MATRICULAS[venda_validas]))
+			    
+			```
+		formatString: #,0
+		lineageTag: 9011aeeb-979f-41cb-8ef0-90f52510b964
+
+	measure 'Total Mat Geral MTD' =
+			CALCULATE(
+			    [Total Mat Valida],
+			    VW_CALENDARIO[MTD_FECHAMENTO]= "RESULTADO ATÉ A DATA"
+			)
+		formatString: #,0
+		lineageTag: 66e1b72f-c734-4e5c-8aea-e2d31ea9926d
+
+	measure 'Conversão Geral' =
+			
+			VAR TOTAL = DIVIDE([Total Mat Geral],[Total Leads])
+			RETURN
+			IF(NOT ISBLANK(TOTAL) && TOTAL <> 0 ,TOTAL)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 599154eb-67f3-4f49-9ac1-f0ff3dc432aa
+
+	measure 'Conversao Inscritos para Pre Matriculados' = [Total Pre Matriculas Geral] / [Total Inscritos Geral Lead]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: c03f74ad-bfac-44d0-be33-82203125a700
+
+	measure 'Conversao Leads para Inscritos' = ([Total Pre Matriculas Geral]) / [Total Leads]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: dfb46bee-b502-4165-b7f5-41e4c304e7fe
+
+	measure 'Conversao Mat/Leads' = DIVIDE( [Total Mat/Leads], [Total Leads])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: d31502fb-202b-4557-bbe5-7c9dd85a748c
+
+	measure 'Conversao Leads para Pre Matriculados' = [Total Pre Matriculas Geral] / [Total Leads]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b17fc089-8a3f-449e-9180-7cebb5356b8e
+
+	measure 'Conversão Leads Válidos para Mat/Leads' = DIVIDE([Total Mat/Leads],[Total Atendimentos Leads Falados Validos])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: a108936a-cba0-471a-9421-30316fa3ce30
+
+	measure 'Conversao Pre Matriculados para Matriculados' = [Total Mat/Leads] / [Total Pre Matriculas Geral]
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: a405740a-e467-4330-b4e8-44511c1f5bd6
+
+	measure 'Conversão Visitantes em Leads Pagos' = DIVIDE([Total Leads Pago], [Total Visitantes],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6ca0aa39-ad49-48d1-b3c2-d8cb28f5ea3a
+
+	measure 'Conversão Leads/Visitantes' = DIVIDE([Total Leads Visitantes], [Total Visitantes])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4f284629-f8c4-40a9-bf85-3410124daf39
+
+	measure 'Total Atendimentos Leads Falados' = ```
+			
+			    CALCULATE(
+			        SUMX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[total_atendimentos_falados]
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: d17d3eeb-4219-4cbe-9d02-a3f1b4342e94
+
+	measure 'Total Atendimentos Leads Falados Validos' = ```
+			
+			    CALCULATE(
+			        SUMX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[total_atendimentos_falados_validos]
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: dd1b57a2-6255-49b8-94e9-61e862064408
+
+	measure '% Total Atendimentos Leads Falados Válidos' = DIVIDE([Total Atendimentos Leads Falados Validos], [Total Leads],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 630c7b2c-00de-457e-aca7-dd8795ef08d1
+
+	measure '% Total Leads Pago' =
+			
+			
+			VAR diferenca = DIVIDE([Total Leads Pago],[Total Leads],0)
+			
+			RETURN diferenca
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: efa7fb18-c164-454c-9be9-80d8a9451038
+
+	measure '% Total Leads sem atendimentos' = DIVIDE([Total Leads Sem Atendimento],[Total Leads],0)
+		formatString: 0%;-0%;0%
+		lineageTag: a3e7a02b-c351-45c9-84bd-8d9a1f519717
+
+	measure '% Leads sem unidade' = DIVIDE([Total Leads Sem Unidade],[Total Leads],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3c8b68f4-faa7-4b6a-834d-9fd1bb9fb044
+
+	measure '% Leads sem UTM' = DIVIDE([Total Leads Sem UTM],[Total Leads],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 5c1d3e7e-d116-476c-bfa0-da7540202b2c
+
+	measure '% Participação Lead' = ```
+			
+			// Variável para trazer o total do ano filtrado
+			var total = CALCULATE([Total Leads],ALLSELECTED(VW_LEADS_GROUP))
+			
+			
+			return
+			
+			
+			// Divisão entre o valor da categoria sobre o total do ano filtrado
+			DIVIDE(
+			    [Total Leads],
+			    total,
+			    0
+			) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5d68813b-f73d-42cd-825c-b731e5c1fe83
+
+	measure '% Participação Lead por Dia' = ```
+			
+			VAR totalPorSemana = 
+			    CALCULATE(
+			        [Total Leads],
+			        ALLSELECTED(VW_LEADS_GROUP),
+			        VALUES(VW_CALENDARIO[DATA])
+			    )
+			
+			RETURN
+			DIVIDE(
+			    [Total Leads],
+			    totalPorSemana,
+			    0
+			)
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4e8dd171-669b-4ea9-9065-25a1df13e31f
+
+	measure '% Participação Lead por Semana' = ```
+			
+			VAR totalPorSemana = 
+			    CALCULATE(
+			        [Total Leads],
+			        ALLSELECTED(VW_LEADS_GROUP),
+			        VALUES(VW_CALENDARIO[DSC_SEMANA])
+			    )
+			
+			RETURN
+			DIVIDE(
+			    [Total Leads],
+			    totalPorSemana,
+			    0
+			)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 16e2b44c-c63d-4401-be2f-96c9626dbe93
+
+	measure '% Participação Lead por Semana, Campanha e Tipo' = ```
+			
+			VAR totalPorSemanaCampanhaTipo = 
+			    CALCULATE(
+			        [Total Leads],
+			        ALLSELECTED(VW_LEADS_GROUP),
+			        VALUES(VW_CALENDARIO[DSC_SEMANA])
+			    )
+			
+			RETURN
+			DIVIDE(
+			    [Total Leads],
+			    totalPorSemanaCampanhaTipo,
+			    0
+			)
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4345e1fc-6cec-49e9-8e34-3684873fffbb
+
+	measure '% Participação Visitantes' = ```
+			
+			// Variável para trazer o total do ano filtrado
+			var total = CALCULATE([Total Visitantes],ALLSELECTED(VW_VISITANTES_GROUP))
+			
+			
+			return
+			
+			
+			// Divisão entre o valor da categoria sobre o total do ano filtrado
+			DIVIDE(
+			    [Total Visitantes],
+			    total,
+			    0
+			) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f76659ea-adf6-4efb-ab87-946d23675a43
+
+	measure '% Participação Mat/Leads' = ```
+			
+			// Variável para trazer o total do ano filtrado
+			var total = CALCULATE([Total Mat/Leads],ALLSELECTED(VW_LEADS_GROUP))
+			
+			
+			return
+			
+			
+			// Divisão entre o valor da categoria sobre o total do ano filtrado
+			DIVIDE(
+			    [Total Mat/Leads],
+			    total,
+			    0
+			) 
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bf6fffd8-e756-4776-a522-4bf5c4b525fa
+
+	measure 'PDU Leads' = DIVIDE([Total Leads],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 79b7ca8b-e5f8-4154-b00f-435898edfef2
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'PDU Leads MTD' = DIVIDE([Total Leads MTD],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 1f7a617a-8d27-4618-9cab-ec2daee40911
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'PDU Leads Sem Unidade' = DIVIDE([Total Leads Sem Unidade],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 0f138e32-4df3-49bb-a0d6-ac788a369a97
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'PDU Leads Sem UTM' = DIVIDE([Total Leads Sem UTM],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: fb659183-1498-4e95-85bb-518915190903
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'PDU Matrículas' =
+			
+			VAR diascorridos = [Total dias uteis corridos]
+			var totalmat = [Total Mat Geral]
+			RETURN
+			if (diascorridos < 1, DIVIDE(totalmat,1,0),DIVIDE(totalmat,diascorridos,0))
+		formatString: #,0.0
+		lineageTag: 1bde4941-1e2d-41b9-b4db-85250f93b73d
+
+	measure 'PDU Visitantes' = DIVIDE([Total Visitantes],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 829a670f-6128-4331-a6df-f6a778d3b7b6
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Atendimentos Leads' = ```
+			
+			    CALCULATE(
+			        SUMX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[total_atendimentos]
+			        )
+			    )
+			```
+		formatString: #,0
+		lineageTag: d8540d58-6369-4978-8ca8-ced0b2a94980
+
+	measure 'Total Inscritos Atual Lead' = SUM(VW_LEADS_GROUP[total_inscritos])
+		formatString: #,0
+		lineageTag: 93c480a0-d60b-4c03-ab68-d50c6a434fb0
+
+	measure 'Total Inscritos Geral Lead' = [Total Inscritos Atual Lead] + [Total Pre Matriculas Atual] + [Total Mat/Leads]
+		formatString: #,0
+		lineageTag: 2402cc73-b61a-4124-9b47-1f4391ac94b6
+
+	measure 'Total Leads' = ```
+			
+			    var leadshist = CALCULATE([Total Leads Historica])
+			    RETURN
+			    leadshist
+			```
+		formatString: #,0
+		lineageTag: 5ac5f73d-6304-4591-8bd8-54651b61e7bf
+
+	measure 'Total Leads MTD' =
+			CALCULATE(
+			    SUMX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[Total]
+			        ),
+			    VW_CALENDARIO[MTD_FECHAMENTO]= "RESULTADO ATÉ A DATA"
+			)
+		formatString: 0
+		lineageTag: 1241703e-a4e4-45e6-b1e4-5acc396e97ca
+
+	measure 'Total Leads Não Pago' =
+			
+			CALCULATE(
+			        [Total Leads], DIM_TIPO_LEAD[tipo_lead] = "Não Pago"
+			)
+		formatString: #,0
+		lineageTag: 8417a110-93ee-4a8c-986b-801cf8e16efc
+
+	measure 'Total Leads Pago' =
+			
+			CALCULATE(
+			    [Total Leads], DIM_TIPO_LEAD[tipo_lead] = "Pago"
+			
+			)
+		formatString: #,0
+		lineageTag: 454b87b2-e716-4f4a-bf62-eaf21fd90135
+
+	measure 'Total Leads Sem Atendimento' = ```
+			
+			   CALCULATE([Total Leads],CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n1],"Sem Atendimento"))
+			 
+			
+			```
+		formatString: #,0
+		lineageTag: be14b588-8ffc-4de5-8a78-805ca9b849d5
+
+	measure 'Total Leads Sem Unidade' =
+			
+			CALCULATE(
+			    [Total Leads],
+			    VW_LEADS_GROUP[unidade]= "N/A" ||   VW_LEADS_GROUP[unidade]= "Sem Unidade"
+			)
+		formatString: #,0
+		lineageTag: c957bd42-b9e5-4230-9358-335a1b07d02a
+
+	measure 'Total Leads Sem UTM' =
+			
+			CALCULATE(
+			    [Total Leads],
+			    VW_LEADS_GROUP[utm_campaign_agrupada]= "Sem UTM"
+			)
+		formatString: #,0
+		lineageTag: 3db3fdef-003e-4510-a784-102a9e2e1eb7
+
+	measure 'Total Mat/Leads' = CALCULATE(SUM(VW_LEADS_GROUP[total_matriculados]),FILTER(VW_LEADS_GROUP,VW_LEADS_GROUP[status_safra]<> "Convertido Em Datas Anteriores"))
+		formatString: #,0
+		lineageTag: 410cea7e-1df7-4698-b10e-f884c5175015
+
+	measure 'Total Mat/Leads MTD' =
+			CALCULATE(
+			    SUM(VW_LEADS_GROUP[total_matriculados] ),
+			    VW_CALENDARIO[MTD_FECHAMENTO]= "RESULTADO ATÉ A DATA"
+			)
+		formatString: 0
+		lineageTag: 94feaf0a-cd6f-4813-b48f-8930b44e5adb
+
+	measure 'Total Pre Matriculas Atual' = SUM(VW_LEADS_GROUP[total_pre_matriculados])
+		formatString: #,0
+		lineageTag: 8ed5bbcb-f60f-4082-8925-ae0f39215907
+
+	measure 'Total Pre Matriculas Geral' = [Total Mat/Leads] + [Total Pre Matriculas Atual]
+		formatString: #,0
+		lineageTag: b6b175b4-cc66-4f3d-97a7-fa5c6cfed129
+
+	measure 'Total Visitantes Hora' = CALCULATE(SUM(VW_VISITANTES_GROUP[Total]))
+		formatString: #,0
+		lineageTag: 44f0fa05-c622-4670-b0f3-faae91852196
+
+	measure 'Total Visitantes na DataBase' = ```
+			
+			CALCULATE(
+			    SUM(VW_VISITANTES_GROUP[Total]),
+			    FILTER(
+			        VW_VISITANTES_GROUP,
+			        VW_VISITANTES_GROUP[data_criacao] = [DataBase]
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 4f984303-30fd-4864-a94d-2b4f396adf76
+
+	measure 'Total Tkt' = DIVIDE([Total Faturamento], [Total Mat Valida],0)
+		lineageTag: 31891cde-5882-4e55-93fd-9124d84326b2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% D.U Real' = DIVIDE([Total dias uteis corridos], [Total dias uteis],0)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 7361f5d7-54d6-438d-85eb-c8bf558b7f3b
+
+	measure 'Total dias uteis' = CALCULATE(SUM(VW_CALENDARIO[COD_DIA_UTIL]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+		formatString: 0.0
+		lineageTag: ba6eee5b-b520-47c8-a942-85cfcad0e6a2
+
+	measure 'Total dias uteis restante' = ([Total dias uteis] - [Total dias uteis corridos])
+		formatString: 0.0
+		lineageTag: e1830b5f-49a6-4752-bcc9-152dceb0cfaa
+
+	measure 'Total dias uteis corridos acum' = ```
+			
+			VAR maxmat = IF(MAX(VW_LEADS_GROUP[data_criacao]) <= TODAY(), MAX(VW_LEADS_GROUP[data_criacao]), TODAY())
+			VAR dureal = 
+			    CALCULATE(
+			        SUMX(VW_CALENDARIO,VW_CALENDARIO[COD_DIA_UTIL]),FILTER(ALLSELECTED(VW_CALENDARIO),VW_CALENDARIO[DATA] <= maxmat))
+			    
+			RETURN dureal
+			
+			
+			```
+		formatString: 0.0
+		lineageTag: e22554db-b3e2-4657-a569-5e19d339ab63
+
+	measure 'Total Mat Meta BP Movel' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Mat Meta BP], [Total dias uteis], 0)
+			VAR DiasCorridos = [Total dias uteis corridos]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 7114450c-5ccf-475b-88be-86824c7ae64b
+
+	measure '% Total Mat Meta BP Movel' =
+			
+			
+			VAR meta = DIVIDE([Total Mat Geral], [Total Mat Meta BP Movel], 0)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Mat Meta BP Movel]),BLANK(),meta)
+		formatString: 0%;-0%;0%
+		lineageTag: 22896251-a8a4-4f9c-9b8b-88450bf5679e
+
+	measure 'Total Mat Meta BP Movel Acum' = CALCULATE([Total Mat Meta BP Movel],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		lineageTag: e471aebe-e01b-4cc2-9ce7-0700ecd7b001
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Acum' = CALCULATE([Total Mat Geral],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: 0
+		lineageTag: aa052602-4111-4be0-a54e-048e71c2eb61
+
+	measure 'Total Mat Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Acum],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Acum],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: 78fb3f60-c105-4621-a054-46a49e06a0d1
+
+	measure 'Total Mat Meta BP Acum' = CALCULATE([Total Mat Meta BP],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: c8e063e7-c1bc-4830-b8ff-e06db2afa650
+
+	measure 'Total Mat Meta BP Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Meta BP Acum],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Meta BP Acum],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Meta BP Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 31a7382e-ed8f-4829-89d1-33586b31a85b
+
+	measure '% Total Mat Meta BP Acum Zerado' = DIVIDE([Total Mat Acum Zerado], [Total Mat Meta BP Acum Zerado],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 3e40daac-117b-47a0-b249-d889042111c3
+
+	measure '% Total Mat Meta BP' = ```
+			
+			
+			var meta = DIVIDE([Total Mat Geral], [Total Mat Meta BP])
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Mat Meta BP]),BLANK(),meta)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: 680d3183-09d7-4b55-af61-7061e101e13d
+
+	measure 'Total dias uteis corridos' =
+			
+			VAR DataHoje = TODAY()
+			VAR SomaDiasUteis =
+			    CALCULATE(
+			        SUM(VW_CALENDARIO[COD_DIA_UTIL]),FILTER(VW_CALENDARIO,VW_CALENDARIO[DATA] <= DataHoje
+			    ))
+			RETURN
+			SomaDiasUteis
+		formatString: 0.0
+		lineageTag: ab04be28-4549-4195-97f8-27294657779b
+
+	measure 'Total Leads Meta' =
+			
+			VAR meta =
+			    CALCULATE(
+			        SUM(vw_ft_meta_bp_comercial[meta_leads_totais_dia]),
+			        ALL(VW_CALENDARIO[MTD_FECHAMENTO])
+			    )
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(meta) || meta = 0, BLANK(),
+			        meta
+			    )
+		formatString: #,0
+		lineageTag: c8db4ca9-f0f8-48e7-8fee-934185927df7
+
+	measure 'Total Leads Meta Acum' = CALCULATE([Total Leads Meta],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 9d913528-0344-408a-8c00-a62fdf317602
+
+	measure 'Total Leads Meta Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Meta Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Meta Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Meta Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 62810b1b-525f-4276-9d45-32d90acb645b
+
+	measure 'Total Leads Acum' = CALCULATE([Total Leads],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: 0
+		lineageTag: 7eb2d964-b4ba-4dd7-ae1b-1169eb7d7370
+
+	measure 'Total Leads Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: d0b5c940-2b8e-4456-8ce9-2ad68032d894
+
+	measure '% Total Leads Meta Acum Zerado' = DIVIDE([Total Leads Acum Zerado], [Total Leads Meta Acum Zerado],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: abb6b136-5e6a-465c-80bf-94fb226e5fb6
+
+	measure '% Total Leads Meta' = ```
+			
+			
+			var total = DIVIDE([Total Leads],[Total Leads Meta],0)
+			RETURN
+			IF(
+			        NOT ISBLANK([Total Leads Meta]) && [Total Leads Meta] <> 0, 
+			        total
+			    )
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: ce40c2db-bbaf-4b30-8a36-7c5476f4fffd
+
+	measure 'Total Leads Meta Pago' =
+			
+			VAR meta = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_leads_pago_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(meta) || meta = 0, BLANK(),
+			        meta
+			    )
+		formatString: #,0
+		lineageTag: 88003c1e-87db-40c7-aaf1-54e087534e66
+
+	measure 'Total Leads Meta Não Pago' =
+			
+			
+			var meta = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_leads_nao_pago_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        ISBLANK(meta) || meta = 0, BLANK(),
+			        meta
+			    )
+		formatString: #,0
+		lineageTag: 880b50fc-9f2e-4b62-b4be-29f0ce9be27d
+
+	measure 'Total Leads Meta Pago Acum' = CALCULATE([Total Leads Meta Pago],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: f6315772-f4f9-406a-abeb-4bc8f2fd3dde
+
+	measure 'Total Leads Meta Não Pago Acum' = CALCULATE([Total Leads Meta Não Pago],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 880b33eb-40a7-40ee-a15c-238877b12f3f
+
+	measure 'Total Leads Meta Pago Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Meta Pago Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Meta Pago Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Meta Pago Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 93dc72af-941a-4a43-aa94-07a8ac91a1dc
+
+	measure 'Total Leads Meta Não Pago Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Meta Não Pago Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Meta Não Pago Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Meta Não Pago Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 00f8f025-6a6d-4461-a7a5-142f6de36174
+
+	measure '% Total Leads Meta Pago' =
+			
+			VAR TOTAL = DIVIDE([Total Leads Pago],[Total Leads Meta Pago],0)
+			
+			RETURN
+			IF(NOT ISBLANK([Total Leads Meta Pago]) && [Total Leads Meta Pago] <> 0 ,TOTAL)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 1b3b2f33-9658-41df-8d13-48b09f4047d9
+
+	measure '% Total Leads Meta Não Pago' = DIVIDE([Total Leads Não Pago],[Total Leads Meta Não Pago],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 29aecf9e-b741-4efa-989a-ee7af9f725f1
+
+	measure 'Total Leads Pago Acum' = CALCULATE([Total Leads Pago],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: cd907158-81ec-4f68-b094-f51b7a0c157c
+
+	measure 'Total Leads Não Pago Acum' = CALCULATE([Total Leads Não Pago],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: d216feb4-94e1-46f5-be3e-94a4654908f9
+
+	measure 'Total Leads Pago Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Pago Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Pago Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Pago Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 410fa5d6-abe9-41a2-99ad-bf7f52d14043
+
+	measure 'Total Leads Não Pago Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var lead1 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Leads Não Pago Acum],BLANK()
+			            )
+			
+			var lead2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Leads Não Pago Acum],BLANK())
+			
+			var lead3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Leads Não Pago Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),lead1,
+			   NOT(ISBLANK(Codsem)),lead2,
+			   NOT(ISBLANK(Codmes)),lead3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: a09df009-4c41-40b4-bbae-62bc64235085
+
+	measure '% Total Leads Meta Pago Acum Zerado' = DIVIDE([Total Leads Pago Acum Zerado], [Total Leads Meta Pago Acum Zerado],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 22471e3b-78b1-4545-8d2f-dd16557cceb9
+
+	measure '% Total Leads Meta Não Pago Acum Zerado' = DIVIDE([Total Leads Não Pago Acum Zerado], [Total Leads Meta Não Pago Acum Zerado],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: dfc5ecc2-e52b-4a98-a8e9-8f61986afa3d
+
+	measure 'Total Mat Geral Pago' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			DIM_TIPO_LEAD[tipo_lead]="Pago")
+		formatString: #,0
+		lineageTag: d4b5d167-15c9-4ebf-ae17-4e9877bd35f2
+
+	measure 'Total Mat Geral Não Pago' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			DIM_TIPO_LEAD[tipo_lead]="Não Pago")
+		formatString: #,0
+		lineageTag: 9af94299-5a3a-4c91-ad33-0f578e77cb59
+
+	measure 'Conversão Geral Pago' = DIVIDE([Total Mat Geral Pago], [Total Leads Pago])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 797117e7-e029-4107-8b1a-5c44b0b4c58d
+
+	measure 'Conversão Geral Não Pago' = DIVIDE([Total Mat Geral Não Pago], [Total Leads Não Pago],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b6aed8f3-2cf4-429e-94fb-75970ef8d70c
+
+	measure 'Total Mat Projeção' = ```
+			
+			VAR VENDASELECAO = [Total Mat Geral]
+			VAR VENDACORRIDA = CALCULATE(DIVIDE(VENDASELECAO,[Total dias uteis corridos],0)) * [Total dias uteis restante]
+			RETURN 
+			
+			VENDASELECAO + VENDACORRIDA
+			```
+		formatString: #,0
+		lineageTag: 5501ad7e-9af8-4da5-8ba0-3c8590f0072c
+
+	measure 'Total Mat Meta BP Dia' =
+			
+			VAR Dias_Restantes = [Total dias uteis restante]
+			VAR Total_Mat_Meta_BP = [Total Mat Meta BP]
+			VAR Total_Mat_Selecao = [Total Mat Geral]
+			VAR Divisao = DIVIDE(Total_Mat_Meta_BP - Total_Mat_Selecao, Dias_Restantes)
+			VAR Divisao2 = Total_Mat_Meta_BP-Total_Mat_Selecao
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   Dias_Restantes > 0, Divisao,
+			   Divisao2
+			)
+		formatString: #,0
+		lineageTag: 22dbcd86-257c-4a5c-ae15-89f4c54c6fe5
+
+	measure 'Total Leads Projeção' = ```
+			
+			VAR LEADSSELECAO = [Total Leads]
+			VAR LEADSCORRIDA = CALCULATE(DIVIDE(LEADSSELECAO,[Total dias uteis corridos],0)) * [Total dias uteis restante]
+			RETURN 
+			
+			LEADSSELECAO + LEADSCORRIDA
+			```
+		formatString: #,0
+		lineageTag: cc5d50ca-f218-498a-90a1-539460b9c16e
+
+	measure 'Total Leads Meta Movel' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Leads Meta], [Total dias uteis Ajustado], 0)
+			VAR DiasCorridos = [Total dias uteis corridos Ajustado]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 633010eb-3c33-4584-bb8b-797a3121d5ba
+
+	measure '% Total Leads Meta Movel' =
+			
+			var total = DIVIDE([Total Leads], [Total Leads Meta Movel], 0)
+			RETURN
+			IF(NOT ISBLANK([Total Leads Meta Movel]) && [Total Leads Meta Movel] <> 0 ,TOTAL)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b0188538-ee22-4677-8c7c-887bee671f37
+
+	measure 'Total Leads Meta Dia' =
+			
+			VAR Dias_Restantes = [Total dias uteis restante]
+			VAR Totalleadsmeta = [Total Leads Meta]
+			VAR Totalleads = [Total Leads]
+			VAR Divisao = DIVIDE(Totalleadsmeta - Totalleads, Dias_Restantes)
+			VAR Divisao2 = Totalleadsmeta-Totalleads
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   Dias_Restantes > 0, Divisao,
+			   Divisao2
+			)
+		formatString: #,0
+		lineageTag: 24ddc820-61c2-48c3-8ca9-3892cbf2a316
+
+	measure 'PDU Leads Pago' = DIVIDE([Total Leads Pago],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 225dcf72-ce69-4c4e-8da0-2037e28b21cf
+
+	measure 'PDU Leads Não Pago' = DIVIDE([Total Leads Não Pago],[Total dias uteis corridos],0)
+		formatString: #,0
+		lineageTag: 72576a86-ba2a-498d-8c5f-7f5d2cbe5ecf
+
+	measure '% Participação Mat Geral' = ```
+			
+			// Variável para trazer o total do ano filtrado
+			var total = CALCULATE([Total Mat Geral],ALLSELECTED(VW_MATRICULAS))
+			
+			
+			return
+			
+			
+			// Divisão entre o valor da categoria sobre o total do ano filtrado
+			DIVIDE(
+			    [Total Mat Geral],
+			    total,
+			    0
+			) 
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: f2ac895a-f44c-4945-b40d-4e139de8b9fb
+
+	measure 'PDU Mat/Leads' =
+			
+			VAR diascorridos = [Total dias uteis corridos]
+			var totalmat = [Total Mat/Leads]
+			RETURN
+			if (diascorridos < 1, DIVIDE(totalmat,1,0),DIVIDE(totalmat,diascorridos,0))
+		formatString: #,0.0
+		lineageTag: cf868bc0-f03c-4e13-a9e3-19673bf715d4
+
+	measure 'Total Mat Valida c/zero' = ```
+			
+			var mat = [Total Mat Valida]
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(mat),0,mat)
+			    
+			```
+		formatString: 0
+		lineageTag: 023923c5-68eb-46a0-b95c-546c99ff38c4
+
+	measure 'Total Leads Historica' = ```
+			
+			var leadhist = CALCULATE(SUMX(vw_base_leads_historica_count, vw_base_leads_historica_count[qtde]),USERELATIONSHIP(vw_dim_users_ajustado[email_usuario],vw_base_leads_historica_count[email_usuario]),USERELATIONSHIP(dim_unidade_historica[unidade],vw_base_leads_historica_count[unidade]))
+			var leads = CALCULATE(
+			        COUNTX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[Total]
+			        )
+			)
+			return leadhist + leads
+			
+			```
+		formatString: 0
+		lineageTag: 58d1d8ce-fe18-4379-87f2-abdf74af3333
+
+	measure 'Total Leads Pago 2' =
+			
+			CALCULATE(
+			    [Total Leads Historica],
+			    DIM_TIPO_LEAD[tipo_lead]="Pago"
+			)
+		formatString: 0
+		lineageTag: 69aed0d8-1e37-41ff-a850-6c13724d8366
+
+	measure 'Total Leads Geral' = ```
+			
+			   [Total Leads Historica]
+			```
+		formatString: #,0
+		lineageTag: 2aff4928-5c08-48c4-a466-450c3ade97bb
+
+	measure 'Total Colaboradores Total' = ```
+			
+			VAR UltimaDataSemana =
+			    MAX(VW_CALENDARIO[COD_SEMANA_MES])
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(vw_dim_users_ajustado[email_usuario]),
+			        VW_CALENDARIO[COD_SEMANA_MES] = UltimaDataSemana
+			    )
+			
+			
+			```
+		formatString: 0
+		lineageTag: 2ede5cca-f690-4ac7-a0de-73d224494f00
+
+	measure 'Total Operadores Ativos' = ```
+			
+			[Total Consultores Ativos]
+			
+			```
+		formatString: #,0
+		lineageTag: bfec0ba5-27ac-448e-ae4f-b8ab5ad8a93e
+
+	measure 'PDUC Mat' =
+			
+			VAR PDUMAT = [PDU Matrículas]
+			VAR OPER = [Total Consultores Ativos]
+			VAR FINAL = PDUMAT/OPER
+			RETURN
+			FINAL
+		lineageTag: 36afeb69-0dec-4526-94c6-c69d0f166b93
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PDUC Leads' =
+			
+			VAR PDULEAD = [PDU Leads]
+			VAR OPER = [Total Operadores Ativos]
+			VAR FINAL = PDULEAD/OPER
+			RETURN
+			FINAL
+		formatString: #,0.0
+		lineageTag: 86cb70c5-2d5a-48a2-bfb6-ae416becd409
+
+	measure 'PDC Matricula' = DIVIDE([Total Mat Geral],[Total Consultores Ativos],0)
+		lineageTag: 370fe682-fa5f-4415-a7d6-f992f4b81463
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Leads por Operador' = DIVIDE([Total Leads],[Total Consultores Ativos],0)
+		lineageTag: 32b6f05b-cd74-4c5d-95a5-8f14af9f9966
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PDUC Usuarios' =
+			
+			VAR PDUVIS = [PDU Visitantes]
+			VAR OPER = [Total Operadores Ativos]
+			VAR FINAL = PDUVIS/OPER
+			RETURN
+			FINAL
+		formatString: #,0
+		lineageTag: c437036f-c435-40c5-ba1e-37c4959c7966
+
+	measure 'PDU Leads/12h' = DIVIDE([PDU Leads], 12)
+		lineageTag: 16931570-6518-485a-9415-410b44d9776e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PDU Mat/12h' = DIVIDE([PDU Matrículas], 12)
+		lineageTag: bdb56906-dec4-4f47-be3b-126102071326
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Max_cod_dia = MAX(VW_CALENDARIO[COD_DIA])
+		formatString: 0
+		lineageTag: d5996f08-0351-4415-8293-2d6e6ebb4c4e
+
+	measure 'Total Leads Meta Movel Pago' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Leads Meta Pago], [Total dias uteis Ajustado], 0)
+			VAR DiasCorridos = [Total dias uteis corridos Ajustado]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		lineageTag: ad2f6ecb-364a-407a-b0ec-c2cf23713e63
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Leads Meta Movel Pago' =
+			
+			
+			VAR TOTAL = DIVIDE([Total Leads Pago], [Total Leads Meta Movel Pago], 0)
+			RETURN
+			IF(NOT ISBLANK([Total Leads Meta Movel Pago]) && [Total Leads Meta Movel Pago] <> 0 ,TOTAL)
+		formatString: 0%;-0%;0%
+		lineageTag: 8b3a3a87-7b47-42eb-a0f3-c4599feab87a
+
+	measure 'Total Mat/Leads Pago' = CALCULATE([Total Mat/Leads],DIM_TIPO_LEAD[tipo_lead]="Pago")
+		formatString: #,0
+		lineageTag: 598f218d-5110-493a-beaf-028d66bf04ae
+
+	measure 'Conversão Mat/Leads Pago' = DIVIDE( [Total Mat/Leads Pago], [Total Leads Pago],0)
+		formatString: 0%;-0%;0%
+		lineageTag: a1dabdba-6418-409f-a825-e48ef50385d2
+
+	measure '% Total Leads Não Pago' = DIVIDE([Total Leads Não Pago],[Total Leads],0)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: a4857f3d-dda0-46ad-9116-ef9ee2fe879d
+
+	measure 'Total Mat Meta Comercial' = ```
+			
+			VAR metacons = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			VAR metasup = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			VAR metacom = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_comercial_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			VAR metabp = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_bp_dia]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			VAR consult = SELECTEDVALUE(vw_dim_users_ajustado[nome_usuario])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR sigl = SELECTEDVALUE(dim_unidade_historica[sigla])
+			VAR gestao = SELECTEDVALUE(vw_dim_users_ajustado[gestao])
+			VAR cargo = SELECTEDVALUE(vw_dim_users_ajustado[cargo])
+			VAR grupo = SELECTEDVALUE(vw_dim_users_ajustado[grupo])
+			VAR periodo = SELECTEDVALUE(vw_dim_users_ajustado[periodo])
+			
+			var meta =
+			SWITCH(TRUE(),
+			NOT(ISBLANK(consult)),metacons,
+			NOT(ISBLANK(cargo)),metacons,
+			NOT(ISBLANK(grupo)),metacons,
+			NOT(ISBLANK(periodo)),metacons,
+			NOT(ISBLANK(unid)),metacons,
+			NOT(ISBLANK(sigl)),metacons,
+			NOT(ISBLANK(gestao)),metacons,metacons)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(meta) || meta = 0,BLANK(),meta)
+			
+			   
+			```
+		formatString: #,0
+		lineageTag: 09d2cd9d-b05c-4801-98e6-cec6b7f2bf00
+
+	measure 'Total Colaboradores Ativos' = ```
+			
+			CALCULATE(
+			    [Total Colaboradores Total],
+			        vw_dim_users_ajustado[status_usuario_final] = "Ativo" 
+			)
+			
+			```
+		formatString: 0
+		lineageTag: fee862c0-03d7-4995-941b-3c185235f64e
+
+	measure 'Total Consultores Ativos' = ```
+			
+			VAR CONS = CALCULATE(
+			    [Total Consultores Total], vw_dim_users_ajustado[status_usuario_final] = "Ativo" 
+			)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Leads]),BLANK(),CONS)
+			```
+		formatString: 0
+		lineageTag: 7c5b1775-0e17-4bf0-8477-f1e1977ea1ff
+
+	measure 'Total Ticket Médio Faturamento Total Curso' = DIVIDE([Total Faturamento 1ª Mensalidade],[Total Mat Geral])
+		formatString: #,0
+		lineageTag: 38944481-5c0a-425c-9f88-fb7c5f2f7077
+
+	measure 'Total Mat Canceladas c/zero' =
+			
+			
+			var matcanc = [Total Mat Canceladas]
+			
+			RETURN
+			SWITCH(TRUE(),
+			NOT(ISBLANK(matcanc)),matcanc,0)
+		formatString: 0
+		lineageTag: 5fcac894-c521-485f-8857-f4e9e131d3b4
+
+	measure 'Total Mat Meta Comercial Movel' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Mat Meta Comercial], [Total dias uteis], 0)
+			VAR DiasCorridos = [Total dias uteis corridos]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 503ce2b3-4e21-413f-b28d-985e48eebd79
+
+	measure '% Total Mat Meta Comercial Movel' = DIVIDE([Total Mat Geral], [Total Mat Meta Comercial Movel])
+		formatString: 0%;-0%;0%
+		lineageTag: dd6f961d-81d7-4c34-a097-455a187073cb
+
+	measure 'Total Atendimentos Leads Whatsapp' = SUM(VW_LEADS_GROUP[total_atendimentos_whatsapp])
+		formatString: #,0
+		lineageTag: 77ee2953-f3e5-49d9-8c0e-dc700acd256f
+
+	measure 'Total Atendimentos Leads Telefonia' = SUM(VW_LEADS_GROUP[total_atendimentos_telefonia])
+		formatString: #,0
+		lineageTag: cf5e320b-5ad6-4b02-a84a-f3b933b967b8
+
+	measure '% Total Atendimentos Leads Whatsapp' = DIVIDE([Total Atendimentos Leads Whatsapp],[Total Leads])
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 04549a3c-acf2-4f35-9391-b2d0c605d5f9
+
+	measure '% Total Atendimentos Leads Telefonia' = DIVIDE([Total Atendimentos Leads Telefonia],[Total Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: f89925b0-9298-4353-959a-e0f5f3dc3f76
+
+	measure 'Total Mat Geral Y-1' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR)
+			    )
+			
+			
+			VAR matfinal =  IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			RETURN
+			matfinal
+			
+			```
+		formatString: #,0
+		lineageTag: f1e1bec9-7218-41d5-957b-fe17c959af19
+
+	measure 'Total Mat Acum Y-1' = CALCULATE([Total Mat Geral Y-1],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: 0
+		lineageTag: 4a5cb336-f73e-423c-a1f6-83e6acc5bf33
+
+	measure 'Total Mat Acum Y-1 Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Acum Y-1],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Acum Y-1],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Acum Y-1],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: 87ee2bdc-61db-46e3-a660-545cb4a8f190
+
+	measure 'Total Mat Geral WY-1' = ```
+			
+			VAR DataAtual = MAX(VW_CALENDARIO[DATA])
+			
+			-- Encontrar o primeiro dia da semana atual no mês
+			VAR PrimeiroDiaSemanaAtual = 
+			    MINX(
+			        FILTER(
+			            'VW_CALENDARIO', 
+			            MONTH('VW_CALENDARIO'[DATA]) = MONTH(DataAtual)
+			        ), 
+			        'VW_CALENDARIO'[DATA]
+			    )
+			
+			-- Calcular o ano e mês atual no formato YYYYMM
+			VAR AnoMesAtual = YEAR(DataAtual) * 100 + MONTH(DataAtual)
+			
+			-- Encontrar a data correspondente no mesmo mês do ano anterior
+			VAR DataMesAnterior =
+			    CALCULATE(
+			        MAX('VW_CALENDARIO'[DATA]),
+			        YEAR('VW_CALENDARIO'[DATA]) * 100 + MONTH('VW_CALENDARIO'[DATA]) = (YEAR(DataAtual) - 1) * 100 + MONTH(DataAtual),
+			        WEEKDAY('VW_CALENDARIO'[DATA]) = WEEKDAY(DataAtual),
+			        DAY('VW_CALENDARIO'[DATA]) <= DAY(PrimeiroDiaSemanaAtual) + 7
+			    )
+			
+			-- Tratar caso onde DataMesAnterior seja BLANK()
+			VAR DataMesAnteriorValida =
+			    IF(
+			        ISBLANK(DataMesAnterior),
+			        CALCULATE(
+			            MAX('VW_CALENDARIO'[DATA]),
+			            YEAR('VW_CALENDARIO'[DATA]) * 100 + MONTH('VW_CALENDARIO'[DATA]) = (YEAR(DataAtual) - 1) * 100 + MONTH(DataAtual)
+			        ),
+			        DataMesAnterior
+			    )
+			
+			RETURN
+			    CALCULATE(
+			        [Total Mat Geral],
+			        'VW_CALENDARIO'[DATA] = DataMesAnteriorValida
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: ab92c09d-9d39-40b0-966f-776985b51b1c
+
+	measure 'Total Mat Geral Y-1 Real' = ```
+			
+			CALCULATE([Total Mat Geral],DATEADD(VW_CALENDARIO[DATA],-1,YEAR),VW_CALENDARIO[MTD]="REAL")
+			
+			
+			```
+		formatString: #,0
+		lineageTag: f4a27ea6-33cd-46b3-8fc3-f5d971397ea7
+
+	measure 'Total Faturamento Meta Movel' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Faturamento Meta comercial], [Total dias uteis], 0)
+			VAR DiasCorridos = [Total dias uteis corridos]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 3c429cf3-3f0e-4dec-8beb-65e7c82cdd78
+
+	measure 'Total Faturamento Min' = ```
+			CALCULATE(MIN(VW_MATRICULAS[total_faturamento]),
+			    FILTER(
+			        VW_MATRICULAS, 
+			        NOT CONTAINS(VW_MATRICULAS,VW_MATRICULAS[motivo_da_saida],"Cancelado"
+			    )
+			),FILTER(VW_MATRICULAS,VW_MATRICULAS[status_contrato]="Matriculado"))
+			```
+		lineageTag: f5eba423-1e40-4f31-abb8-d69738b26a86
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Max' = ```
+			CALCULATE(MAX(VW_MATRICULAS[total_faturamento]),
+			    FILTER(
+			        VW_MATRICULAS, 
+			        NOT CONTAINS(VW_MATRICULAS,VW_MATRICULAS[motivo_da_saida],"Cancelado"
+			    )
+			),FILTER(VW_MATRICULAS,VW_MATRICULAS[status_contrato]="Matriculado"))
+			```
+		lineageTag: 887aef1b-6445-4609-b993-8d5a4ed60d19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Faturamento Meta Móvel' = DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta Movel])
+		formatString: 0%;-0%;0%
+		lineageTag: de509a86-7d47-4461-a998-567f52ee52a6
+
+	measure RankingCurso = ```
+			
+			VAR rankk = RANKX(
+			    ALL(VW_MATRICULAS[curso]),
+			    [Total Faturamento],
+			    ,
+			    DESC,
+			    DENSE
+			)
+			RETURN
+			    IF(
+			        NOT(ISBLANK([Total Faturamento])),
+			        rankk,
+			        BLANK()
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: f85d02ac-9ba6-4a93-a8f1-9b0e9a0757cb
+
+	measure RankingCons = ```
+			
+			VAR rankk = RANKX(
+			    ALL(vw_dim_users_ajustado[nome_usuario]),
+			    [Total Faturamento],
+			    ,
+			    DESC,
+			    DENSE
+			)
+			RETURN
+			    IF(
+			        NOT(ISBLANK([Total Faturamento])),
+			        rankk,
+			        BLANK()
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: 91407108-d59b-458b-be85-8066a694b7bf
+
+	measure 'Total Faturamento Cancelado' =
+			CALCULATE([Total Faturamento Bruto Esperado],
+			    FILTER(
+			        VW_MATRICULAS,
+			        NOT CONTAINSSTRING(VW_MATRICULAS[motivo_da_saida], "Cancelado") &&
+			        VW_MATRICULAS[status_contrato] = "Matriculado"))
+		formatString: #,0
+		lineageTag: 1abc298d-28a0-4815-b2c1-fc0fd91715e0
+
+	measure 'Total Mat Geral W-1' = CALCULATE([Total Mat Valida],FILTER(ALL(VW_CALENDARIO),VW_CALENDARIO[COD_SEMANA_ANO]=SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_ANO])-1 && VW_CALENDARIO[COD_ANO] = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])))
+		formatString: 0
+		lineageTag: 2a1a5577-5172-4961-b0fd-d25c83bd26f3
+
+	measure Rankingsemana = ```
+			
+			VAR rankk = RANKX(
+			    ALL(VW_CALENDARIO[COD_SEMANA_ANO]),
+			    [Total Faturamento],
+			    ,
+			    DESC,
+			    DENSE
+			)
+			RETURN
+			    IF(
+			        NOT(ISBLANK([Total Faturamento])),
+			        rankk,
+			        BLANK()
+			    )
+			
+			```
+		formatString: 0
+		lineageTag: ab25af2d-6f18-4920-9f08-b82030839d2b
+
+	measure '% Total Mat Cancelada c/ Zero' =
+			
+			var matcanc = [Total Mat Canceladas c/zero]
+			var mattotal = [Total Mat Geral]
+			RETURN
+			DIVIDE(matcanc, mattotal)
+		formatString: 0%;-0%;0%
+		lineageTag: 61facfde-dfe1-4b88-bb93-73427e511cd2
+
+	measure 'Total Mat Canceladas' = ```
+			
+			CALCULATE(
+			    SUM(VW_MATRICULAS[qtde_matriculas]),
+			    VW_MATRICULAS[status_contrato] = "Matriculado",
+			    VW_MATRICULAS[venda_cancelada] = 1)
+			
+			
+			```
+		formatString: #,0
+		lineageTag: f8f9b585-11a5-4884-b981-0645cb0b4273
+
+	measure 'Total Mat Meta Comercial Dia' =
+			
+			VAR Dias_Restantes = [Total dias uteis restante]
+			VAR Total_Mat_Meta_com = [Total Mat Meta Comercial]
+			VAR Total_Mat_Selecao = [Total Mat Geral]
+			VAR Divisao = DIVIDE(Total_Mat_Meta_com - Total_Mat_Selecao, Dias_Restantes)
+			VAR Divisao2 = Total_Mat_Meta_com -Total_Mat_Selecao
+			var final =   SWITCH(TRUE(),
+			   Dias_Restantes > 0, Divisao,
+			   Divisao2
+			)
+			RETURN
+			 if (final < 0, 0, final)
+		formatString: #,0
+		lineageTag: 45dce4ff-6a5a-4e60-b77d-d721e7338300
+
+	measure '% Total Mat Meta Comercial' = DIVIDE([Total Mat Geral], [Total Mat Meta Comercial],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 8628b5c0-56f9-4b54-9188-8d9fb34545bc
+
+	measure 'Total Mat Meta Comercial Acum' = CALCULATE([Total Mat Meta Comercial],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: d370543c-ee0f-4bd4-a277-80b8a9384d35
+
+	measure 'Total Mat Meta Comercial Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Meta Comercial Acum],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Meta Comercial Acum],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Meta Comercial Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 8d59ab47-d834-4fa1-96da-23f093590472
+
+	measure 'Total Mat Geral' =
+			
+			
+			var matgeral = CALCULATE(SUM(VW_MATRICULAS[qtde_matriculas]),VW_MATRICULAS[status_contrato]="matriculado")
+			var mathist = SUM(base_matricula_historica_count[qtde_matriculas])
+			
+			RETURN
+			matgeral + mathist
+		formatString: #,0
+		lineageTag: 1b77b425-efd4-42ab-92ec-c41dfa47d8b1
+
+	measure '% Total Faturamento Cancelado' = DIVIDE([Total Faturamento Cancelado],[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: 9f78e3cc-95ca-40cd-b245-2bb3044de82d
+
+	measure 'Total Falados Não Validos' = [Total Atendimentos Leads Falados] - [Total Atendimentos Leads Falados Validos]
+		formatString: #,0
+		lineageTag: 5396178d-c7b6-49d3-a345-b010600305a2
+
+	measure 'PDUC Leads/12h' = ```
+			
+			var pdulead = [PDU Leads/12h]
+			var consul = [Total Consultores Ativos]
+			return
+			pdulead/consul
+			
+			
+			```
+		formatString: #,0.0
+		lineageTag: 5f4333a6-4b06-4312-8a20-0dc30322e24b
+
+	measure '% Total Faturamento Meta' = DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta comercial])
+		formatString: 0%;-0%;0%
+		lineageTag: 89bccd7d-f42b-4c43-99e3-f3cea5cd62af
+
+	measure 'Total Documentos Validados' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao_final], "Documentação Validada"))
+		formatString: #,0
+		lineageTag: 7bf7f272-14ec-4a62-b65a-b184f71d4d5b
+
+	measure '% Total Documentos Validados' = DIVIDE([Total Documentos Validados], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: e303f1e9-6ae3-4458-8183-a82c7aea97d9
+
+	measure 'Total leads safra' = ```
+			
+			var safra = SELECTEDVALUE(VW_LEADS_GROUP[status_safra])
+			var leads = [Total Leads]
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(safra),leads,BLANK())
+			
+			```
+		formatString: 0
+		lineageTag: d0b93f1a-091d-4d31-9366-72cca69f49cf
+
+	measure 'Total Mat/Leads Convertido Até 15 Dias' = CALCULATE([Total Mat/Leads],FILTER(VW_LEADS_GROUP,VW_LEADS_GROUP[status_safra]="Convertido Até 15 Dias"))
+		formatString: 0
+		lineageTag: 4a66632d-f430-473b-a7d6-2595cb731916
+
+	measure 'Total Mat/Leads Convertido Até 7 Dias' = CALCULATE([Total Mat/Leads],FILTER(VW_LEADS_GROUP,VW_LEADS_GROUP[status_safra]="Convertido Até 7 Dias"))
+		formatString: 0
+		lineageTag: 0050abfb-4267-4aa9-bca5-69277292dd25
+
+	measure 'Total Mat/Leads Convertido Mesmo Dia' = CALCULATE([Total Mat/Leads],FILTER(VW_LEADS_GROUP,VW_LEADS_GROUP[status_safra]="Convertido Mesmo Dia"))
+		formatString: 0
+		lineageTag: 2c7f7ceb-a43f-466d-b2da-3bb1c8b50827
+
+	measure 'Total Mat/Leads Convertido Até 30 Dias' = CALCULATE([Total Mat/Leads],FILTER(VW_LEADS_GROUP,VW_LEADS_GROUP[status_safra]="Convertido Até 30 Dias"))
+		formatString: 0
+		lineageTag: bea85189-5690-4023-9bc7-812349d3fcd0
+
+	measure 'Share Mat/Leads Convertido Mesmo Dia' = DIVIDE([Total Mat/Leads Convertido Mesmo Dia],[Total Mat/Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: 64023c44-58f7-42c4-a9f6-ef6083973f70
+
+	measure 'Share Mat/Leads Convertido Até 7 Dias' = DIVIDE([Total Mat/Leads Convertido Até 7 Dias],[Total Mat/Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: 9e16d9f5-6467-4fe8-9147-3c19f9e3bebc
+
+	measure 'Share Mat/Leads Convertido Até 15 Dias' = DIVIDE([Total Mat/Leads Convertido Até 15 Dias],[Total Mat/Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: 34755566-680c-4f3c-88a4-476832b3c055
+
+	measure 'Share Mat/Leads Convertido No Mês' = DIVIDE([Total Mat/Leads Convertido Até 30 Dias],[Total Mat/Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: a0eb001a-1d72-4fc0-a502-9d08a10fcab3
+
+	measure 'Max Total Mat/Leads' = MAXX(VW_LEADS_GROUP,SUMX(VW_LEADS_GROUP,VW_LEADS_GROUP[total_matriculados]))
+		formatString: 0
+		lineageTag: 21d93e1b-f68e-4fd3-9af7-bb07bd198370
+
+	measure 'Total dias uteis Ajustado' = CALCULATE(SUM(VW_CALENDARIO[COD_DIA_UTIL_AJUSTADO]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+		lineageTag: e2eebf89-de2a-42ff-8839-bcfe068d9cd3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total dias uteis corridos Ajustado' =
+			
+			VAR DataHoje = TODAY()
+			VAR SomaDiasUteis =
+			    CALCULATE(
+			        SUM(VW_CALENDARIO[COD_DIA_UTIL_AJUSTADO]),FILTER(VW_CALENDARIO,VW_CALENDARIO[DATA] <= DataHoje
+			    ))
+			RETURN
+			SomaDiasUteis
+		lineageTag: 37d67e73-ecb5-42d9-abab-0e16ed33c10f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Medida
+		lineageTag: 3c309c15-e1fe-43f7-b106-bfbf792fda29
+
+	measure '% Total Atendimentos Leads Falado Válido' = DIVIDE([Total Atendimentos Leads Falados Validos],[Total Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: ee46144a-0b1a-4aca-ba47-34838c96d3ab
+
+	measure 'Total Mat Geral c/zero' =
+			
+			var matgeral = [Total Mat Valida] + [Total Mat Canceladas]
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(matgeral),0,matgeral)
+		formatString: #,0
+		lineageTag: d5143cc7-b5a9-4d6c-b56c-97af77737db8
+
+	measure 'Total Mat/Leads Sem UTM' =
+			
+			CALCULATE(
+			    [Total Mat/Leads],
+			    VW_LEADS_GROUP[utm_campaign_agrupada]= "Sem UTM"
+			)
+		formatString: 0
+		lineageTag: b2b660e1-a47f-44a8-8578-59168fa5a172
+
+	measure '% Mat/Leads Sem UTM' = DIVIDE([Total Mat/Leads Sem UTM],[Total Mat/Leads],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 4b5dd4eb-552d-4563-a53b-d0b4048576b8
+
+	measure 'Total Mat Inscrito' = ```
+			
+			CALCULATE(SUM(VW_MATRICULAS[qtde_matriculas]),VW_MATRICULAS[status_contrato]= "Inscrito")
+			    
+			```
+		formatString: #,0
+		lineageTag: 4b7b20c5-0cad-4a11-8e30-36768f46ded7
+
+	measure 'Total Pre Venda' = CALCULATE(SUM(VW_MATRICULAS[qtde_matriculas]),VW_MATRICULAS[status_contrato]<> "Matriculado",VW_MATRICULAS[status_saida]<> "Cancelado")
+		formatString: #,0
+		lineageTag: ea497e8f-2dd2-4e41-b209-8543aac99e3f
+
+	measure 'Total Vendas' = [Total Pre Venda] + [Total Mat Geral]
+		formatString: #,0
+		lineageTag: aad60e18-2dd8-4ca7-ad98-2583ecd4dd41
+
+	measure '% Total Contrato Assinado' = DIVIDE([Total Mat Geral],[Total Vendas])
+		formatString: 0%;-0%;0%
+		lineageTag: 63f61784-bec1-4a80-b557-a248bea19cbe
+
+	measure '% Total Pré-Vendas' = DIVIDE([Total Pre Venda],[Total Vendas])
+		formatString: 0%;-0%;0%
+		lineageTag: 4031255c-5913-48c0-934c-4304cf92b6b6
+
+	measure 'Total Pre Venda c/zero' =
+			
+			var matgeral = [Total Pre Venda]
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(matgeral),0,matgeral)
+		formatString: #,0
+		lineageTag: 28b54f2e-df8f-465d-8326-9b63d7ea8e2a
+
+	measure 'Total Leads Dia' = ```
+			
+			
+			VAR atend = SELECTEDVALUE(VW_MATRICULAS[qtde_matriculas])
+			VAR finalszero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Leads]), 
+			    CALCULATE(
+			        [Total Leads],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 1,
+			            TODAY()
+			        )
+			    ),BLANK()
+			)
+			
+			VAR finalczero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Leads]), 
+			    CALCULATE(
+			        [Total Leads],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 1,
+			            TODAY()
+			        )
+			    ),0
+			)
+			RETURN
+			SWITCH(TRUE(),
+			NOT ISBLANK(atend),finalczero,finalszero)
+			
+			
+			```
+		formatString: 0
+		lineageTag: 95b5a04f-4b54-4f4d-8784-ce03398f678c
+
+	measure '% Mat/Leads' = DIVIDE([Total Mat/Leads],[Total Mat Geral],0)
+		formatString: 0%;-0%;0%
+		lineageTag: db2b7656-c912-4426-aeda-f38595768e1c
+
+	measure 'Total Leads Dia Ontem' = ```
+			
+			
+			VAR atend = SELECTEDVALUE(VW_MATRICULAS[qtde_matriculas])
+			VAR finalszero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Leads]), 
+			    CALCULATE(
+			        [Total Leads],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 2,
+			            TODAY() -1
+			        )
+			    ),BLANK()
+			)
+			
+			VAR finalczero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Leads]), 
+			    CALCULATE(
+			        [Total Leads],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 2,
+			            TODAY() -1
+			        )
+			    ),0
+			)
+			RETURN
+			SWITCH(TRUE(),
+			NOT ISBLANK(atend),finalczero,finalszero)
+			
+			
+			```
+		formatString: 0
+		lineageTag: 806c6ef9-5b71-418c-a365-f425dc04af5e
+
+	measure 'Texto Volume Leads por dia' = ```
+			"Volume de Leads por dia até às " & paramentro_hora_leads[Valor_paramento_hora_leads] & " horas"
+			
+			```
+		lineageTag: 197a4209-c718-483e-a73f-b851288c5074
+
+	measure '% Total Leads do Dia vs Ontem' = DIVIDE([Total Leads Dia],[Total Leads Dia Ontem])-1
+		formatString: 0%;-0%;0%
+		lineageTag: 810c3ba1-4b86-454c-bba1-d0bb5f35f0da
+
+	measure 'Total Leads Acum Hora' =
+			
+			CALCULATE(
+			    [Total Leads],
+			    FILTER(
+			        ALLSELECTED(DIM_HORA[Hora]),
+			        DIM_HORA[Hora] <= MAX(DIM_HORA[Hora])))
+		formatString: #,0
+		lineageTag: e15ce6a9-686d-48dc-b2e9-f9c4cee963c7
+
+	measure 'Total Mat Dia' = ```
+			
+			
+			VAR atend = SELECTEDVALUE(VW_MATRICULAS[qtde_matriculas])
+			VAR finalszero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Mat Geral]), 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 1,
+			            TODAY()
+			        )
+			    ),BLANK()
+			)
+			
+			VAR finalczero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Mat Geral]), 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 1,
+			            TODAY()
+			        )
+			    ),0
+			)
+			RETURN
+			SWITCH(TRUE(),
+			NOT ISBLANK(atend),finalczero,finalszero)
+			
+			```
+		formatString: #,0
+		lineageTag: a93c093c-8ae4-47ad-8645-eca70f2d5d0a
+
+	measure 'Total Mat Dia de Ontem' = ```
+			
+			
+			VAR atend = SELECTEDVALUE(VW_MATRICULAS[qtde_matriculas])
+			VAR finalszero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Mat Geral]), 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 2,
+			            TODAY() - 1
+			        )
+			    ),BLANK()
+			)
+			
+			VAR finalczero = SWITCH(TRUE,
+			    NOT ISBLANK([Total Mat Geral]), 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        VW_CALENDARIO[DATA] = 
+			        IF(
+			            MAX(VW_CALENDARIO[MTD_FECHAMENTO]) = "Fechamento Dia Anterior",
+			            TODAY() - 2,
+			            TODAY() -1
+			        )
+			    ),0
+			)
+			RETURN
+			SWITCH(TRUE(),
+			NOT ISBLANK(atend),finalczero,finalszero)
+			
+			```
+		formatString: #,0
+		lineageTag: b7c0cb71-38df-493f-ba3d-9824430e2054
+
+	measure '% Total Mat do Dia vs Ontem' = DIVIDE([Total Mat Dia],[Total Mat Dia de Ontem])-1
+		formatString: 0%;-0%;0%
+		lineageTag: 61669e7b-2e75-4a05-a7db-3a24a32a8a9b
+
+	measure 'Texto Volume Vendas por dia' = ```
+			"Volume de Vendas por dia até às " & parametro_hora_Venda[Valor parametro_hora] & " horas"
+			
+			```
+		lineageTag: 8786903d-e553-428a-8dd2-b256f47360cb
+
+	measure 'Max hora venda' = CALCULATE(MAX(DIM_HORA[hora_atual_venda]),ALL(DIM_HORA[hora_acum_1]))
+		formatString: 0
+		lineageTag: 6dfa513c-7f5d-42e7-af8e-e2cc0fbbe119
+
+	measure 'Max Hora Leads' = CALCULATE(MAX(DIM_HORA[hora_atual_lead]))
+		formatString: 0
+		lineageTag: 2eb52661-167e-410c-830b-327ab3a6a2fb
+
+	measure 'Total Mat hora' = ```
+			
+			VAR horaSelecionada = SELECTEDVALUE(parametro_hora_Venda[parametro_hora], 0) -- Pega o valor selecionado no slicer
+			RETURN
+			IF(
+			    horaSelecionada = 0, -- Se não houver filtro aplicado no slicer
+			    CALCULATE(
+			        [Total Mat Geral]),   -- Retorna o valor total sem filtro de hora
+			    CALCULATE(
+			        [Total Mat Geral],
+			        FILTER(
+			            ALL(DIM_HORA),
+			            DIM_HORA[Cod Hora] <= horaSelecionada  -- Considera horas até a hora selecionada
+			        )
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 3829c240-e21b-4c73-b6d1-2a7ccc5e1622
+
+	measure 'Total Mat Dia Acum' =
+			
+			CALCULATE([Total Mat Dia],FILTER(ALLSELECTED('DIM_HORA'), 'DIM_HORA'[Cod Hora] <= MAX('DIM_HORA'[Cod Hora])))
+		formatString: 0
+		lineageTag: dfccb4b8-a6a4-476f-a3c3-6bd42ccfd6d9
+
+	measure 'Total Leads hora' = ```
+			
+			VAR horaSelecionada = SELECTEDVALUE(paramentro_hora_leads[paramento_hora_leads], 0) -- Pega o valor selecionado no slicer
+			RETURN
+			IF(
+			    horaSelecionada = 0, -- Se não houver filtro aplicado no slicer
+			    CALCULATE(
+			        [Total Leads]),
+			    CALCULATE(
+			        [Total Leads],
+			        FILTER(
+			            ALL(DIM_HORA),
+			            DIM_HORA[Cod Hora] <= horaSelecionada  -- Considera horas até a hora selecionada
+			        )
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 374e5a51-2e6d-4e42-a866-7169b54382d9
+
+	measure 'Total Leads Dia Acum' =
+			
+			CALCULATE([Total Leads Dia],FILTER(ALLSELECTED('DIM_HORA'), 'DIM_HORA'[Cod Hora] <= MAX('DIM_HORA'[Cod Hora])))
+		formatString: 0
+		lineageTag: 13e34363-2a97-4e04-b157-cb43cfcf8c6e
+
+	measure 'Total Leads Dia 2' = ```
+			
+			VAR atend = SELECTEDVALUE(VW_LEADS_GROUP[total])
+			VAR dataSelecionada = SELECTEDVALUE(VW_CALENDARIO[DATA])
+			VAR horaSelecionada = SELECTEDVALUE(DIM_HORA[Hora])  -- Captura a hora selecionada no slicer
+			VAR diaselecionado = TODAY()
+			VAR horaselecionado = NOW()
+			
+			-- Total Leads do Dia (Hoje, até a hora atual)
+			VAR totalLeadsDia = 
+			    CALCULATE(
+			        [Total Leads hora 2],
+			        VW_CALENDARIO[DATA] = diaselecionado)-- Filtra até a hora e minuto atuais
+			
+			-- Total Leads na Data Selecionada (Filtro Global)
+			VAR totalLeadsDataSelecionada = 
+			    IF(
+			        NOT ISBLANK(dataSelecionada),
+			        CALCULATE(
+			            [Total Leads hora 2],
+			            VW_CALENDARIO[DATA] = dataSelecionada
+			              -- Filtra até a hora atual
+			        ),
+			        BLANK()
+			    )
+			
+			-- Total Leads pela Hora Selecionada no Slicer (4ª condição)
+			VAR totalLeadsHoraSelecionada =
+			    IF(
+			        NOT ISBLANK(horaSelecionada),
+			        CALCULATE(
+			            [Total Leads],
+			            VW_CALENDARIO[DATA] = diaselecionado,   -- Filtra pela data de hoje
+			            DIM_HORA[Hora] = horaSelecionada -- Filtra pela hora selecionada no slicer
+			        ),
+			        BLANK()
+			    )
+			
+			-- Total Leads ao Clicar em uma Data no Gráfico (3ª condição)
+			VAR totalLeadsClicada = 
+			    IF(
+			        ISFILTERED(VW_CALENDARIO[DATA]) && HASONEVALUE(VW_CALENDARIO[DATA]),
+			        CALCULATE(
+			            [Total Leads],
+			            VW_CALENDARIO[DATA] = SELECTEDVALUE(VW_CALENDARIO[DATA]),
+			            DIM_HORA[Hora] <= TIME(HOUR(horaselecionado), MINUTE(horaselecionado), 0)  -- Filtra até a hora atual
+			        ),
+			        BLANK()
+			    )
+			
+			-- Definindo o retorno final baseado nas 4 condições
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- 4ª condição: Quando uma hora é selecionada no slicer
+			        --NOT ISBLANK(totalLeadsHoraSelecionada), totalLeadsHoraSelecionada,
+			        -- 3ª condição: Quando uma data é clicada no gráfico
+			        --NOT ISBLANK(totalLeadsClicada), totalLeadsClicada,
+			        -- 2ª condição: Data selecionada no filtro global
+			        --NOT ISBLANK(totalLeadsDataSelecionada), totalLeadsDataSelecionada, 
+			        -- 1ª condição: Total Leads do Dia até a hora atual
+			        NOT ISBLANK(totalLeadsDia), totalLeadsDia,                         
+			        -- Caso nenhuma condição seja satisfeita
+			        BLANK()                                                           
+			    )
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: a7954045-d179-45a6-8b3e-fe06d007ce9b
+
+	measure 'Total Leads hora 2' = ```
+			
+			
+			    CALCULATE(
+			        [Total Leads],
+			        
+			            VW_CALENDARIO[DATA] = TODAY()-1)
+			```
+		formatString: 0
+		lineageTag: 4a580fdc-cc5d-4fed-b986-0ed7148f816e
+
+	measure 'Total Leads Y-1' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Leads],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Leads],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: #,0
+		lineageTag: f26927bc-5ad7-49c4-a94b-3e8640a74928
+
+	measure 'Conversão Geral Y-1' = DIVIDE([Total Mat Geral Y-1],[Total Leads Y-1])
+		formatString: 0%;-0%;0%
+		lineageTag: b9f9ccfc-4664-4d5f-8b68-5bf5d484a1c8
+
+	measure 'Total Investimento Y-1' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Investimento],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Investimento],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 2221a77e-30e4-4d29-b06e-1ff9db3dde3c
+
+	measure 'Total Documentos Pendentes' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao_final], "Documentação Pendente"))
+		formatString: #,0
+		lineageTag: 12e7ff04-f0f4-4824-8ea9-faccfde3159c
+
+	measure '% Total Documentos Pendentes' = DIVIDE([Total Documentos Pendentes], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 3edb43ad-3b2d-48ca-927e-10777b2e9010
+
+	measure '% Total Mat Meta Comercial Acum Zerado' = DIVIDE([Total Mat Acum Zerado], [Total Mat Meta Comercial Acum Zerado],0)
+		formatString: 0%;-0%;0%
+		lineageTag: 30155447-5ff2-43ab-84cd-79c9d0eba9b9
+
+	measure 'Total Recorrencia' = CALCULATE(SUM(VW_MATRICULAS[qtde_matriculas]),VW_MATRICULAS[recorrencia]="Sim")
+		formatString: 0
+		lineageTag: e22a97f7-582d-4c15-a07e-e99cfc833ef0
+
+	measure 'Total Faturamento Antecipado Taxa Recorrencia Aprovado' = CALCULATE([Total Faturamento Antecipado Taxa Recorrencia],VW_MATRICULAS[status_pagamento] = "Aprovado")
+		formatString: #,0
+		lineageTag: 08a58270-cb2f-4760-ab30-b1104374a8e3
+
+	measure 'Total Recorrencia Aprovado' = CALCULATE([Total Recorrencia],VW_MATRICULAS[status_pagamento] = "Aprovado")
+		formatString: 0
+		lineageTag: 2c4f2d99-25ee-44dd-8efa-41c1dbe56bb9
+
+	measure 'Total Recorrencia Não Aprovado' = CALCULATE([Total Recorrencia],VW_MATRICULAS[status_pagamento] = "Nao Aprovado")
+		formatString: 0
+		lineageTag: 21b30b13-1ee3-45f7-af5f-40eeca03f742
+
+	measure 'Total Recorrencia Pendente' = CALCULATE([Total Recorrencia],VW_MATRICULAS[status_pagamento] = "Pendente")
+		formatString: 0
+		lineageTag: 5b5cfe15-8f38-4d05-9d25-ff0a0194e9b5
+
+	measure '% Total Recorrencia Matriculado x Vendas' = CALCULATE(DIVIDE([Total Recorrencia Matriculado Aprovado],[Total Mat Geral]))
+		formatString: 0%;-0%;0%
+		lineageTag: 2eaa34b4-9ca9-4c3e-942a-a5c550c7290e
+
+	measure '% Total Recorrencia Aprovado' = DIVIDE([Total Recorrencia Aprovado],[Total Recorrencia])
+		formatString: 0%;-0%;0%
+		lineageTag: aff62114-8058-404d-ab41-852b7bf0c04a
+
+	measure '% Total Recorrencia Pendente' = DIVIDE([Total Recorrencia Pendente],[Total Recorrencia])
+		formatString: 0%;-0%;0%
+		lineageTag: f1640fff-f957-406e-a7d8-4a82f69ceac1
+
+	measure '% Total Recorrencia Não Aprovado' = DIVIDE([Total Recorrencia Não Aprovado],[Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 205e8c47-4f38-4cde-a49a-5a7be168d9b3
+
+	measure 'Total Ticket Médio Recorrencia Aprovado' = DIVIDE([Total Faturamento Recorrencia Aprovada],[Total Recorrencia Aprovado])
+		formatString: #,0
+		lineageTag: c3e986e6-41d4-4909-9796-a2ca622ccb55
+
+	measure 'Total Mat Geral Y-2' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -2, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -2, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: 0
+		lineageTag: 0c77b477-c580-4388-a6b2-ada883365aaf
+
+	measure 'Total Mat Geral Y-3' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -3, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -3, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: 0
+		lineageTag: f0d05761-e7c5-4ae7-a35e-c6c530cdf8e8
+
+	measure 'Total Mat Geral Y-4' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -4, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -4, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: 0
+		lineageTag: 06b105fb-eb32-488e-bf21-d7e3ea292b79
+
+	measure 'Total Mat Geral YoY' =
+			
+			
+			
+			var matfinal =  DIVIDE([Total Mat Geral],[Total Mat Geral Y-1])-1
+			RETURN
+			SWITCH(TRUE(),
+			matfinal <=-1,BLANK(),matfinal)
+		formatString: 0%;-0%;0%
+		lineageTag: 37f4cca8-cad8-46a7-b90d-750f78c93868
+
+	measure 'Total Mat Geral M-1' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -1, MONTH),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat Geral],
+			        DATEADD(VW_CALENDARIO[DATA], -1, MONTH)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 32fa1aab-a83d-4384-8f6f-6cbebb2d4ce9
+
+	measure 'Total Mat Geral MoM' = DIVIDE([Total Mat Geral],[Total Mat Geral M-1])-1
+		formatString: 0%;-0%;0%
+		lineageTag: 3a749487-3bef-48e8-be3d-fce7605ef34b
+
+	measure 'Total Meta Recorrencia' = [Total Mat Meta BP] * 0.1
+		formatString: #,0
+		lineageTag: 510fdb72-6c8e-47d9-ab86-681f66a4d362
+
+	measure 'Total Faturamento Antecipado Taxa Recorrencia' = CALCULATE(SUM(VW_MATRICULAS[taxa_liquida]),VW_MATRICULAS[recorrencia] = "Sim")
+		formatString: #,0
+		lineageTag: 5298f05c-a9e2-4544-ad48-ec5eb4eb57f9
+
+	measure 'Total Ticket Médio Recorrencia' = CALCULATE(AVERAGE(VW_MATRICULAS[total_faturamento_medio]),VW_MATRICULAS[recorrencia] = "Sim")
+		formatString: #,0
+		lineageTag: 0e9e6b04-f5b5-4d6e-ab2f-23f9e527555b
+
+	measure 'Total Conversão Geral p.p' = ([Conversão Geral]-[Conversão Geral Y-1])*100
+		formatString: #,0.0
+		lineageTag: 91308ca7-637f-4407-8378-7d0d3c9824fe
+
+	measure 'Total Recorrencia Matriculado' = CALCULATE([Total Recorrencia],VW_MATRICULAS[status_contrato] = "Matriculado")
+		formatString: #,0
+		lineageTag: f44b2b2c-1927-448b-bd4e-7616f20dbb45
+
+	measure 'Total Recorrencia Pré_matriculado' = CALCULATE([Total Recorrencia],VW_MATRICULAS[status_contrato] <> "Matriculado")
+		formatString: 0
+		lineageTag: 39362bef-8518-4a40-b71d-fe7c6aae2dcc
+
+	measure 'Total Recorrencia Matriculado Aprovado' = CALCULATE([Total Recorrencia Aprovado],VW_MATRICULAS[status_contrato] = "Matriculado")
+		formatString: 0
+		lineageTag: 68e601d7-62c1-4daf-9ff5-3ef756e5c50e
+
+	measure 'Total Recorrencia Matriculado Pendente' = CALCULATE([Total Recorrencia Matriculado],VW_MATRICULAS[status_pagamento] = "Pendente")
+		formatString: 0
+		lineageTag: 38aead00-7ee4-49d6-8552-cbbc8bbfa234
+
+	measure 'Total Recorrencia Matriculado Não Aprovado' = CALCULATE([Total Recorrencia Matriculado],VW_MATRICULAS[status_pagamento] = "Nao Aprovado")
+		formatString: 0
+		lineageTag: 8c770211-2cde-4498-852d-f047e3c7090d
+
+	measure 'Medida 2'
+		lineageTag: 819701d9-aac4-4a6f-8010-e5321759e943
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Total Recorrencia Pré_matrículado Aprovado' = CALCULATE([Total Recorrencia Pré_matriculado],VW_MATRICULAS[status_pagamento] = "Aprovado")
+		formatString: 0
+		lineageTag: b347efc1-7962-4c1d-a5b7-336cc9993a24
+
+	measure 'Total Recorrencia Pré_Matriculado Pendente' = CALCULATE([Total Recorrencia Pré_matriculado], VW_MATRICULAS[status_pagamento] = "Pendente")
+		formatString: 0
+		lineageTag: 90606608-6a24-46e6-b739-a1b35683b9df
+
+	measure 'Total Recorrencia Pré_Matriculado Não Aprovado' = CALCULATE([Total Recorrencia Pré_matriculado],VW_MATRICULAS[status_pagamento] = "Nao Aprovado")
+		formatString: 0
+		lineageTag: 4b9c2738-90df-4640-a446-45f6acd183a7
+
+	measure 'Total Faturamento Antecipado Taxa Liquida Aprovado' = CALCULATE(SUM(VW_MATRICULAS[taxa_liquida]),VW_MATRICULAS[status_pagamento]="Aprovado",VW_MATRICULAS[recorrencia] = "Nao")
+		formatString: #,0
+		lineageTag: c2969f94-13ae-4299-8a28-13ddbf952e53
+
+	measure 'Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão' = ```
+			
+			CALCULATE(
+			    SUM(VW_MATRICULAS[valor_mensalidade]),
+			    FILTER(
+			        VW_MATRICULAS,
+			        NOT CONTAINSSTRING(VW_MATRICULAS[motivo_da_saida], "Cancelado") &&
+			        VW_MATRICULAS[status_contrato] = "Matriculado" &&
+			        VW_MATRICULAS[recorrencia] = "Nao"
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: c81c5de7-2977-4407-abc7-6e573aca68a0
+
+	measure 'Total Faturamento Médio' = ```
+			CALCULATE(SUM(VW_MATRICULAS[total_faturamento_medio]),
+			    FILTER(
+			        VW_MATRICULAS, 
+			        NOT CONTAINS(VW_MATRICULAS,VW_MATRICULAS[motivo_da_saida],"Cancelado"
+			    )
+			),FILTER(VW_MATRICULAS,VW_MATRICULAS[status_contrato]="Matriculado"))
+			```
+		formatString: #,0
+		lineageTag: a4bfa0ff-2b81-4329-80b5-8f393d43aa47
+
+	measure 'Total Faturamento Meta comercial' =
+			
+			VAR metacons = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_faturamento_dia]),vw_ft_meta_bp_comercial[unidade] = "N/A",ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			VAR consult = SELECTEDVALUE(vw_dim_users_ajustado[nome_usuario])
+			VAR gestao = SELECTEDVALUE(vw_dim_users_ajustado[gestao])
+			VAR cargo = SELECTEDVALUE(vw_dim_users_ajustado[cargo])
+			VAR grupo = SELECTEDVALUE(vw_dim_users_ajustado[grupo])
+			
+			var meta =
+			SWITCH(TRUE(),
+			NOT(ISBLANK(consult)),metacons,
+			NOT(ISBLANK(cargo)),metacons,
+			NOT(ISBLANK(grupo)),metacons,
+			NOT(ISBLANK(gestao)),metacons,metacons)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(meta) || meta = 0,BLANK(), meta)
+		formatString: #,0
+		lineageTag: 47e8c2a9-2099-487b-93fb-93f55a77defc
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Total Faturamento Bruto Esperado' = [Total Faturamento Recorrencia Aprovada] + [Total Faturamento Boleto/Pix/Cartão]
+		formatString: #,0
+		lineageTag: 8869dd9a-e0a6-4089-8dab-7234b9e39f72
+
+	measure 'Total Faturamento Antecipado Liquido' = ([Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão]* (1-[% Noshow Real])) + [Total Faturamento Antecipado Taxa Liquida Aprovado]
+		formatString: 0
+		lineageTag: 0f296be0-52d4-45e1-8044-0709d4ad4415
+
+	measure '% Total Faturamento Boleto/Pix/Cartão' = DIVIDE([Total Faturamento Boleto/Pix/Cartão],[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: 0352c735-4e18-4d49-8cfa-074496064d54
+
+	measure '% Total Faturamento Recorrencia' = DIVIDE([Total Faturamento Recorrencia Aprovada],[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: 249b94f9-b20e-4d9c-88f9-d12c9d0361b2
+
+	measure '% Total Faturamento 1ª Mensalidade' = DIVIDE([Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão]+[Total Faturamento 1ª Mensalidade Recorrencia] ,[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: c6e8779a-8aea-4021-9528-8f799aa501be
+
+	measure 'Total Mat Valida Acum' = CALCULATE([Total Mat Valida],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: e7ce7be1-dbf0-418d-8997-ecfdec200a8b
+
+	measure 'Total Mat Valida Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Valida Acum],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Valida Acum],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Valida Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: aae29cac-e0ff-4ba0-adb9-fc1fef23de67
+
+	measure 'Total 50% Boleto' = CALCULATE(COUNTA(VW_MATRICULAS[status_perc_mensal_taxa_liquida]),VW_MATRICULAS[status_perc_mensal_taxa_liquida]=">=50% No Boleto")
+		formatString: #,0
+		lineageTag: 1b482c5b-da9d-4dbd-a6e6-23ff3831e775
+
+	measure 'Total 20% Boleto' = CALCULATE(COUNTA(VW_MATRICULAS[status_perc_mensal_taxa_liquida]),VW_MATRICULAS[status_perc_mensal_taxa_liquida]="<=20% No Boleto")
+		formatString: #,0
+		lineageTag: f30d7030-532a-4929-be0a-d4b81b8e879a
+
+	measure 'Total Faturamento Antecipado Taxa Bruto' = CALCULATE(SUM(VW_MATRICULAS[taxa_bruta]),VW_MATRICULAS[status_pagamento]="Aprovado")
+		formatString: #,0
+		lineageTag: 73ce04ac-f959-41d9-b17c-0b7524822552
+
+	measure '% Total Taxa Desconto' = DIVIDE([Total Faturamento Antecipado Taxa Aprovada],[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: 38014aa1-ad5c-4ac3-8c22-5069d262c190
+
+	measure '% Total Taxa Desconto Recorrente' =
+			
+			
+			VAR taxaliquida = CALCULATE(SUM(VW_MATRICULAS[taxa_liquida]),VW_MATRICULAS[recorrencia] = "Sim",VW_MATRICULAS[status_contrato]="Matriculado",VW_MATRICULAS[status_pagamento]="Aprovado")
+			VAR mensal = CALCULATE(SUM(VW_MATRICULAS[valor_mensalidade]),VW_MATRICULAS[recorrencia] = "Sim",VW_MATRICULAS[status_contrato]="Matriculado",VW_MATRICULAS[status_pagamento]="Aprovado")
+			RETURN
+			DIVIDE((mensal-taxaliquida),mensal)
+		formatString: 0%;-0%;0%
+		lineageTag: 3319e3a1-4f1e-4841-9248-071fb74c864d
+
+	measure 'VAR taxaliquida' = CALCULATE(SUM(VW_MATRICULAS[taxa_liquida]),VW_MATRICULAS[recorrencia] = "Sim",VW_MATRICULAS[status_contrato]="Matriculado",VW_MATRICULAS[status_pagamento]="Aprovado")
+		lineageTag: 5e701430-58ea-4eef-8d65-667f872202e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Ticket Médio Meta' =
+			
+			DIVIDE([Total Faturamento Meta comercial],[Total Mat Meta Comercial])
+		formatString: 0
+		lineageTag: f9f90639-bce0-4131-bd6b-37c433957036
+
+	measure 'var metafat' = [Total Ticket Médio Meta]
+		lineageTag: bb0880df-e4ec-4923-ad46-ee66de4d3e26
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'var tiket' = CALCULATE(DIVIDE([Total Ticket Médio Meta],[Total Mat Meta Comercial]),ALL(vw_ft_meta_bp_comercial[email]))
+		lineageTag: 1e5096bc-72bc-423b-8007-d2259432aeb4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'var metabp' = CALCULATE([Total Mat Meta Comercial],ALL(vw_ft_meta_bp_comercial[email]))
+		lineageTag: 846b8fe1-f544-4000-9171-adc4285e21b5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'VAR metasup' = CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_comercial_dia]))
+		lineageTag: 7abd85e4-9b3a-4d3e-bca2-fda16d727553
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Médio Reduzido' = DIVIDE([Total Faturamento Médio],1000)
+		lineageTag: ed35cd36-c65d-4e13-983d-5260216dd1e3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Meta Reduzido' = DIVIDE([Total Faturamento Meta comercial],1000)
+		lineageTag: 840036b4-995e-4404-852b-f2de9ac567c3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Meta Móvel Reduzido' = DIVIDE([Total Faturamento Meta Movel],1000)
+		lineageTag: 01e17f8b-ba4d-4ac5-bcb8-a68e0c6176b1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Bruto Esperado Reduzido' = DIVIDE([Total Faturamento Bruto Esperado],1000)
+		formatString: 0.0
+		lineageTag: 22bfcc48-ec50-476a-a18a-63866f63f332
+
+	measure 'Total Mat Geral BF + Recorrencia' =
+			
+			var bf = CALCULATE(
+			    [Total Mat Geral c/zero],
+			    CONTAINSSTRING(VW_MATRICULAS[cupom_extraido], "BF")
+			)
+			var recor = CALCULATE([Total Mat Geral],CONTAINSSTRING(VW_MATRICULAS[status_perc_mensal_taxa_liquida],"Recorrencia"),NOT CONTAINSSTRING(VW_MATRICULAS[cupom_extraido],"BF"))
+			
+			RETURN
+			bf + recor
+		formatString: 0
+		lineageTag: 0db0e8ae-6a5e-48eb-83b0-923cfc5772e0
+
+	measure 'Total Vendas c/zero' =
+			
+			var matgeral = [Total Pre Venda] + [Total Mat Geral]
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(matgeral),0,matgeral)
+		formatString: #,0
+		lineageTag: 97c13520-c3d1-46c6-ad37-b7ec620d026f
+
+	measure 'Total Mat Geral BF' =
+			
+			var bf = CALCULATE(
+			    [Total Mat Geral c/zero],
+			    CONTAINSSTRING(VW_MATRICULAS[cupom_extraido], "BF")
+			)
+			RETURN
+			bf
+		formatString: #,0
+		lineageTag: 02d1eeb5-ffd2-481e-ae9f-98215243eb5d
+
+	measure 'Total Mat Ecommerce' = ```
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    FILTER(
+			        VW_MATRICULAS,
+			        VW_MATRICULAS[origem_matricula] = "Ecommerce" || VW_MATRICULAS[origem_do_contato_agrupada_final] = "Ecommerce"
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: caa0c309-84bd-413e-aa2f-16c950fe4848
+
+	measure 'Total valor meio pagamento' = ```
+			
+			VAR coltipopag = SELECTEDVALUE(DIM_TIPO_PAGAMENTO[tipo_pagamento])
+			VAR colunid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR coldia = SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR colano = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR colsem = SELECTEDVALUE(VW_CALENDARIO[DSC_SEMANA])
+			
+			VAR pagdia = [Total valor meio pagamento Dia]
+			
+			VAR pagred = DIVIDE(SUM(Base_meio_pagamento[valor_pago]),1000)
+			
+			RETURN
+			SWITCH(TRUE(),
+			NOT(ISBLANK(coltipopag)),pagred,
+			NOT(ISBLANK(colunid)),pagred,
+			NOT(ISBLANK(coldia)),pagdia,
+			NOT(ISBLANK(colano)),pagred,
+			NOT(ISBLANK(colsem)),pagdia,pagred)
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 35e6f632-6118-4fb2-960c-724aee0535a5
+
+	measure 'Total Mat historica dia' = SUM('base_matricula_dia_Y-1'[qtde_matriculas])
+		formatString: #,0
+		lineageTag: 3fa96a4c-4171-4279-9c2d-8bfa026840f9
+
+	measure 'Total Mat Historica Dia Y-1 Real' = ```
+			
+			VAR CurrentMonth = MONTH(TODAY())
+			VAR CurrentYear = YEAR(TODAY())
+			VAR FilteredMonth = MAX(VW_CALENDARIO[COD_MES])
+			VAR FilteredYear = MAX(VW_CALENDARIO[COD_ANO])
+			
+			VAR MatReal = 
+			    CALCULATE(
+			        [Total Mat historica dia],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR),
+			        VW_CALENDARIO[MTD] = "Real"
+			    )
+			
+			VAR MatYReal = 
+			    CALCULATE(
+			        [Total Mat historica dia],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR)
+			    )
+			    VAR MatYReal_2 = 
+			    CALCULATE(
+			        [Total Mat historica dia],
+			        DATEADD(VW_CALENDARIO[DATA], -1, YEAR)
+			    )
+			
+			RETURN
+			    IF(
+			        FilteredYear = CurrentYear && FilteredMonth = CurrentMonth,
+			        MatReal,  // Utiliza MatReal se o mês filtrado for o atual
+			        MatYReal  // Utiliza MatYReal se o filtro for de meses anteriores
+			    )
+			
+			
+			```
+		formatString: 0
+		lineageTag: 4da1c9d5-fc8b-4b61-b55b-aee0e574c7e3
+
+	measure 'Total Mat Historica dia Acum Y-1 Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Mat Historica dia Acum Y-1],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Mat Historica dia Acum Y-1],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Mat Historica dia Acum Y-1],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 40429995-67c8-45c7-873b-753a77ecb9e1
+
+	measure 'Total Valor Meio Pagamento Acum' = CALCULATE([Total valor meio pagamento],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 07e73fc5-7a91-4b48-b639-2785871efcfb
+
+	measure 'Total Valor Meio Pagamento Y-1' = CALCULATE([Total valor meio pagamento],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		formatString: #,0
+		lineageTag: d914de25-5fcc-4390-9ca9-2bbe33dafde7
+
+	measure 'Total Valor Meio Pagamento Acum Y-1' = CALCULATE([Total Valor Meio Pagamento Y-1],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 0648a234-7fa5-4e64-918a-473170a9ef3e
+
+	measure 'Total Valor Meio Pagamento YoY' = ```
+			
+			
+			VAR YOY = DIVIDE([Total valor meio pagamento],[Total Valor Meio Pagamento Y-1])-1
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(YOY),BLANK(),
+			YOY <= -1, BLANK(),YOY)
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: ccefa894-c669-40e3-8d53-66084200e017
+
+	measure 'Total valor meio pagamento Dia' = DIVIDE(SUM(Base_meio_pagamento_YoY_Dia[valor_pago]),1000)
+		formatString: #,0
+		lineageTag: 4ee2812d-8d09-4469-8a64-e89b53080f3e
+
+	measure 'Total Valor Meio Pagamento Dia Acum' = CALCULATE([Total valor meio pagamento Dia],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 8e0082c2-4be0-48fb-b88a-c8933c11b254
+
+	measure 'Total Valor Meio Pagamento Dia Y-1' = CALCULATE([Total valor meio pagamento Dia],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		formatString: #,0
+		lineageTag: 0b0cc0d0-cfa2-4e22-8a12-ecd98b91f619
+
+	measure 'Total Valor Meio Pagamento Dia Acum Y-1' = CALCULATE([Total Valor Meio Pagamento Dia Y-1],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 5499282b-e985-4dda-82cb-15f21ede2c42
+
+	measure 'Total Valor Meio Pagamento Acum Dia Zerado' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Valor Meio Pagamento Dia Acum],BLANK())
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Valor Meio Pagamento Dia Acum],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Valor Meio Pagamento Dia Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: #,0
+		lineageTag: dd6363f7-f739-4a03-b478-489600e5d2cd
+
+	measure 'Total Valor Meio Pagamento Acum Dia Zerado Y-1' =
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<= MAX(vw_ft_investimento_distribuido_tb[data_criacao])))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var invest = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Valor Meio Pagamento Dia Acum Y-1],BLANK())
+			
+			var invest2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Valor Meio Pagamento Dia Acum Y-1],BLANK())
+			
+			var invest3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Valor Meio Pagamento Dia Acum Y-1],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),invest,
+			   NOT(ISBLANK(Codsem)),invest2,
+			   NOT(ISBLANK(Codmes)),invest3
+			    )
+		formatString: #,0
+		lineageTag: e74e7025-c796-47c3-887c-d5fd61891193
+
+	measure 'Total Valor Meio Pagamento Acum Dia Zerado YoY' = DIVIDE([Total Valor Meio Pagamento Acum Dia Zerado],[Total Valor Meio Pagamento Acum Dia Zerado Y-1])-1
+		formatString: 0%;-0%;0%
+		lineageTag: 51b439f0-08df-4636-a0ad-347421e47f05
+
+	measure 'Total Mat GeraL Ano Atual' = ```
+			
+			CALCULATE(
+			    [Total Mat Geral], 
+			    VW_CALENDARIO[COD_ANO] = YEAR(TODAY())
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 12df0f45-ff71-468c-a523-29009e9f339c
+
+	measure 'Total Mat Geral Ano Anterior' = ```
+			
+			CALCULATE(
+			    [Total Mat Geral], 
+			    VW_CALENDARIO[COD_ANO] = YEAR(TODAY()) - 1
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 21741298-fd0d-4275-9878-f490ae461f36
+
+	measure 'Total Mat Geral Ano YoY' = DIVIDE([Total Mat GeraL Ano Atual],[Total Mat Geral Ano Anterior])-1
+		formatString: 0%;-0%;0%
+		lineageTag: c8dc8fca-eac1-4c1e-ba53-672f85324e9e
+
+	measure '% Total Mat Geral Valida' = DIVIDE([Total Mat Valida],[Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 816e3cc8-37c4-481c-817b-236145828a60
+
+	measure 'Total Leads YoY' =
+			
+			
+			
+			var leadsfinal =  DIVIDE([Total leads],[Total Leads Y-1])-1
+			RETURN
+			SWITCH(TRUE(),
+			leadsfinal <=-1,BLANK(),leadsfinal)
+		formatString: 0%;-0%;0%
+		lineageTag: 4ef680c0-dcba-46ed-bfc7-25d1ed84431c
+
+	measure 'Total Faturamento Projeção' = ```
+			
+			VAR fatbruto = [Total Faturamento Bruto Esperado]
+			VAR fatcalculo = CALCULATE(DIVIDE(fatbruto,[Total dias uteis corridos],0)) * [Total dias uteis restante]
+			RETURN 
+			
+			fatbruto + fatcalculo
+			```
+		formatString: #,0
+		lineageTag: 90e474c4-cf65-49d7-afa4-6a51a02ec2e3
+
+	measure 'Total Faturamento Meta Dia' =
+			
+			VAR Dias_Restantes = [Total dias uteis restante]
+			VAR fatmeta = [Total Faturamento Meta comercial]
+			VAR fatbruto = [Total Faturamento Bruto Esperado]
+			VAR Divisao = DIVIDE(fatmeta - fatbruto, Dias_Restantes)
+			VAR Divisao2 = fatmeta - fatbruto
+			var final =   SWITCH(TRUE(),
+			   Dias_Restantes > 0, Divisao,
+			   Divisao2
+			)
+			RETURN
+			 if (final < 0, 0, final)
+		formatString: #,0
+		lineageTag: e439d5f9-7890-4b1b-8b13-f69c3dee2ec3
+
+	measure 'PDU Faturamento' =
+			
+			VAR diascorridos = [Total dias uteis corridos]
+			var fatbruto = [Total Faturamento Bruto Esperado]
+			RETURN
+			if (diascorridos < 1, DIVIDE(fatbruto,1,0),DIVIDE(fatbruto,diascorridos,0))
+		formatString: #,0
+		lineageTag: 5c75b42b-7b07-4d49-adfc-ba99752416bb
+
+	measure 'PDUC Faturamento' =
+			
+			VAR PDUFAT = [PDU Faturamento]
+			VAR CONSULT = [Total Consultores Ativos]
+			VAR FINAL = DIVIDE(PDUFAT,CONSULT)
+			RETURN
+			FINAL
+		formatString: #,0
+		lineageTag: 1641ac6f-de7d-4626-8df5-2d7ab6143da5
+
+	measure 'PDC Faturamento' = DIVIDE([Total Faturamento Bruto Esperado],[Total Consultores Ativos],0)
+		formatString: #,0
+		lineageTag: e0320e9e-55ad-4e13-9d89-6e30804203e0
+
+	measure 'Total Consultores Total' = ```
+			
+			
+			CALCULATE([Total Colaboradores Total],
+			    CONTAINSSTRING(vw_dim_users_ajustado[cargo], "Consultor") ||  CONTAINSSTRING(vw_dim_users_ajustado[cargo], "Operador") ||  CONTAINSSTRING(vw_dim_users_ajustado[cargo], "Comercial") && NOT CONTAINSSTRING(vw_dim_users_ajustado[cargo], "Supervisor"), 
+			    VW_CALENDARIO[MTD_REAL] = "Real"
+			)
+			```
+		formatString: 0
+		lineageTag: ce3e163b-ef4b-4a6c-b6be-bddd46e8a8ef
+
+	measure 'Total Mat/Leads Ecommerce' =
+			
+			CALCULATE(
+			    [Total Mat/Leads],
+			    FILTER(
+			        VW_LEADS_GROUP,
+			        VW_LEADS_GROUP[origem_do_contato_agrupada_final] = "Ecommerce" || VW_LEADS_GROUP[origem_matricula] = "Site" || VW_LEADS_GROUP[origem_matricula] = "Ecommerce"
+			    )
+			)
+		formatString: 0
+		lineageTag: 736d9e54-4624-4269-913f-8e25358e99ed
+
+	measure 'Total Leads GeraL Ano Atual' = ```
+			
+			CALCULATE(
+			    [Total Leads], 
+			    VW_CALENDARIO[COD_ANO] = YEAR(TODAY())
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: e33e84f3-b121-46c7-8927-a62dc729d7b6
+
+	measure 'Total Leads Geral Ano Anterior' = ```
+			
+			CALCULATE(
+			    [Total Leads], 
+			    VW_CALENDARIO[COD_ANO] = YEAR(TODAY()) - 1
+			)
+			
+			```
+		formatString: 0
+		lineageTag: a73d7c10-5147-44af-9eb5-1cbccb9f99a2
+
+	measure 'Total Leads Sem Consultor' = ```
+			
+			var leads = CALCULATE(SUM(VW_LEADS_GROUP[total]),VW_LEADS_GROUP[email_usuario] = "Semconsultoratrelado@Prozeducacao.Com.Br")
+			
+			return leads
+			
+			```
+		formatString: #,0
+		lineageTag: 454284ea-85a7-47f0-85b7-937d4e75dece
+
+	measure '% Total Leads Sem Consultor' = DIVIDE([Total Leads Sem Consultor],[Total Leads])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 181c0132-d9e7-416e-9962-9375945f0088
+
+	measure UsuarioAtual = ```
+			USERNAME()
+			
+			```
+		lineageTag: 1f2f9e20-1840-4d97-b8a1-597a6a8755b1
+
+	measure UsuarioAutorizado_leadsconsultor = ```
+			
+			IF(
+			    CONTAINS(DIM_EMAIL_AUTORIZADO_PAGINAS_BI, DIM_EMAIL_AUTORIZADO_PAGINAS_BI[Email], USERPRINCIPALNAME()),
+			    "Base Leads s/Consultor",
+			    "Acesso_Restrito"
+			)
+			
+			
+			```
+		lineageTag: 8ada8730-36d2-4384-8845-079f461482e9
+
+	measure UsuarioAutorizado_leadstotal = ```
+			
+			IF(
+			    CONTAINS(DIM_EMAIL_AUTORIZADO_PAGINAS_BI, DIM_EMAIL_AUTORIZADO_PAGINAS_BI[Email], USERPRINCIPALNAME()),
+			    "Base_Leads",
+			    "Acesso_Restrito"
+			)
+			
+			```
+		lineageTag: 23ee6b81-ba6f-4060-a611-b72fc5345bc2
+
+	measure 'Total Primeiro Contato' = CALCULATE(SUM(VW_LEADS_GROUP[total_primeiro_contato]),CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Falta De Interação") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Parou  De Interagir") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Sem Atendimento" ))
+		formatString: #,0
+		lineageTag: 25363bec-3eff-4c8c-8924-715143c3dd1f
+
+	measure 'Total 24h Contato' = CALCULATE(SUM(VW_LEADS_GROUP[total_24h_contato]),CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Falta De Interação") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Parou  De Interagir")|| CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Sem Atendimento" ))
+		formatString: #,0
+		lineageTag: 0b7a3799-d2f8-463e-8bd3-830576aea465
+
+	measure 'Total 36h Contato' = CALCULATE(SUM(VW_LEADS_GROUP[total_36h_contato]),CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Falta De Interação") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Parou  De Interagir")|| CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Sem Atendimento" ))
+		formatString: #,0
+		lineageTag: cb90e531-fd49-4bdd-8ff2-320a0ceefe4a
+
+	measure 'Total 7 Dias Contato' = CALCULATE(SUM(VW_LEADS_GROUP[total_7dias_contato]),CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Falta De Interação") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Parou  De Interagir")|| CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Sem Atendimento" ))
+		formatString: #,0
+		lineageTag: 73e91e48-18ad-4ddf-9bfc-bfe8aad692c3
+
+	measure 'Total Sem Interacao' = CALCULATE([Total Leads],CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Falta De Interação") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Parou De Interagir") || CONTAINSSTRING(VW_LEADS_GROUP[atendimento_n2],"Sem Atendimento" ))
+		formatString: #,0
+		lineageTag: 50df3d59-b20f-41e4-bced-c5d37a45ebf8
+
+	measure '% Total Primeiro Contato' = DIVIDE([Total Primeiro Contato],[Total Sem Interacao])
+		formatString: 0%;-0%;0%
+		lineageTag: 35ad53d7-cd43-4b02-b2de-42ec733f9199
+
+	measure '% Total 24H Contato' = DIVIDE([Total 24h Contato],[Total Sem Interacao])
+		formatString: 0%;-0%;0%
+		lineageTag: b612b9bb-d3fc-4ecf-b5f7-b5e1ba86453d
+
+	measure '% Total 36H Contato' = DIVIDE([Total 36h Contato],[Total Sem Interacao])
+		formatString: 0%;-0%;0%
+		lineageTag: 3e32d7d4-178a-4dfc-8417-c6408a60528d
+
+	measure '% Total 7 Dias Contato' = DIVIDE([Total 7 Dias Contato],[Total Sem Interacao])
+		formatString: 0%;-0%;0%
+		lineageTag: c8ce84e6-72af-47de-832c-f37a3d5efbe8
+
+	measure '% Leads Sem Interação sobre Total Leads' = DIVIDE([Total Sem Interacao],[Total Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: c30e667c-ad26-4b99-9cec-7164a88196d9
+
+	measure 'Total Leads Com Interação por Mensagem' =
+			
+			
+			IF(([Total Primeiro Contato]+ [Total 24h Contato] + [Total 36h Contato] + [Total 7 Dias Contato])>= 1,1,0)
+		formatString: 0
+		lineageTag: 41cc4a48-ec22-4160-bf73-d1846c32a911
+
+	measure 'Total Mat Valida Projeção' = ```
+			
+			VAR VENDASELECAO = [Total Mat Valida]
+			VAR VENDACORRIDA = CALCULATE(DIVIDE(VENDASELECAO,[Total dias uteis corridos],0)) * [Total dias uteis restante]
+			RETURN 
+			
+			VENDASELECAO + VENDACORRIDA
+			```
+		lineageTag: 918951df-76f3-4272-9d21-c9c63642789f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PPC Mat' = DIVIDE([Total Mat Geral],[Total Consultores Ativos])
+		lineageTag: 941c86e0-b7ea-462f-8e79-3b0072a10874
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MAX COD MES' = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),VW_CALENDARIO[MTD_REAL] = "Real")
+		formatString: 0
+		lineageTag: 86f824bc-b12a-43cd-a6b6-47b978195e0c
+
+	measure 'Total Leads Meta Movel Não Pago' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Leads Meta Não Pago], [Total dias uteis Ajustado], 0)
+			VAR DiasCorridos = [Total dias uteis corridos Ajustado]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		lineageTag: af68e469-7568-47bc-916f-a3aafc837628
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Leads Meta Movel Não Pago' = DIVIDE([Total Leads Não Pago], [Total Leads Meta Movel Não Pago], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: 1dfdb864-9878-47a8-b6ef-4d1bc58ad17f
+
+	measure 'Total Mat Historica dia Acum Y-1' = CALCULATE([Total Mat Historica Dia Y-1 Real],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: 0
+		lineageTag: 639c3a58-4cd3-4331-bc9e-8d96a1ac69ba
+
+	measure 'Total Faturamento Meta BP' = ```
+			
+			var meta = 
+			CALCULATE(SUM(vw_ft_meta_bp_comercial[meta_faturamento_dia_bp]),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
+			
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(meta) || meta = 0,BLANK(),meta)
+			
+			```
+		lineageTag: 643a0417-b628-4191-add1-7cb2e3afcf51
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Meta BP Acum' = CALCULATE([Total Faturamento Meta BP],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: b4fc7500-32e5-4bca-ba43-e91172ce8164
+
+	measure 'Total Faturamento Meta BP Acum Zerado' = ```
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			var fat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Faturamento Meta BP Acum],BLANK()
+			            )
+			
+			var fat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Faturamento Meta BP Acum],BLANK())
+			
+			var fat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Faturamento Meta BP Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),fat,
+			   NOT(ISBLANK(Codsem)),fat2,
+			   NOT(ISBLANK(Codmes)),fat3
+			    )
+			
+			```
+		lineageTag: ddbbf299-e4b4-4669-83c4-822946b05e0c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Acum Zerado' = ```
+			
+			
+			VAR maxday = CALCULATE(MAX('VW_CALENDARIO'[COD_DIA]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			var maxweek = CALCULATE(MAX(VW_CALENDARIO[COD_SEMANA_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			var maxmonth = CALCULATE(MAX(VW_CALENDARIO[COD_MES]),FILTER(ALLSELECTED('VW_CALENDARIO'),VW_CALENDARIO[DATA]<=TODAY()))
+			
+			VAR CodDia =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA])
+			VAR Codsem =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES])
+			VAR Codmes =
+			    SELECTEDVALUE(VW_CALENDARIO[COD_MES])
+			
+			VAR Classificacao =
+			    RANKX(ALL(VW_CALENDARIO[COD_DIA]), CodDia, , ASC)
+			
+			var mat = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_DIA]) <= maxday,
+			        [Total Faturamento Acum],BLANK()
+			            )
+			
+			var mat2 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_SEMANA_MES]) <= maxweek,
+			        [Total Faturamento Acum],BLANK())
+			
+			var mat3 = IF(
+			        SELECTEDVALUE(VW_CALENDARIO[COD_MES]) <= maxmonth,
+			        [Total Faturamento Acum],BLANK())
+			
+			RETURN
+			   SWITCH(TRUE(),
+			   NOT(ISBLANK(CodDia)),mat,
+			   NOT(ISBLANK(Codsem)),mat2,
+			   NOT(ISBLANK(Codmes)),mat3
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 23844f0c-aea5-4ed6-96ad-31f43112ddb7
+
+	measure 'Total Faturamento Acum' = CALCULATE([Total Faturamento Bruto Esperado],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+		formatString: #,0
+		lineageTag: 803073e9-d40c-434c-9f50-94048d63441f
+
+	measure '% Total Faturamento Meta Acum Zerado' = DIVIDE([Total Faturamento Acum Zerado],[Total Faturamento Meta BP Acum Zerado])
+		formatString: 0%;-0%;0%
+		lineageTag: 9d8ddf60-00eb-4012-9f9d-8724144d0133
+
+	measure 'Total Faturamento Meta BP Movel' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Faturamento Meta BP], [Total dias uteis], 0)
+			VAR DiasCorridos = [Total dias uteis corridos]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 8cb46f4b-8954-47b8-b598-6690b564ea02
+
+	measure '% Total Faturamento Meta BP Móvel' = DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta BP Movel])
+		formatString: 0%;-0%;0%
+		lineageTag: 49725d21-5ae3-4aca-9e36-38b5ee9bc123
+
+	measure 'max semana' = WEEKNUM(TODAY())
+		formatString: 0
+		lineageTag: 416e1a15-2c87-44a2-b0ae-98d0fc815c4f
+
+	measure 'Total Atendimentos Leads Unicos' = ```
+			
+			    CALCULATE(
+			        SUMX(
+			            FILTER(
+			                'VW_LEADS_GROUP',
+			                'VW_LEADS_GROUP'[status_cadastro] = "Lead"
+			            ),
+			            VW_LEADS_GROUP[total_atendimentos_unicos]
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: 57775c72-db45-4a13-8a4a-abdacff58d6c
+
+	measure 'Total Documentos Conferencia Pendente' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao_final], "Conferência/Validação Pendente"))
+		formatString: #,0
+		lineageTag: a1fa74af-0a2d-4367-9385-342b08a505fb
+
+	measure '% Total Documentos Conferencia Pendente' = DIVIDE([Total Documentos Conferencia Pendente], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: a4ee08a6-ce11-45d6-b5a0-62e60c159028
+
+	measure 'Total Documentos Ocorrência Retirada' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao], "Ocorrência Retirada"))
+		formatString: #,0
+		lineageTag: d4800853-fcd6-4a41-83bb-2339f5d51d74
+
+	measure 'Total Documentos Ocorrência Não Retirada/Doc Validada' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao], "Ocorrência Não Retirada/Documentação Validada"))
+		formatString: #,0
+		lineageTag: a7055e00-03c8-4da5-af9e-c840435aabf2
+
+	measure '% Total Documentos Ocorrência Retirada' = DIVIDE([Total Documentos Ocorrência Retirada], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 74b1b1e8-631c-4d05-9138-9d169c00e982
+
+	measure '% Total Documentos Ocorrência Não Retirada/Doc Validada' = DIVIDE([Total Documentos Ocorrência Não Retirada/Doc Validada], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 3901cc3c-8e54-4c78-b7e0-829e3a7a6f80
+
+	measure 'Total Documentos Ocorrência Não Retirada/Doc Pendente' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao], "Ocorrência Não Retirada/Documentação Pendente"))
+		formatString: #,0
+		lineageTag: c1493c86-e3da-4909-865d-87edec5c7579
+
+	measure '% Total Documentos Ocorrência Não Retirada/Doc Pendente' = DIVIDE([Total Documentos Ocorrência Não Retirada/Doc Pendente], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: b1bf6bef-8d9f-43ad-984b-20a697d136b4
+
+	measure 'Total Documentos Ocorrência Não Retirada/Validação Pendente' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			    CONTAINSSTRING(VW_MATRICULAS[status_documentacao], "Ocorrência Não Retirada/Validação Pendente"))
+		formatString: #,0
+		lineageTag: b7320eb4-a22e-47da-b5e1-b652ba590b94
+
+	measure '% Total Documentos Ocorrência Não Retirada/Validação Pendente' = DIVIDE([Total Documentos Ocorrência Não Retirada/Validação Pendente], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 8764b63b-4f20-4b6f-ac71-c862485f8481
+
+	measure 'Total Faturamento Antecipado Taxa Recorrencia Não Aprovado' = CALCULATE([Total Faturamento Antecipado Taxa Recorrencia],VW_MATRICULAS[status_pagamento] = "Nao Aprovado")
+		lineageTag: a2ba3dea-7a4b-4adf-b19f-307477114d03
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Antecipado Taxa Recorrencia Pendente' = CALCULATE([Total Faturamento Antecipado Taxa Recorrencia],VW_MATRICULAS[status_pagamento] = "Pendente")
+		lineageTag: eea64788-3dce-4d13-81ae-d62207c8b10c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento 1ª Mensalidade Recorrencia' = ```
+			
+			CALCULATE(
+			    SUM(VW_MATRICULAS[valor_mensalidade]),
+			    FILTER(
+			        VW_MATRICULAS,
+			        NOT CONTAINSSTRING(VW_MATRICULAS[motivo_da_saida], "Cancelado") &&
+			        VW_MATRICULAS[status_contrato] = "Matriculado" &&
+			        VW_MATRICULAS[recorrencia] = "Sim"
+			    )
+			)
+			
+			```
+		lineageTag: 7a8cb0a2-88fa-4427-8424-107d05cc8e65
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Recorrencia Aprovada' = [Total Faturamento Antecipado Taxa Recorrencia Aprovado] + [Total Faturamento 1ª Mensalidade Recorrencia]
+		lineageTag: 248a43aa-827c-4b68-9146-212ac7173692
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Faturamento Boleto/Pix/Cartão' = [Total Faturamento Antecipado Taxa Liquida Aprovado] + [Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão]
+		lineageTag: 68d7a161-2393-44bf-b7cb-389b772661eb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Faturamento Antecipado Taxa Aprovada' = DIVIDE([Total Faturamento Antecipado Taxa Liquida Aprovado]+[Total Faturamento Antecipado Taxa Recorrencia Aprovado],[Total Faturamento Bruto Esperado])
+		formatString: 0%;-0%;0%
+		lineageTag: 9da0ce0a-585b-4fd3-8eee-9d61751de021
+
+	measure 'Medida 5'
+		lineageTag: fb1c4916-b042-4316-b294-60e1be832b93
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Total Faturamento 1ª Mensalidade' = [Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão] + [Total Faturamento 1ª Mensalidade Recorrencia]
+		lineageTag: 702be4e9-3e25-4f82-be0f-bfcb47e3bcd1
+
+	measure 'Total Faturamento Antecipado Taxa Aprovada' = [Total Faturamento Antecipado Taxa Liquida Aprovado]+[Total Faturamento Antecipado Taxa Recorrencia Aprovado]
+		formatString: #,0
+		lineageTag: 72665abb-5af9-409b-9eb4-f12186069512
+
+	measure 'PPC Leads' = DIVIDE([Total Leads],[Total Consultores Ativos])
+		formatString: #,0
+		lineageTag: ff09c60b-1bd3-4d32-9760-d005e6777771
+
+	measure 'Total Consultores Ativos Y-1' =
+			
+			SWITCH(TRUE(),
+			NOT ISBLANK([Total Consultores Ativos]),CALCULATE([Total Consultores Ativos],DATEADD(VW_CALENDARIO[DATA],-1,YEAR)),BLANK())
+		formatString: 0
+		lineageTag: e98d660a-f8ea-41c6-a391-5ef2849d4898
+
+	measure 'PPC Mat y-1' = DIVIDE([Total Mat Historica Dia Y-1 Real],[Total Consultores Ativos Y-1])
+		formatString: #,0
+		lineageTag: 7ec9aec7-d28c-429e-8c8e-c6b580af3e6f
+
+	measure 'PPC Mat YoY' = DIVIDE([PPC Mat],[PPC Mat y-1])-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: cc427631-7d20-4bb1-b893-27ea9499a9ee
+
+	measure 'Medida 6' = ([Total Mat Geral] - [Total Recorrencia Matriculado Aprovado])+[Total Recorrencia Aprovado]
+		formatString: 0
+		lineageTag: 926119c2-a1b5-4bca-97fa-3fa6cafdf415
+
+	measure 'Total Mat Trimestre' = ```
+			
+			
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Mat Geral]) / 3,
+			        BLANK()
+			    )
+			```
+		lineageTag: 72393952-299d-4905-bd7f-7daaf1685760
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PDUC Mat Trimestre' = ```
+			
+			VAR TotalMatTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Mat Geral]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Mat Geral]) / 3,
+			        BLANK()
+			    )
+			
+			VAR TotalDiasUteisTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Dias Uteis]) / 3,
+			        BLANK()
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Consultores Ativos]),
+			        BLANK()
+			    )
+			
+			VAR ProdutividadeTrimestre = 
+			    DIVIDE(TotalMatTrim, TotalDiasUteisTrim, 0)
+			
+			RETURN
+			DIVIDE(ProdutividadeTrimestre, ConsultoresAtivosTrim, 0)
+			
+			```
+		lineageTag: e53f8bfc-ae72-48cf-accf-02c281412c4f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PPC Mat Trimestre' = ```
+			
+			VAR AnoSelecionado = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR TrimestreSelecionado = SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM])
+			VAR Hoje = TODAY()
+			VAR AnoAtual = YEAR(Hoje)
+			
+			-- Calcula o primeiro dia do trimestre selecionado
+			VAR InicioTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 1, 1),
+			        "Q2", DATE(AnoSelecionado, 4, 1),
+			        "Q3", DATE(AnoSelecionado, 7, 1),
+			        "Q4", DATE(AnoSelecionado, 10, 1)
+			    )
+			
+			-- Calcula o último dia do trimestre (ou hoje, caso seja o trimestre atual do ano atual)
+			VAR FimTrimestre = 
+			    SWITCH(
+			        TrimestreSelecionado,
+			        "Q1", DATE(AnoSelecionado, 3, 31),
+			        "Q2", DATE(AnoSelecionado, 6, 30),
+			        "Q3", DATE(AnoSelecionado, 9, 30),
+			        "Q4", DATE(AnoSelecionado, 12, 31)
+			    )
+			
+			-- Se for o ano atual e um trimestre em andamento, usa a data de hoje como fim
+			VAR DiasTrimestre = 
+			    IF(
+			        AnoSelecionado = AnoAtual && Hoje < FimTrimestre,
+			        DATEDIFF(InicioTrimestre, Hoje, DAY), 
+			        DATEDIFF(InicioTrimestre, FimTrimestre, DAY) + 1
+			    )
+			
+			-- Conversão para fração de meses (considerando 30 dias por mês)
+			VAR MesesAjustados = DiasTrimestre / 30
+			
+			-- Define o divisor correto
+			VAR Divisor = IF(AnoSelecionado = AnoAtual, MesesAjustados, 3)
+			
+			VAR TotalMatTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Mat Geral]) / Divisor
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    IF(
+			        NOT ISBLANK(TrimestreSelecionado),
+			        AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = TrimestreSelecionado), [Total Consultores Ativos])
+			    )
+			
+			RETURN
+			DIVIDE(TotalMatTrim, ConsultoresAtivosTrim, 0)
+			
+			```
+		lineageTag: 9bb0e4aa-4c48-4086-b5f3-2a3717c78dd5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Consultores Ativos Trimestre' =
+			
+			SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Consultores Ativos]),
+			        BLANK()
+			    )
+		lineageTag: 5b090dd6-97f4-4cd1-adab-0f462c31ad7b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total dias Uteis Trimestre' =
+			SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q1", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q1"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q2", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q2"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q3", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q3"), [Total Dias Uteis]) / 3,
+			        SELECTEDVALUE(VW_CALENDARIO[DSC_TRIM]) = "Q4", SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[DSC_TRIM] = "Q4"), [Total Dias Uteis]) / 3,
+			        BLANK()
+			    )
+		lineageTag: 0b0f8974-b34c-443d-afb0-f55c278317f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PPC Mat Ano' = ```
+			
+			VAR AnoSelecionado = SELECTEDVALUE(VW_CALENDARIO[COD_ANO])
+			VAR Hoje = TODAY()
+			VAR AnoAtual = YEAR(Hoje)
+			VAR DiaDoAno = DATEDIFF(DATE(AnoAtual, 1, 1), Hoje, DAY) -- Dias desde 1º de janeiro até hoje
+			VAR MesesPassados = DiaDoAno / 30 -- Aproximação da quantidade de meses decorridos
+			
+			VAR Divisor = 
+			    IF(AnoSelecionado = AnoAtual, MesesPassados, 12)
+			
+			VAR TotalMatTrim = 
+			    IF(
+			        NOT ISBLANK(AnoSelecionado),
+			        SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = AnoSelecionado), [Total Mat Geral]) / Divisor
+			    )
+			
+			VAR ConsultoresAtivosTrim = 
+			    IF(
+			        NOT ISBLANK(AnoSelecionado),
+			        AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = AnoSelecionado), [Total Consultores Ativos])
+			    )
+			
+			RETURN
+			DIVIDE(TotalMatTrim, ConsultoresAtivosTrim, 0)
+			
+			```
+		lineageTag: 6bf39c14-e8a9-4209-afd7-120abaef61d4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PDUC Mat Ano' = ```
+			
+			
+			VAR TotalDiasUteisTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2024, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2024), [Total Dias Uteis]) / 12,
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2023, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2023), [Total Dias Uteis]) / 12,
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2022, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2022), [Total Dias Uteis]) / 12,
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2021, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2021), [Total Dias Uteis]) / 12,
+			        BLANK()
+			    )
+			
+			VAR TotalMatTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2024, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2024), [Total Mat Geral]) / 12,
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2023, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2023), [Total Mat Geral]) / 12,
+			       SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2022, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2022), [Total Mat Geral]) / 12,
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2021, SUMX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2021), [Total Mat Geral]) / 12,
+			        BLANK()
+			    )
+			
+			
+			VAR ConsultoresAtivosTrim = 
+			    SWITCH(
+			        TRUE(),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2024, AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2024), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2023, AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2023), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2022, AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2022), [Total Consultores Ativos]),
+			        SELECTEDVALUE(VW_CALENDARIO[COD_ANO]) = 2021, AVERAGEX(FILTER(VW_CALENDARIO, VW_CALENDARIO[COD_ANO] = 2021), [Total Consultores Ativos]),
+			        BLANK()
+			    )
+			
+			VAR ProdutividadeTrimestre = 
+			    DIVIDE(TotalMatTrim, TotalDiasUteisTrim, 0)
+			
+			RETURN
+			DIVIDE(ProdutividadeTrimestre, ConsultoresAtivosTrim, 0)
+			
+			```
+		lineageTag: 78bcb0ad-f16d-4fc9-bd9b-a2a01d113ff1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Ok' = CALCULATE(SUM(VW_MATRICULAS[venda_ok]),VW_MATRICULAS[status_contrato] = "Matriculado")
+		formatString: #,0
+		lineageTag: e6e71d3f-3e9b-4549-aa11-5bef4bf20ce2
+
+	measure 'Total Mat NOk' = CALCULATE(SUM(VW_MATRICULAS[venda_nok]),VW_MATRICULAS[status_contrato] = "Matriculado")
+		formatString: #,0
+		lineageTag: 37686657-ba4f-45e6-a8bc-bad3c230c995
+
+	measure '% Total Mat OK Meta Movel Comercial' = DIVIDE([Total Mat Ok],[Total Mat Meta Comercial Movel])
+		formatString: 0%;-0%;0%
+		lineageTag: 5b77b45e-c95e-4da1-b182-18ba6e368f79
+
+	measure '% Total Mat OK Meta Comercial' = DIVIDE([Total Mat Ok],[Total Mat Meta Comercial])
+		formatString: 0%;-0%;0%
+		lineageTag: 9b44bbc8-a104-4b7e-ac75-ac5f03741ea4
+
+	measure 'Total Mat Pendente' = CALCULATE(SUM(VW_MATRICULAS[venda_pendente]),VW_MATRICULAS[status_contrato] = "Matriculado")
+		formatString: #,0
+		lineageTag: 03c83e8d-065a-465a-840e-f888b22f7b09
+
+	measure MaxDataHoramat = ```
+			
+			VAR UltimaData = CALCULATE(MAX(VW_MATRICULAS[data_final]),VW_MATRICULAS[status_contrato]="Matriculado")
+			VAR UltimaHora = 
+			    CALCULATE(
+			        MAX(VW_MATRICULAS[hora_final_completa]),VW_MATRICULAS[status_contrato]="Matriculado", 
+			        VW_MATRICULAS[data_final] = UltimaData
+			    ) 
+			RETURN 
+			    UltimaData + UltimaHora
+			
+			```
+		formatString: General Date
+		lineageTag: 4a2ec32b-8e1e-4e8b-a74f-3f6ee3941684
+
+	measure 'Status Venda RVV' = ```
+			
+			SWITCH(
+			    TRUE(),
+			    [Total Mat Ok] = 1, "Venda Ok",
+			    [Total Mat NOk] = 1, "Venda Nok",
+			    [Total Mat Pendente] = 1, "Venda Pendente de Documentação ou Validação",
+			    BLANK()
+			)
+			
+			```
+		lineageTag: a13cd317-fe1c-4f11-b18b-790dcc2cfae3
+
+	measure '% Total Mat Ok' = DIVIDE([Total Mat Ok], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 1b058dae-f64f-48a9-a26f-86135a797544
+
+	measure '% Total Mat NOk' = DIVIDE([Total Mat NOk], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 20d19e81-3c0b-4e85-a227-eb0936fad94e
+
+	measure '% Total Mat Pendente' = DIVIDE([Total Mat Pendente], [Total Mat Geral])
+		formatString: 0%;-0%;0%
+		lineageTag: 1b9aaf16-9b7e-4d18-9673-73f7ec593323
+
+	measure MAXHORACOMPLETA = MAX(VW_MATRICULAS[hora_final_completa])
+		formatString: Long Time
+		lineageTag: 30fcbaaf-9bc6-4a2a-a2b1-77d862e84626
+
+	measure 'Total Visitantes' = CALCULATE(SUM(VW_VISITANTES[Total]))
+		formatString: #,0
+		lineageTag: c9a8b9aa-f8a2-4854-a405-11ed4facb41a
+
+	measure 'Total Leads Visitantes' = CALCULATE(SUM(VW_VISITANTES[Total]),VW_VISITANTES[status_cadastro] = "Lead")
+		formatString: #,0
+		lineageTag: 1df8aeb6-1dc0-4e3d-afd5-11b90a2d59e4
+
+	measure 'Total Mat/Leads Visitantes' = CALCULATE(SUM(VW_VISITANTES[total_matriculados]))
+		formatString: 0
+		lineageTag: b7b60278-964f-4d32-ab6b-d779749e2eb1
+
+	measure 'Conversao Mat/Leads Visitantes' = DIVIDE( [Total Mat/Leads Visitantes], [Total Leads Visitantes])
+		formatString: 0%;-0%;0%
+		lineageTag: da542974-a4a1-4c0d-b5e0-2ca4bd3cf25a
+
+	measure 'Total Visitantes M-1' = CALCULATE([Total Visitantes], DATEADD(VW_CALENDARIO[DATA],-1,MONTH))
+		formatString: 0
+		lineageTag: a0b5e4d9-2807-495c-ad13-e2df32986125
+
+	measure 'Total Visitantes 14 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 28 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 14
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: b74bb8c7-8ce8-4e04-b984-fd11b47edce1
+
+	measure 'Total Visitantes Crescimento Últimos 14 Dias' = ```
+			
+			VAR Atual = [Total Visitantes Últimos 14 Dias]
+			VAR Anterior = [Total Visitantes 14 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 68aba3c4-3a39-4d12-bfc7-cf2923976081
+
+	measure 'Total Visitantes Últimos 14 Dias' = ```
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 14,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 3320e330-580d-4dfc-b2ab-01adc0035e2d
+
+	measure 'Total Visitantes Últimos 7 Dias' =
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias],
+			        [MaxDataHoraleads] - 'Data Dia Anterior'[Valor Data Dia Anterior]
+			    )
+			)
+		formatString: #,0
+		lineageTag: 5c43e1be-31b1-4b88-96c6-775a7c50fd4c
+
+	measure 'Total Visitantes 7 Dias Anteriores' =
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias]* 2,
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias]
+			    )
+			)
+		formatString: #,0
+		lineageTag: 6c3d60d9-4569-4caf-8477-ad51014f82e1
+
+	measure Total_Visitantes_Crescimento_Últimos_7_Dias = ```
+			
+			VAR Atual = [Total Visitantes Últimos 7 Dias]
+			VAR Anterior = [Total Visitantes 7 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e0751384-964d-42c6-9ba9-75d53aaeba4b
+
+	measure 'Total Visitantes 21 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 42 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 21
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: c6a08527-e455-40b7-b0d9-3d5d29d22aa3
+
+	measure 'Total Visitantes Crescimento Últimos 21 Dias' = ```
+			
+			VAR Atual = [Total Visitantes Últimos 21 Dias]
+			VAR Anterior = [Total Visitantes 21 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2a9792cf-afbb-4036-9ede-3df5269ed508
+
+	measure 'Total Visitantes Últimos 21 Dias' = ```
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 21,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 545e0b1c-1ff5-46f0-abaf-3f41dd1ab127
+
+	measure 'Total Visitantes Últimos 28 Dias' =
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 28,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+		formatString: #,0
+		lineageTag: fb5ff1d5-b871-4ab2-a4cd-5ad881676cca
+
+	measure 'Total Visitantes 28 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 56 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 28
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 2011de7c-a1f3-4106-9d21-9833503e6887
+
+	measure 'Total Visitantes Crescimento Últimos 28 Dias' = ```
+			
+			VAR Atual = [Total Visitantes Últimos 28 Dias]
+			VAR Anterior = [Total Visitantes 28 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 305f15c2-4056-4c24-afae-ae2a346b22a4
+
+	measure 'Total Leads Visitantes Últimos 7 Dias' =
+			
+			CALCULATE(
+			    [Total Leads Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias],
+			        [MaxDataHoraleads] - 'Data Dia Anterior'[Valor Data Dia Anterior]
+			    )
+			)
+		formatString: #,0
+		lineageTag: 433e643d-1b46-4a39-ba73-35a083a93386
+
+	measure 'Total Leads Visitantes Últimos 14 Dias' =
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 14,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+		formatString: #,0
+		lineageTag: 7b93495f-02fb-438b-af5e-be13cfaffb24
+
+	measure 'Total Conversão Leads/Visitantes Últimos 7 dias' = DIVIDE([Total Leads Visitantes Últimos 7 Dias],[Total Visitantes Últimos 7 Dias])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e7737350-ac70-4009-961d-831d2b3ed6a4
+
+	measure 'Total Leads 7 Dias Anteriores' =
+			
+			CALCULATE(
+			    [Total Leads Visitantes],
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias] * 2,
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias]
+			    )
+			)
+		formatString: #,0
+		lineageTag: 32f4fc8f-7b59-473a-83ea-60a4c9acc485
+
+	measure 'Total Conversão Leads/Visitantes 7 Dias Anteriores' = DIVIDE([Total Leads 7 Dias Anteriores],[Total Visitantes 7 Dias Anteriores])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 2a11cdba-2f0d-4ef6-81dc-3e1a6172a1ba
+
+	measure 'Total Conversão Leads/Visitantes 7 dias p.p' = ```
+			
+			VAR Ultimos7Dias = [Total Conversão Leads/Visitantes Últimos 7 dias]
+			VAR DiasAnteriores = [Total Conversão Leads/Visitantes 7 Dias Anteriores]
+			VAR Diferenca = (Ultimos7Dias - DiasAnteriores) * 100
+			
+			RETURN 
+			SWITCH(TRUE(),
+			ISBLANK(Diferenca),BLANK(),
+			FORMAT(Diferenca, "0.0") & " p.p"
+			)
+			```
+		lineageTag: e8e6522f-bab1-4d49-aaee-1160892c7505
+
+	measure 'Total Leads 14 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 28 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 14
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: caafaa47-ce2c-41f4-a795-3a089f6a5de1
+
+	measure 'Total Conversão Leads/Visitantes Últimos 14 dias' = DIVIDE([Total Leads Visitantes Últimos 14 Dias],[Total Visitantes Últimos 14 Dias])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5720b7b5-4d6e-4a27-9dfd-e9b0aec34a6c
+
+	measure 'Total Conversão Leads/Visitantes 14 Dias Anteriores' = DIVIDE([Total Leads 14 Dias Anteriores],[Total Visitantes 14 Dias Anteriores])
+		formatString: 0%;-0%;0%
+		lineageTag: 3a22a27c-2d4d-45d1-b7d0-07f3170e25d6
+
+	measure 'Total Conversão Leads/Visitantes 14 dias p.p' =
+			
+			VAR Ultimos7Dias = [Total Conversão Leads/Visitantes Últimos 14 dias]
+			VAR DiasAnteriores = [Total Conversão Leads/Visitantes 14 Dias Anteriores]
+			VAR Diferenca = (Ultimos7Dias - DiasAnteriores) * 100
+			
+			RETURN FORMAT(Diferenca, "0.0") & " p.p"
+		lineageTag: e2586a38-3ecc-4803-9ee7-7b115daf6d4d
+
+	measure 'Total Leads Crescimento Últimos 7 Dias' = ```
+			
+			VAR Atual = [Total Leads Visitantes Últimos 7 Dias]
+			VAR Anterior = [Total Leads 7 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 5004bfd7-20cc-4a14-9322-aa06eea78c64
+
+	measure 'Total Leads Crescimento Últimos 14 Dias' = ```
+			
+			VAR Atual = [Total Leads Visitantes Últimos 14 Dias]
+			VAR Anterior = [Total Leads 14 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 9d654cbb-65a0-4c07-87ca-9fc3b24939bc
+
+	measure 'Total Conversão Leads/Visitantes Últimos 21 dias' = DIVIDE([Total Leads Visitantes Últimos 21 Dias],[Total Visitantes Últimos 21 Dias])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 911a105f-e1f8-43cb-9394-bed82172ada9
+
+	measure 'Total Leads Visitantes Últimos 21 Dias' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 21,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			
+			```
+		formatString: #,0
+		lineageTag: c7ecda59-b1b4-4a90-b092-da29a9bb5876
+
+	measure 'Total Leads Visitantes Últimos 28 Dias' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 28,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: dcf38678-3b89-4a74-9490-d94149abb72b
+
+	measure 'Total Leads 21 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 42 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 21
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 6e568b0b-89da-40a2-b747-c930f0179b8a
+
+	measure 'Total Leads 28 Dias Anteriores' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes],
+			    FILTER(
+			        ALL(VW_CALENDARIO),
+			        VW_CALENDARIO[DATA] >= TODAY() - 56 &&
+			        VW_CALENDARIO[DATA] < TODAY() - 28
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: b0f2381c-96d9-4491-ac27-a005b58cb5d4
+
+	measure 'Total Leads Crescimento Últimos 21 Dias' = ```
+			
+			VAR Atual = [Total Leads Visitantes Últimos 21 Dias]
+			VAR Anterior = [Total Leads 21 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: e0f3323e-aaa0-4a30-b339-eee62ea61b1d
+
+	measure 'Total Leads Crescimento Últimos 28 Dias' = ```
+			
+			VAR Atual = [Total Leads Visitantes Últimos 28 Dias]
+			VAR Anterior = [Total Leads 28 Dias Anteriores]
+			RETURN 
+			    IF(Anterior <> 0, (Atual - Anterior) / Anterior, BLANK())
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 1b78705d-97e6-4454-9b0d-a5d0605bbded
+
+	measure 'Total Conversão Leads/Visitantes 21 dias p.p' =
+			
+			VAR Ultimos7Dias = [Total Conversão Leads/Visitantes Últimos 21 dias]
+			VAR DiasAnteriores = [Total Conversão Leads/Visitantes 21 Dias Anteriores]
+			VAR Diferenca = (Ultimos7Dias - DiasAnteriores) * 100
+			
+			RETURN FORMAT(Diferenca, "0.0") & " p.p"
+		lineageTag: 8dc3e461-4c68-46b6-81f6-bdbffcab44f3
+
+	measure 'Total Conversão Leads/Visitantes 21 Dias Anteriores' = DIVIDE([Total Leads 21 Dias Anteriores],[Total Visitantes 21 Dias Anteriores])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: df8a5dff-b253-484d-9be5-8514dd95fff6
+
+	measure 'Total Conversão Leads/Visitantes 28 Dias Anteriores' = DIVIDE([Total Leads 28 Dias Anteriores],[Total Visitantes 28 Dias Anteriores])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: ad28eb5e-e517-4674-8470-2574c1e6ce6e
+
+	measure 'Total Conversão Leads/Visitantes 28 dias p.p' =
+			
+			VAR Ultimos7Dias = [Total Conversão Leads/Visitantes Últimos 28 dias]
+			VAR DiasAnteriores = [Total Conversão Leads/Visitantes 28 Dias Anteriores]
+			VAR Diferenca = (Ultimos7Dias - DiasAnteriores) * 100
+			
+			RETURN FORMAT(Diferenca, "0.0") & " p.p"
+		lineageTag: 78229ac4-4fcc-4cc9-b4a5-8c9e7c20cce6
+
+	measure 'Total Conversão Leads/Visitantes Últimos 28 dias' = DIVIDE([Total Leads Visitantes Últimos 28 Dias],[Total Visitantes Últimos 28 Dias])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b3495e10-99e6-4fe3-a59a-c56feda11547
+
+	measure MaxDataHoraleads = ```
+			
+			VAR UltimaData = CALCULATE(MAX(VW_LEADS_GROUP[data_criacao]))
+			VAR UltimaHora = 
+			    CALCULATE(
+			        MAX(VW_LEADS_GROUP[hora]), 
+			        VW_LEADS_GROUP[data_criacao] = UltimaData
+			    ) 
+			
+			RETURN 
+			    UltimaData + (UltimaHora / 24)
+			
+			```
+		formatString: General Date
+		lineageTag: 0d380b7b-c449-424b-9c0b-62b42c418d0c
+
+	measure '% Total Leads Meta Pago Share' = DIVIDE([Total Leads Meta Pago],[Total Leads Meta])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 02782b57-9104-49b7-acf5-645833a03847
+
+	measure '% Total Leads Meta Não Pago Share' = DIVIDE([Total Leads Meta Não Pago],[Total Leads Meta])
+		formatString: 0%;-0%;0%
+		lineageTag: 7c2825cc-b9b5-4119-8896-91fcf20b864e
+
+	measure 'Conversão Geral Meta' = DIVIDE([Total mat meta bp],[Total Leads Meta])
+		lineageTag: df2b5317-a5dd-4d5d-ba39-636538edaaf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Conversão Geral Meta p.p' =
+			
+			VAR ttconv = [Conversão Geral]
+			VAR ttconvmeta = [Conversão Geral Meta]
+			VAR Diferenca = (ttconv-ttconvmeta) * 100
+			
+			RETURN FORMAT(Diferenca, "+0.0;-0.0;0.0") & " p.p"
+		lineageTag: 8e93f0a2-2ab5-4fbf-bdb0-0fe9e93b39f1
+
+	measure 'Total Leads Meta Pago Share p.p' =
+			
+			VAR real = [% Total Leads Pago]
+			VAR meta = [% Total Leads Meta Pago Share]
+			VAR Diferenca = (real-meta) * 100
+			
+			RETURN FORMAT(Diferenca, "0.0") & " p.p"
+		lineageTag: 9fc480d9-aa69-457a-97f4-f0fb669d6286
+
+	measure 'Conversão Geral Meta Movel' = DIVIDE([Total Mat Meta BP Movel],[Total Leads Meta Movel])
+		lineageTag: cc783aa8-906d-4019-8d10-b6a246954d2e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Conversão Geral Meta Movel p.p' =
+			
+			VAR ttconv = [Conversão Geral]
+			VAR ttconvmeta = [Conversão Geral Meta Movel]
+			VAR Diferenca = (ttconv-ttconvmeta) * 100
+			
+			RETURN FORMAT(Diferenca, "+0.0;-0.0;0.0") & " p.p"
+		lineageTag: 046b8f5e-d257-44de-a4c8-15c70cefa94f
+
+	measure 'Total CPL Meta Movel Pago' = DIVIDE([Total Investimento Meta Movel],[Total Leads Meta Movel Pago])
+		lineageTag: 60d2e796-a3d9-4cac-acd0-c3df47d0b548
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total Faturamento Meta BP' = DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta BP])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: b1053c81-f004-4e8e-8b28-76df56989b29
+
+	measure 'Total Faturamento Meta Movel BP' = ```
+			
+			VAR MetasPorDia = DIVIDE([Total Faturamento Meta BP], [Total dias uteis], 0)
+			VAR DiasCorridos = [Total dias uteis corridos]
+			
+			RETURN
+			    IF(
+			        MetasPorDia <> BLANK() && DiasCorridos > 0,
+			        MetasPorDia * DiasCorridos
+			    )
+			
+			```
+		formatString: #,0
+		lineageTag: 06909c5b-d410-43e5-a3fa-efd09a17faf8
+
+	measure '% Total Faturamento Meta Móvel BP' = DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta Movel BP])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 406f98eb-4606-4dbf-bc50-7aaf8f59040d
+
+	measure 'Total Mat Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			VAR ValorNumerico = [% Total Mat Meta BP Movel] // Remove espaços extras
+			
+			VAR TOTAL = 
+			SWITCH(TRUE(),
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			    
+			                ValorNumerico >= 1, "🟢 " , // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0.8, "🟡 ",  // Entre 50% e 99.9% → círculo amarelo
+			                ValorNumerico < 0.8, "🔴 " ,  // Abaixo de 50% → círculo vermelho
+			                ValorNumerico // Caso padrão
+			            )
+			RETURN 
+			    IF(
+			        NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(sigla) || NOT ISBLANK(stat), 
+			        IF(
+			            ValorNumerico <> 0 && NOT ISBLANK(ValorNumerico), 
+			            total
+			        )
+			    )
+			
+			```
+		lineageTag: 57280f61-d30d-472a-86a4-1fb2e01c6518
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Leads Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			VAR ValorNumerico = [% Total Leads Meta Movel] // Remove espaços extras
+			
+			VAR TOTAL =
+			SWITCH(TRUE(),
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			    
+			                ValorNumerico >= 1, "🟢 " , // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0.8, "🟡 ",  // Entre 50% e 99.9% → círculo amarelo
+			                ValorNumerico < 0.8, "🔴 " ,  // Abaixo de 50% → círculo vermelho
+			                ValorNumerico // Caso padrão
+			            )
+			RETURN 
+			    IF(
+			        NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(sigla) || NOT ISBLANK(stat),
+			        IF(
+			            ValorNumerico <> 0 && NOT ISBLANK(ValorNumerico), 
+			            total
+			        )
+			    )
+			
+			```
+		lineageTag: 54c88a24-84ca-4fb9-838b-d3293eba9833
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Leads Pago Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			VAR ValorNumerico = [% Total Leads Meta Movel Pago] // Remove espaços extras
+			
+			VAR TOTAL =
+			SWITCH(TRUE(),
+			        ISBLANK(ValorNumerico), 
+			        BLANK(),  // Mantém valores em branco sem erro
+			    
+			                ValorNumerico >= 1, "🟢 " , // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0.8, "🟡 ",  // Entre 50% e 99.9% → círculo amarelo
+			                ValorNumerico < 0.8, "🔴 " ,  // Abaixo de 50% → círculo vermelho
+			                ValorNumerico // Caso padrão
+			            )
+			RETURN 
+			    IF(
+			        NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(sigla) || NOT ISBLANK(stat),
+			        IF(
+			            ValorNumerico <> 0 && NOT ISBLANK(ValorNumerico), 
+			            total
+			        )
+			    )
+			```
+		lineageTag: 80d31f07-dfb8-481f-806e-578877a5e8e5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Conversão Geral Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			VAR ValorTexto = TRIM([Conversão Geral]) // Remove espaços extras
+			// Verifica se o valor contém "p.p" ou "%" para definir o tratamento adequado
+			VAR ContemPP = SEARCH("p.p", ValorTexto, 1, 0) > 0
+			VAR ContemPorcento = SEARCH("%", ValorTexto, 1, 0) > 0
+			// Remove os indicadores de texto para conversão numérica
+			VAR ValorLimpo = SUBSTITUTE(SUBSTITUTE(ValorTexto, " p.p", ""), "%", "")
+			// Converte para número, mas só divide por 100 se for percentual ("%")
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(ValorLimpo) / IF(ContemPorcento, 100, 1) // Divide por 100 apenas para "%"
+			    )
+			VAR total = SWITCH(
+			                TRUE(),
+			                ValorNumerico >= 0.14, "🟢 ",  // Meta atingida ou superada → círculo verde
+			                ValorNumerico >= 0.1, "🟡 ",   // Entre 0% e meta → círculo amarelo
+			                ValorNumerico < 0.1, "🔴 "     // Abaixo de 0% → círculo vermelho
+			            )
+			RETURN 
+			    IF(
+			        NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(sigla) || NOT ISBLANK(stat),
+			        IF(
+			            ValorNumerico <> 0 && NOT ISBLANK(ValorNumerico), 
+			            total
+			        )
+			    )
+			
+			
+			    
+			```
+		lineageTag: 8e4c63a6-09eb-4351-bccb-31cb5569f070
+
+	measure 'Total CPL Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			VAR ValorTexto = TRIM([Total CPL Pago]) // Remove espaços extras
+			// Verifica se o valor contém "p.p" ou "%" para definir o tratamento adequado
+			VAR ContemPP = SEARCH("p.p", ValorTexto, 1, 0) > 0
+			VAR ContemPorcento = SEARCH("%", ValorTexto, 1, 0) > 0
+			// Remove os indicadores de texto para conversão numérica
+			VAR ValorLimpo = SUBSTITUTE(SUBSTITUTE(ValorTexto, " p.p", ""), "%", "")
+			// Converte para número, mas só divide por 100 se for percentual ("%")
+			VAR ValorNumerico = 
+			    IF(
+			        ValorTexto = "" || ValorTexto = BLANK(), 
+			        BLANK(), 
+			        VALUE(ValorLimpo) / IF(ContemPorcento, 100, 1) // Divide por 100 apenas para "%"
+			    )
+			VAR TOTAL =
+			                SWITCH(
+			                    TRUE(),
+			                    // Ícones para outros indicadores em "% Ating"
+			                       ValorNumerico > 60, "🔴 ", // Abaixo de 0% → círculo vermelho
+			                    ValorNumerico >= 55, "🟡 " ,  // Entre 0% e meta → círculo amarelo
+			                    ValorNumerico < 55, "🟢 "  // Meta atingida ou superada → círculo verde
+			
+			                 
+			
+			                )
+			RETURN 
+			    IF(
+			        NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(sigla) || NOT ISBLANK(stat),
+			        IF(
+			            ValorNumerico <> 0 && NOT ISBLANK(ValorNumerico), 
+			            total
+			        )
+			    )
+			
+			```
+		lineageTag: a365f615-e2cb-459d-a3c2-0d5343396630
+
+	measure 'Ranking Icone' = ```
+			
+			VAR porte = SELECTEDVALUE(dim_unidade_historica[porte])
+			VAR reg = SELECTEDVALUE(dim_unidade_historica[regional])
+			VAR unid = SELECTEDVALUE(dim_unidade_historica[dsc_unidade])
+			VAR stat = SELECTEDVALUE(dim_unidade_historica[status])
+			VAR sigla = SELECTEDVALUE(dim_unidade_historica[status])
+			
+			
+			VAR MAT = 
+			    SWITCH(TRUE(),
+			        [% Total Mat Meta BP Movel] >= 1, 20,
+			        [% Total Mat Meta BP Movel] >= 0.8, 10,
+			        BLANK())
+			
+			VAR LEADS = 
+			    SWITCH(TRUE(),
+			        [% Total Leads Meta Movel] >= 1, 20,
+			        [% Total Leads Meta Movel] >= 0.8, 10,
+			        BLANK())
+			
+			VAR LEADSPAGO = 
+			    SWITCH(TRUE(),
+			        [% Total Leads Meta Movel Pago] >= 1, 20,
+			        [% Total Leads Meta Movel Pago] >= 0.8, 10,
+			        BLANK())
+			
+			VAR CONV = 
+			    SWITCH(TRUE(),
+			        [Conversão Geral] >= 0.14, 20,
+			        [Conversão Geral] >= 0.10, 10,
+			        BLANK())
+			
+			VAR CPL = 
+			    IF(
+			        NOT ISBLANK([Total CPL Pago]),
+			        SWITCH(TRUE(),
+			            [Total CPL Pago] <= 55, 20,
+			            [Total CPL Pago] > 55, 10
+			        ),
+			        BLANK()
+			    )
+			
+			VAR TOTAL = MAT + LEADS + LEADSPAGO + CONV + CPL
+			
+			RETURN
+			    IF(
+			        (NOT ISBLANK(porte) || NOT ISBLANK(reg) || NOT ISBLANK(unid) || NOT ISBLANK(stat) || NOT ISBLANK(sigla)) &&
+			        TOTAL <> 0 && NOT ISBLANK(TOTAL),
+			        TOTAL
+			    )
+			```
+		formatString: 0
+		lineageTag: 815d5d92-2209-4314-a7d7-5d17f5921c11
+
+	measure 'Total Leads Últimos 14 Dias' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 14,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 6e3a88d4-b42f-4a51-99a1-b9cdccd1dfff
+
+	measure 'Total Leads Últimos 7 Dias' =
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias],
+			        [MaxDataHoramat] - 'Data Dia Anterior'[Valor Data Dia Anterior]
+			    )
+			)
+		formatString: #,0
+		lineageTag: 44a2d8f0-b307-46ae-b934-ccf7b0139887
+
+	measure 'Total Mat/Leads Últimos 7 Dias' =
+			
+			CALCULATE(
+			    [Total Mat/Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 'Qtd Últimos Dias'[Valor Qtd Últimos Dias],
+			        [MaxDataHoramat] - 'Data Dia Anterior'[Valor Data Dia Anterior]
+			    )
+			)
+		formatString: 0
+		lineageTag: b9d5623a-8f73-406e-9246-6499d5c38394
+
+	measure 'Total Conversão Mat/Leads Últimos 7 Dias' = DIVIDE([Total Mat/Leads Últimos 7 Dias],[Total Leads Últimos 7 Dias])
+		formatString: 0%;-0%;0%
+		lineageTag: ac66a901-ea5c-4969-bece-11e63b9f7974
+
+	measure 'Total Mat/Leads Últimos 14 Dias' =
+			
+			CALCULATE(
+			    [Total Mat/Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 14,
+			        [MaxDataHoramat] - 1
+			    )
+			)
+		formatString: 0
+		lineageTag: 8f970b1d-88bd-4558-8866-caa8e4974bd0
+
+	measure 'Total Mat/Leads Últimos 21 Dias' =
+			
+			CALCULATE(
+			    [Total Mat/Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 21,
+			        [MaxDataHoramat] - 1
+			    )
+			)
+		formatString: 0
+		lineageTag: d3366eb5-dbf3-46f8-bae4-ce9092484295
+
+	measure 'Total Mat/Leads Últimos 28 Dias' =
+			
+			CALCULATE(
+			    [Total Mat/Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoramat] - 28,
+			        [MaxDataHoramat] - 1
+			    )
+			)
+		formatString: 0
+		lineageTag: 068c2d49-badf-45aa-8cf5-c55b35ae6836
+
+	measure 'Total Conversão Mat/Leads Últimos 14 Dias' = DIVIDE([Total Mat/Leads Últimos 14 Dias],[Total Leads Últimos 14 Dias])
+		formatString: 0%;-0%;0%
+		lineageTag: 40fe9834-6ac4-44d9-a0fb-2e61d40588b6
+
+	measure 'Total Conversão Mat/Leads Últimos 21 Dias' = DIVIDE([Total Mat/Leads Últimos 21 Dias],[Total Leads Últimos 21 Dias])
+		formatString: 0%;-0%;0%
+		lineageTag: b1b7c1fb-c652-4f54-8f74-6e6e09bbfab2
+
+	measure 'Total Leads Últimos 21 Dias' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 21,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 92b13569-4a1d-4797-b78a-db10137ff48f
+
+	measure 'Total Leads Últimos 28 Dias' = ```
+			
+			CALCULATE(
+			    [Total Leads Visitantes] ,
+			    DATESBETWEEN(
+			        VW_CALENDARIO[DATA],
+			        [MaxDataHoraleads] - 28,
+			        [MaxDataHoraleads] - 1
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 49769e78-606c-4305-9003-6741055e03f0
+
+	measure 'Total Conversão Mat/Leads Últimos 28 Dias' = DIVIDE([Total Mat/Leads Últimos 28 Dias],[Total Leads Últimos 28 Dias])
+		formatString: 0%;-0%;0%
+		lineageTag: 8b49a427-9d92-46ed-bc32-72d20c035d78
+
+	measure 'Titulo Visitantes Últimos Dias' = "Usuários Últimos "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias"
+		lineageTag: 32294354-f51e-406e-8202-b06fb910b91a
+
+	measure 'Titulo Leads Últimos Dias' = "Leads Últimos "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias"
+		lineageTag: cd7e708c-e4e4-4483-95a7-2c32c7fd6fa7
+
+	measure 'Titulo Mat/Leads Últimos Dias' = "Mat/Leads Últimos "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias"
+		lineageTag: f2c325a1-9989-4ae2-bd55-05da1e01dbe5
+
+	measure 'Titulo Leads Dias Anteriores' = "Leads "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias Anteriores"
+		lineageTag: 77b538df-f36f-4b35-a0e7-af90b230fa83
+
+	measure 'Titulo Visitantes Dias Anteriores' = "Usuários "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias Anteriores"
+		lineageTag: fa23f06a-6f97-49ff-bc41-80a673b9e881
+
+	measure MaxData-1 = ```
+			
+			VAR MaxDataHora  = CALCULATE(MAX(VW_MATRICULAS[data_final]),VW_MATRICULAS[status_contrato]="Matriculado")
+			VAR DataAjustada = MaxDataHora - 1
+			RETURN VALUE(FORMAT(DataAjustada, "dd"))
+			
+			```
+		lineageTag: 58014233-f7f8-4c8c-b9ab-7ec07367759c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Titulo Ultimos Dias' = "Leads/Usuários "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Ultimos Dias "
+		lineageTag: 3e6c6891-13a4-4d86-a0a0-f8d8797c814e
+
+	measure 'Titulo Dias Anteriores' = "Leads/Usuários "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias Anteriores"
+		lineageTag: 74b37349-baa6-44f0-8d84-1266e7d58932
+
+	measure '% Total Mat Cancelada' = ```
+			
+			var matcanc = [Total Mat Canceladas]
+			var mattotal = [Total Mat Geral]
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(matcanc),BLANK(),
+			DIVIDE(matcanc, mattotal))
+			
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: b3c7707e-904b-486f-aa65-9e83ba903fc6
+
+	measure '% Total Convertido Mesmo Dia' = DIVIDE([Total Mat/Leads Convertido Mesmo Dia],[Total Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: b3d9e1b2-29cd-46d3-be81-cc5538a6f854
+
+	measure 'Titulo Δ Dias Anteriores' = "Δ "&'Qtd Últimos Dias'[Valor Qtd Últimos Dias]&" Dias Anteriores: "
+		lineageTag: 2850a3cb-1cdc-4d30-bd92-7ae07ce4ae3c
+
+	measure 'Medida 8'
+		lineageTag: d483a987-0779-443a-bf03-cfdf13e004a4
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure '% Total Leads Sem Utm' =
+			
+			
+			VAR diferenca = DIVIDE([Total Leads Sem UTM],[Total Leads],0)
+			
+			RETURN diferenca
+		formatString: 0%;-0%;0%
+		lineageTag: d724246d-337e-4c3f-983b-7e71eb00f18a
+
+	measure 'Total Mat Geral Sem UTM' =
+			
+			CALCULATE(
+			    [Total Mat Geral],
+			DIM_TIPO_LEAD[tipo_lead]="Sem Utm")
+		formatString: #,0
+		lineageTag: 5b6be269-e03d-481b-baa0-a1c42c0132c8
+
+	measure 'Conversão Geral Acum' = DIVIDE([Total Mat Acum],[Total Leads Acum])
+		formatString: 0%;-0%;0%
+		lineageTag: 70bc818c-205b-4461-b042-975234d8e655
+
+	measure 'Conversão Mat/Leads Não Pago' = DIVIDE( [Total Mat/Leads Não Pago], [Total Leads Não Pago])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8ce53097-4c72-498e-ad5d-dc406422e9ab
+
+	measure 'Total Mat/Leads Não Pago' = CALCULATE([Total Mat/Leads],DIM_TIPO_LEAD[tipo_lead]="Não Pago")
+		formatString: #,0
+		lineageTag: b95ea908-a970-4088-bfc8-4c5f6c21dff7
+
+	measure 'Medida 3'
+		lineageTag: 3f2bb98d-cb55-4695-a78d-49f8ec4cfc84
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Conversão Mat/Leads Sem Utm' = DIVIDE( [Total Mat/Leads Sem UTM], [Total Leads Sem UTM])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0da43159-bd03-4771-b33d-ff7e63001c04
+
+	measure 'Conversão Geral Sem UTM' = DIVIDE([Total Mat Geral Sem UTM], [Total Leads Sem UTM])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3eb2377f-5bd5-4c08-9864-cef3b055a274
+
+	measure 'PPC Mat Trimestre Y-1' =
+			
+			CALCULATE([PPC Mat Trimestre],DATEADD(VW_CALENDARIO[DATA],-1,YEAR))
+		lineageTag: 0e9d1890-9fed-4841-97e5-d33477e1b272
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PPC Mat Trimestre YoY' = DIVIDE([PPC Mat Trimestre],[PPC Mat Trimestre Y-1])-1
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a5562758-5dce-4410-80f3-a2f264ed0317
+
+	column MEDIDAS
+		dataType: string
+		isHidden
+		lineageTag: 3eb847c0-ab94-4e7d-9d32-007ac71593a9
+		summarizeBy: none
+		sourceColumn: MEDIDAS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MEDIDAS = m
+		mode: import
+		source =
+				let
+				    Fonte = ""
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Text
+

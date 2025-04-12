@@ -1,0 +1,61 @@
+table DIM_METRICAS_PBI
+	lineageTag: 17bff908-9fdd-4355-ba08-55e99c73ce44
+
+	column kpi
+		dataType: string
+		lineageTag: 377358f6-1add-4b64-a9c5-366073ddbbf8
+		summarizeBy: none
+		sourceColumn: kpi
+		sortByColumn: ordem
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column medidas
+		dataType: string
+		lineageTag: c401a682-0a6c-4040-942d-9c788848147c
+		summarizeBy: none
+		sourceColumn: medidas
+
+		annotation SummarizationSetBy = Automatic
+
+	column metricas
+		dataType: string
+		lineageTag: 86107f02-be5e-492f-9480-1a872965df4c
+		summarizeBy: none
+		sourceColumn: metricas
+
+		annotation SummarizationSetBy = Automatic
+
+	column ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: 8da04093-08ea-47c2-ae28-127b899e60dd
+		summarizeBy: sum
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_kpi
+		dataType: string
+		lineageTag: a4a07989-15af-4b3c-b859-af2d8a998c7f
+		summarizeBy: none
+		sourceColumn: tipo_kpi
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_METRICAS_PBI = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.Static_Data.dim_metricas_pbi", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"kpi", Text.Proper, type text}, {"medidas", Text.Proper, type text}, {"metricas", Text.Proper, type text}, {"tipo_kpi", Text.Proper, type text}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"ordem", Int64.Type}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,26 @@
+table Parâmetro_PerTotal
+	lineageTag: 74b02c29-169b-4582-96d4-e726016efd1d
+
+	measure 'Valor Parâmetro_PerTotal' = SELECTEDVALUE('Parâmetro_PerTotal'[Parâmetro_PerTotal])
+		formatString: 0
+		lineageTag: bb736699-f37b-4d95-a482-eb445c45652a
+
+	column Parâmetro_PerTotal
+		formatString: 0%;-0%;0%
+		lineageTag: 58ab4a92-953d-42f9-906c-8fe9fc450af4
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_PerTotal = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.001)
+
+	annotation PBI_Id = c1bac10fbf194724b1585ef8e842bd57
+

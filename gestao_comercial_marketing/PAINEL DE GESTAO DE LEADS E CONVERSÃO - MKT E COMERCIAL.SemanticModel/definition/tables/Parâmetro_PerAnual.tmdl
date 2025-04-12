@@ -1,0 +1,26 @@
+table Parâmetro_PerAnual
+	lineageTag: 73cf4003-c716-4dc1-9204-00ff000c0a0f
+
+	measure 'Valor Parâmetro_PerAnual' = SELECTEDVALUE('Parâmetro_PerAnual'[Parâmetro_PerAnual])
+		formatString: 0
+		lineageTag: 6ebad3cd-8a56-41f1-98e9-da074044286d
+
+	column Parâmetro_PerAnual
+		formatString: 0%;-0%;0%
+		lineageTag: 127fed1a-7d0d-49cc-a2fe-ddaff8114b9f
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition Parâmetro_PerAnual = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.001)
+
+	annotation PBI_Id = 7e1251a916b043209e9792430e74ee30
+
