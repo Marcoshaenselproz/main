@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "PAINEL_ENSALAMENTO_V2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "eb09fea0-79ba-4e09-b899-357010c8d730"
+  }
+}

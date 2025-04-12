@@ -1,0 +1,163 @@
+table vw_ft_orcamento_ensalamento
+	lineageTag: 67f20d09-d82c-43f5-b48d-57956ff4c727
+
+	column unidade
+		dataType: string
+		lineageTag: ac478677-4326-4137-84b1-a1314fc75067
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: 0e3ad40d-a63d-4756-bf3f-ade3a703ce60
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: ecf550ea-2e41-42d4-9f16-8947dbbd0789
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 31f6a2b2-1093-4f37-8fa6-d6e871caa9e6
+		summarizeBy: none
+		sourceColumn: mes
+
+		variation Variation
+			isDefault
+			relationship: 1eec47cc-474a-4b01-b950-92ab58f77296
+			defaultHierarchy: LocalDateTable_a91071ba-7553-4080-9b7f-c7b1542f7c4d.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column valor_orcamento_media_alunos
+		dataType: double
+		lineageTag: 4abe3e45-523c-4651-99fb-908cc1a8844f
+		summarizeBy: sum
+		sourceColumn: valor_orcamento_media_alunos
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_orcamento_receita_liquida
+		dataType: double
+		lineageTag: a8610b96-6e99-4710-834f-aa115e3f077c
+		summarizeBy: sum
+		sourceColumn: valor_orcamento_receita_liquida
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_orcamento_receita_bruta
+		dataType: double
+		lineageTag: fba5e4eb-4503-4971-b285-4243a1d8ad4b
+		summarizeBy: sum
+		sourceColumn: valor_orcamento_receita_bruta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column valor_mensalidade
+		dataType: double
+		lineageTag: 578582cb-085f-4c6a-8e40-a6207b43e844
+		summarizeBy: sum
+		sourceColumn: valor_mensalidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column qtde_matriculas
+		dataType: double
+		lineageTag: ec97e716-6e8f-4fef-8096-c5e4cf5bf45c
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column grupo_final
+		dataType: string
+		lineageTag: 89b85670-026c-4838-b8af-e047a7a66bfa
+		summarizeBy: none
+		sourceColumn: grupo_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_nao_atribuido_geral
+		dataType: string
+		lineageTag: 4555b35c-ba19-4fec-9c7f-13a0872353d9
+		summarizeBy: none
+		sourceColumn: status_nao_atribuido_geral
+
+		annotation SummarizationSetBy = Automatic
+
+	column sala
+		dataType: string
+		lineageTag: 5ae3da77-4f37-42f2-965f-d4be6af3e63a
+		summarizeBy: none
+		sourceColumn: sala
+
+		annotation SummarizationSetBy = Automatic
+
+	column andar
+		dataType: string
+		lineageTag: 5c844c63-9622-4678-afa1-7943c5d856e5
+		summarizeBy: none
+		sourceColumn: andar
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_sala
+		dataType: string
+		lineageTag: 951f1d1a-f35d-467f-a0e8-f4d13fd992e5
+		summarizeBy: none
+		sourceColumn: tipo_sala
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: 3654f366-c51e-426e-b94b-155788019b4f
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_trilhas
+		dataType: string
+		lineageTag: c64e8279-e74b-4a8a-8e71-f597c0a7f285
+		summarizeBy: none
+		sourceColumn: status_trilhas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition vw_ft_orcamento_ensalamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.Static_Data.vw_ft_orcamento_ensalamento", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}, {"grupo_final", Text.Proper, type text}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"mes", type date}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

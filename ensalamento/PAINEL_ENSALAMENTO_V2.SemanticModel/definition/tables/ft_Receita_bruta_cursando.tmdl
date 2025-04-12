@@ -1,0 +1,113 @@
+table ft_Receita_bruta_cursando
+	lineageTag: 12850418-47eb-415a-bf65-07b509fcce46
+
+	column ValorEsperado
+		dataType: double
+		lineageTag: d2e3cdd9-7bf0-4d13-8331-587b5e6f56a5
+		summarizeBy: sum
+		sourceColumn: ValorEsperado
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorPago
+		dataType: double
+		lineageTag: 307c6254-8481-4736-bccb-755af33d4503
+		summarizeBy: sum
+		sourceColumn: ValorPago
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ValorDevido
+		dataType: double
+		lineageTag: 0682520c-6121-4251-83ac-f30e31bc873b
+		summarizeBy: sum
+		sourceColumn: ValorDevido
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mes_vencimento
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 581ccd46-491a-4e58-8278-6eab89d12f0d
+		summarizeBy: none
+		sourceColumn: mes_vencimento
+
+		variation Variation
+			isDefault
+			relationship: e7c6d166-7642-4249-9ab0-b0103815d82a
+			defaultHierarchy: LocalDateTable_78e35bf1-28ca-4a4b-b642-e6f063d78683.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column unidade
+		dataType: string
+		lineageTag: 7929151f-cb02-44dc-90fa-b4cbef81704f
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: b37f0780-fdcd-4fc3-8056-1006fc214ae0
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: d0c73a87-0682-4135-94cd-d31d9a934ea3
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_aluno_valorpago
+		dataType: int64
+		formatString: 0
+		lineageTag: 6f023011-8c76-4547-afeb-efd13c28f2cd
+		summarizeBy: sum
+		sourceColumn: qtde_aluno_valorpago
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_aluno_valordevido
+		dataType: int64
+		formatString: 0
+		lineageTag: d198f558-4c90-4c32-abf7-91b3a3f21064
+		summarizeBy: sum
+		sourceColumn: qtde_aluno_valordevido
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_aluno_esperado
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f8e47ad-fd7f-4af5-ad14-6caffdebfc0e
+		summarizeBy: sum
+		sourceColumn: qtde_aluno_esperado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ft_Receita_bruta_cursando = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT#(lf)COALESCE(du.unidade, du2.unidade) AS unidade,#(lf)ch.curso,#(lf)t.turno,#(lf)date_trunc(data_vencimento, month) as mes_vencimento ,#(lf)#(lf)COUNT(DISTINCT CASE WHEN ValorPago > 0 THEN student_id END) AS qtde_aluno_valorpago,#(lf)  COUNT(DISTINCT CASE WHEN ValorDevido > 0 THEN student_id END) AS qtde_aluno_valordevido,#(lf)  COUNT(DISTINCT CASE WHEN ValorEsperado > 0 THEN student_id END) AS qtde_aluno_esperado,#(lf)#(lf)SUM(CAST(ValorPago AS FLOAT64)) AS ValorPago,#(lf)SUM(CAST(ValorDevido AS FLOAT64)) AS ValorDevido,#(lf)SUM(CAST(ValorEsperado AS FLOAT64)) AS ValorEsperado#(lf)#(lf) FROM `plancomercial.PERSONE_ETL.tb_receita_bruta_cursando` rbc#(lf)#(lf)#(lf)LEFT JOIN `PERSONE_ETL.curso_aluno` ca #(lf)ON rbc.enrollment_id = ca.ref_id#(lf)#(lf) LEFT JOIN plancomercial.Static_Data.mapeamento_unidades AS du#(lf)ON (CASE#(lf)WHEN LOWER(rbc.unidade) LIKE '%vend%' THEN 'venda nova'#(lf)ELSE LOWER(rbc.unidade)#(lf)END) LIKE du.padrao#(lf)#(lf) LEFT JOIN plancomercial.Static_Data.mapeamento_unidades AS du2#(lf)ON (CASE#(lf)WHEN LOWER(ca.polo) LIKE '%vend%' THEN 'venda nova'#(lf)ELSE LOWER(ca.polo)#(lf)END) LIKE du2.padrao#(lf)#(lf)#(lf)#(lf)LEFT JOIN (SELECT DISTINCT de_curso, curso FROM `PERSONE_ETL.dim_curso_historico`) ch #(lf)ON LOWER(ca.curso) = LOWER(ch.de_curso)#(lf)#(lf)#(lf)LEFT JOIN `PERSONE_ETL.dim_turno` t ON LOWER(ca.turno) = LOWER(t.de_turno)#(lf)WHERE 1=1#(lf)AND LOWER(rbc.Unidade) NOT LIKE '%novotec%'#(lf)#(lf)AND DATE_TRUNC(data_vencimento, MONTH) = DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH), MONTH)#(lf)#(lf) GROUP BY 1,2,3,4", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

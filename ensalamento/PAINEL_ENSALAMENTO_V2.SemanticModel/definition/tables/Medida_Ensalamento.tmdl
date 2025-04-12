@@ -1,0 +1,441 @@
+table Medida_Ensalamento
+	lineageTag: 11c34b00-d218-416c-9aaa-10ee29413826
+
+	measure '% Total Ocupação Sem Turma' = DIVIDE([Total Sem Turma Ensalamento], [Total Capacidade Ensalamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 06f714e4-d896-466d-844f-e6851e3b499e
+
+	measure 'Total Alunos Ensalamento' = [Total Sem Turma Ensalamento] + [Total Cursando Ensalamento]
+		formatString: #,0
+		lineageTag: 208dc5fe-15e3-47a1-9970-70b6a5165e0b
+
+	measure 'Total Capacidade Ensalamento' =
+			
+			VAR ResultadosPorSala =
+			    SUMMARIZE(
+			       ENSALAMENTO_V2,ENSALAMENTO_V2[concatx],
+			        "Capacidade",
+			        SUMX(
+			            DISTINCT(ENSALAMENTO_V2[qtde_cadeiras]),
+			            ENSALAMENTO_V2[qtde_cadeiras]
+			        )
+			    )
+			RETURN
+			    IF(
+			        ISINSCOPE(ENSALAMENTO_V2[concatx]),
+			        SUMX(
+			            DISTINCT(ENSALAMENTO_V2[qtde_cadeiras]),
+			            ENSALAMENTO_V2[qtde_cadeiras]
+			        ),
+			        CALCULATE(
+			            SUMX(ResultadosPorSala, [Capacidade]),
+			            ALL(DIM_SALA)
+			        )
+			    )
+		formatString: #,0
+		lineageTag: c9505546-924b-4ee2-8abb-5eaeb0601a79
+
+	measure 'Total Cursando Ensalamento' = ```
+			
+			
+			SUM(ENSALAMENTO_V2[qtde_cursando])
+			   
+			```
+		formatString: #,0
+		lineageTag: 6a30ac2d-fa03-4a38-b8d0-69d671555137
+
+	measure 'Total Gap Ensalamento' = [Total Capacidade Ensalamento] - [Total Alunos Ensalamento]
+		formatString: #,0
+		lineageTag: 68ec2617-e990-41fe-9b29-638dce99952c
+
+	measure 'Total Sem Turma Ensalamento' = ```
+			
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(vw_ft_orcamento_ensalamento[qtde_matriculas]),
+			    vw_ft_orcamento_ensalamento[mes] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+			
+			
+			```
+		formatString: 0
+		lineageTag: ba66c516-9950-47d3-951d-791af118f522
+
+	measure 'Total Vendas Ensalamento' = SUM(vw_vendas_ensalamento[qtde_matriculas])
+		formatString: #,0
+		lineageTag: d98106a5-c595-46eb-a4e6-eb45b5f1b816
+
+	measure '% Total Não Ocupado' = DIVIDE([Total Gap Ensalamento],[Total Capacidade Ensalamento])
+		formatString: 0%;-0%;0%
+		lineageTag: f5ddd0fe-b47e-4a59-90f7-e0fffe4ac373
+
+	measure '% Total Ocupação' = DIVIDE([Total Alunos Ensalamento],[Total Capacidade Ensalamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 5bfc8b61-545d-4983-b086-ad1277b74b6e
+
+	measure '% Total Ocupação Cursando' = DIVIDE([Total Cursando Ensalamento],[Total Capacidade Ensalamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 4d110935-8a63-4e15-9e4b-4aa0436551fb
+
+	measure TotalAssentos = ```
+			COUNTROWS(Assentos)
+			
+			
+			```
+		formatString: 0
+		lineageTag: fe84e73e-50d3-422e-b5a2-1eefc4a78b58
+
+	measure PercentualCursando = ```
+			
+			ROUND(CALCULATE(DIVIDE([Total Cursando Ensalamento],[Total Capacidade Ensalamento])*100,ALLSELECTED(DIM_UNIDADE_HISTORICA[dsc_unidade])
+			
+			),0)
+			
+			
+			```
+		lineageTag: 94cdbeb0-f1d1-4363-8b92-f393eb9f8632
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PercentualSemTurma = ```
+			
+			ROUND(CALCULATE(DIVIDE([Total Sem Turma Ensalamento], [Total Capacidade Ensalamento]) * 100,ALLSELECTED(DIM_UNIDADE_HISTORICA[dsc_unidade])
+			
+			),0)
+			
+			
+			```
+		lineageTag: 6044b358-6ea2-46e2-821a-c8258d753af6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure StatusAssentoMeasure =
+			
+			VAR TotalAssentos = COUNTROWS(Assentos)
+			VAR Cursando = [PercentualCursando]
+			VAR SemTurma = [PercentualCursando] + [PercentualSemTurma]
+			VAR CurrentValue = SELECTEDVALUE(Assentos[Value])
+			RETURN
+			    IF(
+			        CurrentValue <= Cursando,
+			        "Cursando",
+			        IF(
+			            CurrentValue <= SemTurma,
+			            "Sem Turma",
+			            "Não Ocupado"
+			        )
+			    )
+		lineageTag: beb92a56-992c-4590-9e0f-5ee21d6c5aa4
+
+	measure CorAssento =
+			
+			VAR StatusValue = [StatusAssentoMeasure]
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        StatusValue = "Cursando", "#A3DDB3",  -- Verde
+			        StatusValue = "Sem Turma", "#B3BCE0",  -- Amarelo
+			        StatusValue = "Não Ocupado", "#E6E6E6"  -- Cinza
+			    )
+		lineageTag: 3456a4ec-ccd1-4d1b-82d4-97c5b4a2af73
+
+	measure Cor_Slice_unidade =
+			
+			var unid1 = SELECTEDVALUE(unidade[unidade])
+			var unid2 = SELECTEDVALUE(DIM_UNIDADE_HISTORICA[dsc_unidade])
+			RETURN
+			IF(unid1 = unid2,1,0)
+		formatString: 0
+		lineageTag: ea70d0eb-8c0f-413c-a88b-ca79fd6072fd
+
+	measure Titulo_Ensalamento = "Analise de Ensalamento (Ocupação) - Unidade : " && SELECTEDVALUE(DIM_UNIDADE_HISTORICA[dsc_unidade]) && "com Ocupação de :" && [% Total Ocupação Cursando]
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5755e771-b924-4727-a36b-5d6a8620947f
+
+	measure 'Total Cadeiras ensalamento' =
+			
+			
+			var cadeira = [Total Capacidade Ensalamento]
+			
+			RETURN
+			cadeira
+		formatString: 0
+		lineageTag: 0d7d06a1-aa1f-43d6-8c50-2908572ac9ee
+
+	measure 'Total Cadeiras não ocupadas' = [Total Capacidade Ensalamento]-([Total Cursando Ensalamento] + [Total Sem Turma Ensalamento])
+		formatString: #,0
+		lineageTag: dd1eecb1-af42-454e-bb9d-f904effcd9a4
+
+	measure '% Total Cadeiras Não Ocupadas' = DIVIDE([Total Cadeiras não ocupadas],[Total Capacidade Ensalamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 1e014cc6-727c-46c6-aff1-c50e807239a1
+
+	measure 'Receita Bruta  Esperada' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(ft_Receita_bruta_cursando[ValorEsperado]),
+			    ft_Receita_bruta_cursando[mes_vencimento] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: #,0
+		lineageTag: 7aef1a17-cf5f-4244-b367-102c9c1c3629
+
+	measure 'Ticket Médio' = DIVIDE([Receita Bruta  Esperada],[Total Cursando Ensalamento])
+		formatString: #,0
+		lineageTag: a4f40d0b-9d90-438f-acec-2e5a06ca2fdc
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Receita Bruta Devido' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(ft_Receita_bruta_cursando[ValorDevido]),
+			    ft_Receita_bruta_cursando[mes_vencimento] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: #,0
+		lineageTag: b142b482-cea2-412e-9ec7-7c253446de01
+
+	measure 'Receita Bruta Pago' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(ft_Receita_bruta_cursando[ValorPago]),
+			    ft_Receita_bruta_cursando[mes_vencimento] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: #,0
+		lineageTag: bf24b494-8c8b-4ea7-bf7a-a6e3c8b92277
+
+	measure 'Total Estagio/Finalizando Ensalamento' = SUM(ENSALAMENTO_V2[qtde_estagio_finalizando])
+		formatString: #,0
+		lineageTag: ecc40040-b96e-4bf7-a8c8-f05dab4c8a28
+
+	measure 'Receita Bruta Orcamento' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(vw_ft_orcamento_ensalamento[valor_orcamento_receita_bruta]),
+			    vw_ft_orcamento_ensalamento[mes] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: #,0
+		lineageTag: 44abdf3c-89ae-4945-9a03-37703b74a5b6
+
+	measure '% Receita Bruta Pago Meta' = DIVIDE([Receita Bruta Pago],[Receita Bruta Orcamento])
+		formatString: 0%;-0%;0%
+		lineageTag: f5fc3e8c-9bcb-4b3d-97e2-35ccaf374211
+
+	measure '100% Receita Bruta' = ```
+			
+			 
+			 VAR valor = 1 - ([% Receita Bruta Pago Meta]  + [% Receita Mensalidade Esperada Meta])
+			 RETURN
+			 SWITCH(TRUE(),
+			 ISBLANK([% Receita Bruta Pago Meta]),BLANK(),valor)
+			```
+		formatString: 0%;-0%;0%
+		lineageTag: c57dc716-476a-437c-95fd-a9cbaa19cebd
+
+	measure '% Receita Bruta Devido Meta' = DIVIDE([Receita Bruta Devido],[Receita Bruta Orcamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 2e2b1708-4e2e-4257-9a37-4b471931fa6e
+
+	measure 'Receita Mensalidade esperada' = ```
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(vw_ft_orcamento_ensalamento[valor_mensalidade]),
+			    vw_ft_orcamento_ensalamento[mes] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+			
+			
+			
+			```
+		formatString: #,0
+		lineageTag: 61bc81c5-8e20-44f4-bbd4-5122243a967c
+
+	measure '% Receita Mensalidade Esperada Meta' = DIVIDE([Receita Mensalidade esperada],[Receita Bruta Orcamento])
+		formatString: 0%;-0%;0%
+		lineageTag: 33a2b771-965b-42b7-9814-e27e75c5d0be
+
+	measure 'Saldo Residual Orçamento' = [Receita Bruta Orcamento]-([Receita Bruta Pago]+[Receita Bruta Devido]+[Receita Mensalidade esperada])
+		formatString: #,0
+		lineageTag: d0e2bbf6-8d2e-43dd-af34-ee270a583aee
+
+	measure 'Total Receita Bruta' = [Receita Bruta Pago]+[Receita Mensalidade esperada]
+		formatString: #,0
+		lineageTag: 3b32ad1c-65b2-4dff-b5fa-7cbe1bb16abd
+
+	measure '% Receita Bruta Meta' = DIVIDE([Total Receita Bruta],[Receita Bruta Orcamento])
+		formatString: 0%;-0%;0%
+		lineageTag: f7241293-af9f-4870-b682-e1e2db7be166
+
+	measure Data_Mes_Anterior =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			DATE(AnoMesAnterior, MesAnterior, 1)
+		formatString: mmmM/yy
+		lineageTag: 1cb44eb7-8c2f-4d37-9cc0-18a1d8c4669f
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Titulo Matriz' = "Valores ($000) Receita Bruta Paga vs Receita Bruta Orçada (Meta) referente ao mês de " & UPPER(FORMAT([Data_Mes_Anterior],"MMMM-YY")) &"."
+		lineageTag: c4c03399-66c0-4347-aad7-667620af1020
+
+	measure 'Total Receita Bruta Orçamento grafico' = [Receita Bruta Orcamento]-([Receita Bruta Pago]+[Receita Mensalidade esperada]+ [Receita Bruta Devido])
+		formatString: #,0
+		lineageTag: 74925990-1c3d-4299-a980-fd9663a684c7
+
+	measure '100% Cursando' =
+			
+			var valor =  1 - [% Total Ocupação Cursando] - [% Total Ocupação Sem Turma]
+			
+			 RETURN
+			 SWITCH(TRUE(),
+			 ISBLANK([% Total Ocupação]),BLANK(),valor)
+		formatString: 0%;-0%;0%
+		lineageTag: 90fdefdb-c9df-4e57-b766-418164c895ed
+
+	measure 'Texto Capacidade Total' =
+			
+			
+			VAR cursando = SELECTEDVALUE(ENSALAMENTO_V2[status_ocupacao])
+			RETURN
+			SWITCH(TRUE(),
+			cursando = "Sala Ocupada","(sala ocupada)","(todas as salas)")
+		lineageTag: 01badb97-2d4d-4d0d-b48c-75c26ffcb4aa
+
+	measure 'Total Orçamento Alunos' = SUM(vw_ft_orcamento_ensalamento[valor_orcamento_media_alunos])
+		lineageTag: 7a0d45cb-6764-4e6b-a16f-0b6faf32eee5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total TKT Médio Orçamento' = DIVIDE([Receita Bruta Orcamento],[Total Orçamento Alunos])
+		lineageTag: 4ecb5ebc-afba-4b41-94af-f4971bf8d319
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Meta TkT Orçamento' = DIVIDE([Total Receita Bruta Orçamento grafico],[Total TKT Médio Orçamento])
+		lineageTag: da7cbcb6-cee1-4e4e-947e-9ea07b8be6d1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Meta Orçamento Alunos Residual' = ```
+			[Total Orçamento Alunos] - [Total Cursando Ensalamento] - [Total Sem Turma Ensalamento] 
+			```
+		lineageTag: dd1de3df-e0eb-4456-bbe0-3641b9ac52db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Tkt Médio Realizado' = DIVIDE(([Receita Bruta Pago]+[Receita Mensalidade esperada]+[Receita Bruta Devido]),[Total Alunos Cursando Pago]+[Total Sem Turma Ensalamento]+ [Total Alunos Cursando Devido])
+		lineageTag: c41aa8e6-0196-406a-b26c-bd027e49a2a3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% Total TKT Médio' =
+			
+			VAR tkt = DIVIDE([Total Tkt Médio Realizado],[Total TKT Médio Orçamento])-1
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Tkt Médio Realizado]),BLANK(),tkt)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 639b9ad1-45a7-4360-a76d-c7f2f8a94500
+
+	measure 'Total Alunos Cursando Devido' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(ft_Receita_bruta_cursando[qtde_aluno_valordevido]),
+			    ft_Receita_bruta_cursando[mes_vencimento] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: 0
+		lineageTag: 30276ced-4ce2-439c-8913-08320db92aca
+
+	measure 'Total Alunos Cursando Pago' =
+			
+			VAR AnoAtual = YEAR(TODAY())
+			VAR MesAtual = MONTH(TODAY())
+			VAR MesAnterior = IF(MesAtual = 1, 12, MesAtual - 1)
+			VAR AnoMesAnterior = IF(MesAtual = 1, AnoAtual - 1, AnoAtual)
+			
+			RETURN
+			CALCULATE(
+			    SUM(ft_Receita_bruta_cursando[qtde_aluno_valorpago]),
+			    ft_Receita_bruta_cursando[mes_vencimento] = DATE(AnoMesAnterior, MesAnterior, 1)
+			)
+		formatString: 0
+		lineageTag: bf0702c0-b01f-4fed-b650-403c8168c14d
+
+	measure 'Total Tkt Médio Devido' = DIVIDE([Receita Bruta Devido],[Total Alunos Cursando Devido])
+		lineageTag: a7a7fe54-62ff-4339-a51c-88b7c9ba469a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Meta TkT Realizado' = DIVIDE([Total Receita Bruta Orçamento grafico],[Total Tkt Médio Realizado])
+		lineageTag: 2f28a289-83b0-4c19-974a-34afce2f12db
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Alunos Meta Necessario' = [Total Cursando Ensalamento] + [Total Sem Turma Ensalamento] + [Total Mat Meta TkT Realizado]
+		lineageTag: de4663e1-9d0d-4b11-ba5c-7d976dc23da5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 30d03a55-6288-440a-8521-567fa5aa7ca1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medida_Ensalamento = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = abc1117788ef4004ac8b7066a12b4ca9
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

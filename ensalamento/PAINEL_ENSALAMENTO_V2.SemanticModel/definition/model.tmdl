@@ -1,0 +1,49 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup DEPARA
+
+	annotation PBI_QueryGroupOrder = 1
+
+annotation PBI_QueryOrder = ["ENSALAMENTO_V2","ft_Receita_bruta_cursando","vw_vendas_ensalamento","unidade","DIM_TURNO","DIM_UNIDADE_HISTORICA","DIM_CURSO_HISTORICA","DIM_SALA","DIM_TIPO_SALA","DIM_ANDAR","DIM_TRILHAS","DIM_DIA_SEMANA","DIM_GRUPO","DIM_DADOS_COMPLETOS","DIM_GRUPO_VENDAS","ft_orcamento_ensalamento","vw_ft_orcamento_ensalamento"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.141.1451.0 (25.03)+5007b75f0f7edbed506e31fcb76584cd6d711788
+
+annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
+
+ref table DIM_TURNO
+ref table vw_vendas_ensalamento
+ref table Medida_Ensalamento
+ref table Assentos
+ref table DateTableTemplate_304bfc92-56de-4fd0-8e9c-d116156f03f8
+ref table ENSALAMENTO_V2
+ref table DIM_SALA
+ref table DIM_TIPO_SALA
+ref table DIM_ANDAR
+ref table DIM_TRILHAS
+ref table DIM_DIA_SEMANA
+ref table DIM_UNIDADE_HISTORICA
+ref table DIM_CURSO_HISTORICA
+ref table LocalDateTable_c4189e9b-9de6-4575-b536-3da10ad90b16
+ref table LocalDateTable_7f760690-6fe3-434e-afa9-4dab987eccdc
+ref table unidade
+ref table ft_Receita_bruta_cursando
+ref table LocalDateTable_78e35bf1-28ca-4a4b-b642-e6f063d78683
+ref table ft_orcamento_ensalamento
+ref table LocalDateTable_2f3dc22b-d42e-43e1-a6ff-f03875ca4e59
+ref table 'Receita Orcamento'
+ref table vw_ft_orcamento_ensalamento
+ref table LocalDateTable_02075dc0-af87-4290-9a73-90cd8d464e3e
+ref table DIM_GRUPO
+ref table LocalDateTable_a91071ba-7553-4080-9b7f-c7b1542f7c4d
+ref table DIM_DADOS_COMPLETOS
+
+ref cultureInfo pt-BR
+

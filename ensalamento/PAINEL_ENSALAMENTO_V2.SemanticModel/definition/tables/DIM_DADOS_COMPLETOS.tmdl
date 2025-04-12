@@ -1,0 +1,27 @@
+table DIM_DADOS_COMPLETOS
+	lineageTag: eb91552b-11d8-48ee-8112-dcbdf80a2a84
+
+	column status_nao_atribuido_geral
+		dataType: string
+		lineageTag: cbcdc1c5-4eb2-4da9-811f-6b46581c63be
+		summarizeBy: none
+		sourceColumn: status_nao_atribuido_geral
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_DADOS_COMPLETOS = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[status_nao_atribuido_geral],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"status_nao_atribuido_geral"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [status_nao_atribuido_geral] <> null and [status_nao_atribuido_geral] <> "")
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

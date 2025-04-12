@@ -1,0 +1,27 @@
+table DIM_DIA_SEMANA
+	lineageTag: 4dbc968c-4d48-4590-ae71-82dbad2ce639
+
+	column dia_semana
+		dataType: string
+		lineageTag: bf361e44-2bb2-4912-809e-00ee0fad91e9
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_DIA_SEMANA = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[dia_semana],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"dia_semana"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [dia_semana] <> null and [dia_semana] <> "")
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

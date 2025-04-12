@@ -1,0 +1,30 @@
+table unidade
+	lineageTag: 52f83e32-25b7-4b60-8414-a68255e1d148
+
+	column unidade
+		dataType: string
+		lineageTag: d060b28e-f457-432a-9f86-d3fb884c1919
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition unidade = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    // Filtra linhas onde status_nao_atribuido é nulo
+				    LinhasFiltradas = Table.SelectRows(Fonte, each [status_nao_atribuido_geral] = "Dados Completos"),
+				    #"Linhas Filtradas" = Table.SelectRows(LinhasFiltradas, each ([status_ocupacao] = "Sala Ocupada")),
+				    // Remove duplicatas com base na coluna "unidade"
+				    ValoresUnicos = Table.Distinct(#"Linhas Filtradas", {"unidade"}),
+				    // Seleciona apenas a coluna "unidade"
+				    Resultado = Table.SelectColumns(ValoresUnicos, {"unidade"})
+				in
+				    Resultado
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

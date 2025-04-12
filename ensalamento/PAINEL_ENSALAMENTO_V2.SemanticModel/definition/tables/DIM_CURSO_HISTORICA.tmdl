@@ -1,0 +1,78 @@
+table DIM_CURSO_HISTORICA
+	lineageTag: 72f23085-51d8-4035-b960-fccb72e1f62a
+
+	column de_curso
+		dataType: string
+		lineageTag: b7e4e39b-40e3-47de-bd49-3b347ed00d7c
+		summarizeBy: none
+		sourceColumn: de_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: e54a8bdc-b7f5-4953-bead-485d65bab276
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column cluster_curso
+		dataType: string
+		lineageTag: f963ae04-9eb5-41e7-9536-177ce9ca17cb
+		summarizeBy: none
+		sourceColumn: cluster_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso_ofertado
+		dataType: string
+		lineageTag: b2b5c776-e5e0-431b-9624-0854ec316c82
+		summarizeBy: none
+		sourceColumn: curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultimo_curso_ofertado
+		dataType: string
+		lineageTag: 4d39df4c-c04e-4dcb-b81e-3170f53fa384
+		summarizeBy: none
+		sourceColumn: ultimo_curso_ofertado
+
+		annotation SummarizationSetBy = Automatic
+
+	column nivel_curso
+		dataType: string
+		lineageTag: 99e31467-65cf-4fbf-8751-5fd348c6e0ce
+		summarizeBy: none
+		sourceColumn: nivel_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla_curso
+		dataType: string
+		lineageTag: bbd03160-4258-40c3-a7cb-3025e441eb5b
+		summarizeBy: none
+		sourceColumn: sigla_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_CURSO_HISTORICA = m
+		mode: import
+		source = ```
+				let    
+				Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_curso", null, [EnableFolding=true]),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(Fonte,{"de_curso", "curso","sigla_curso", "cluster_curso", "curso_ofertado","ultimo_curso_ofertado", "nivel_curso"}),
+				    #"Texto Aparado" = Table.TransformColumns(#"Outras Colunas Removidas",{{"de_curso", Text.Trim, type text}}),
+				    #"Texto Limpo" = Table.TransformColumns(#"Texto Aparado",{{"de_curso", Text.Clean, type text}}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Texto Limpo", {"de_curso"}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Duplicatas Removidas",{{"de_curso", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"cluster_curso", Text.Proper, type text}, {"curso_ofertado", Text.Proper, type text}, {"ultimo_curso_ofertado", Text.Proper, type text}, {"nivel_curso", Text.Proper, type text}}),
+				    #"Texto em Maiúscula" = Table.TransformColumns(#"Colocar Cada Palavra Em Maiúscula",{{"sigla_curso", Text.Upper, type text}})
+				in
+				    #"Texto em Maiúscula"
+				```
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

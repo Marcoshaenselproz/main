@@ -1,0 +1,59 @@
+table ft_orcamento_ensalamento
+	lineageTag: 6b8b17bd-fc41-4ced-9c98-8200583799c3
+
+	column unidade
+		dataType: string
+		lineageTag: e2a152ed-fa4f-4753-a81e-f626993972d3
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column kpi
+		dataType: string
+		lineageTag: 9ffb2140-4dfc-4bbe-8e65-8b318ff596e3
+		summarizeBy: none
+		sourceColumn: kpi
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 55046763-05d0-413c-8fc3-43bee1dc5589
+		summarizeBy: none
+		sourceColumn: mes
+
+		variation Variation
+			isDefault
+			relationship: fb97fc07-0a1f-4c83-9968-da541d420822
+			defaultHierarchy: LocalDateTable_2f3dc22b-d42e-43e1-a6ff-f03875ca4e59.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column valor
+		dataType: double
+		lineageTag: 2c1a79cb-ec5a-4de3-a4d1-a79ed8263b4b
+		summarizeBy: sum
+		sourceColumn: valor
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ft_orcamento_ensalamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.Static_Data.ft_orcamento_ensalamento", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"unidade", Text.Proper, type text}, {"kpi", Text.Proper, type text}}),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(#"Colocar Cada Palavra Em Maiúscula",{{"mes", type date}, {"valor", type number}})
+				in
+				    #"Tipo Alterado"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,149 @@
+relationship a7403a10-aa17-75ac-4cfc-f7afa49a84cd
+	fromColumn: vw_vendas_ensalamento.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship AutoDetected_e1d1a0ad-7ae4-4126-bb18-5c3aba8c599b
+	fromColumn: ENSALAMENTO_V2.status_trilhas
+	toColumn: DIM_TRILHAS.status_trilhas
+
+relationship AutoDetected_4350db04-990d-42e3-b13b-1a4979579a9a
+	crossFilteringBehavior: bothDirections
+	fromColumn: ENSALAMENTO_V2.sala
+	toColumn: DIM_SALA.sala
+
+relationship AutoDetected_c5d9aa4f-3e4a-4953-88ab-7c886af2aa57
+	fromColumn: ENSALAMENTO_V2.andar
+	toColumn: DIM_ANDAR.andar
+
+relationship AutoDetected_a78e2baa-ec16-4e01-927b-aa00dd2da8d2
+	fromColumn: ENSALAMENTO_V2.tipo_sala
+	toColumn: DIM_TIPO_SALA.tipo_sala
+
+relationship AutoDetected_4a2b612b-0aca-4790-8abe-640cd60bb3a8
+	fromColumn: ENSALAMENTO_V2.dia_semana
+	toColumn: DIM_DIA_SEMANA.dia_semana
+
+relationship 478c0625-bc84-9954-95b5-18867401c194
+	fromColumn: ENSALAMENTO_V2.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship AutoDetected_37cbea8f-74c6-4d05-b193-97dc35ddb6ac
+	fromColumn: vw_vendas_ensalamento.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship b229b79c-5217-2f81-d89c-fbdb8f7428bc
+	fromColumn: vw_vendas_ensalamento.curso
+	toColumn: DIM_CURSO_HISTORICA.de_curso
+
+relationship 32b226b0-c07d-4abe-a255-9105ada53398
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ENSALAMENTO_V2.inicio_turma
+	toColumn: LocalDateTable_c4189e9b-9de6-4575-b536-3da10ad90b16.Date
+
+relationship 2fc5ef44-2308-4200-8d33-e23524db77a5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ENSALAMENTO_V2.fim_turma
+	toColumn: LocalDateTable_7f760690-6fe3-434e-afa9-4dab987eccdc.Date
+
+relationship AutoDetected_20b5ec86-ff34-4181-8ea8-47afad15debf
+	fromColumn: ENSALAMENTO_V2.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship db70807a-8f44-69bd-bf46-912944f19c5e
+	fromColumn: ENSALAMENTO_V2.curso
+	toColumn: DIM_CURSO_HISTORICA.de_curso
+
+relationship AutoDetected_585cd693-0f1e-4a4e-b2c0-179a385da473
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: unidade.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship e7c6d166-7642-4249-9ab0-b0103815d82a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ft_Receita_bruta_cursando.mes_vencimento
+	toColumn: LocalDateTable_78e35bf1-28ca-4a4b-b642-e6f063d78683.Date
+
+relationship fb97fc07-0a1f-4c83-9968-da541d420822
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ft_orcamento_ensalamento.mes
+	toColumn: LocalDateTable_2f3dc22b-d42e-43e1-a6ff-f03875ca4e59.Date
+
+relationship AutoDetected_bf80a912-e105-4f6b-bda2-2d822125b5c3
+	fromColumn: ft_orcamento_ensalamento.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship AutoDetected_2338a3f8-7889-4201-a0b8-bc4a52491909
+	fromColumn: vw_ft_orcamento_ensalamento.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship 00b27ccf-e82b-b00a-71a4-5617906c8008
+	fromColumn: vw_ft_orcamento_ensalamento.curso
+	toColumn: DIM_CURSO_HISTORICA.de_curso
+
+relationship d1423f74-becd-1fe2-69fd-77e108c68494
+	fromColumn: vw_ft_orcamento_ensalamento.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship a64068e9-a4e2-40a5-bf7f-6892ead3e5a9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: vw_vendas_ensalamento.data_grupo
+	toColumn: LocalDateTable_02075dc0-af87-4290-9a73-90cd8d464e3e.Date
+
+relationship AutoDetected_8fa8a0a9-a8e6-461f-8c2b-f5d2c8d68012
+	fromColumn: ENSALAMENTO_V2.grupo_final
+	toColumn: DIM_GRUPO.grupo_final
+
+relationship AutoDetected_ec24e678-c7cc-4f77-bbc6-83f8cce34d6c
+	fromColumn: vw_ft_orcamento_ensalamento.grupo_final
+	toColumn: DIM_GRUPO.grupo_final
+
+relationship e2cfb2f4-f670-da1b-eeb6-02111b7c5704
+	fromColumn: vw_vendas_ensalamento.grupo_final
+	toColumn: DIM_GRUPO.grupo_final
+
+relationship AutoDetected_df1e7f8b-4313-4e67-88da-3f6c4113eefc
+	fromColumn: ft_Receita_bruta_cursando.unidade
+	toColumn: DIM_UNIDADE_HISTORICA.unidade
+
+relationship 003f6047-6179-ecfa-279f-2dfcdd2722c5
+	fromColumn: ft_Receita_bruta_cursando.curso
+	toColumn: DIM_CURSO_HISTORICA.de_curso
+
+relationship 2618d300-7526-33d0-40a3-cfdf0cb360f1
+	fromColumn: ft_Receita_bruta_cursando.turno
+	toColumn: DIM_TURNO.de_turno
+
+relationship 1eec47cc-474a-4b01-b950-92ab58f77296
+	joinOnDateBehavior: datePartOnly
+	fromColumn: vw_ft_orcamento_ensalamento.mes
+	toColumn: LocalDateTable_a91071ba-7553-4080-9b7f-c7b1542f7c4d.Date
+
+relationship AutoDetected_20e0b7f5-d8d0-4e91-81d1-afad4be85af2
+	fromColumn: ENSALAMENTO_V2.status_nao_atribuido_geral
+	toColumn: DIM_DADOS_COMPLETOS.status_nao_atribuido_geral
+
+relationship AutoDetected_c0a11f3b-7638-418b-8f0a-151514c1fc7d
+	fromColumn: vw_ft_orcamento_ensalamento.status_nao_atribuido_geral
+	toColumn: DIM_DADOS_COMPLETOS.status_nao_atribuido_geral
+
+relationship AutoDetected_79848e49-afd5-496f-9d5b-593cd6bef048
+	fromColumn: vw_ft_orcamento_ensalamento.status_trilhas
+	toColumn: DIM_TRILHAS.status_trilhas
+
+relationship AutoDetected_10f97192-f8d5-4fef-8515-ce735dfe0800
+	fromColumn: vw_ft_orcamento_ensalamento.sala
+	toColumn: DIM_SALA.sala
+
+relationship AutoDetected_2caefbd5-0160-46cd-9982-018bdec1acff
+	fromColumn: vw_ft_orcamento_ensalamento.andar
+	toColumn: DIM_ANDAR.andar
+
+relationship AutoDetected_ba980b25-16a2-4b9b-86e7-12fc3806828d
+	fromColumn: vw_ft_orcamento_ensalamento.tipo_sala
+	toColumn: DIM_TIPO_SALA.tipo_sala
+
+relationship AutoDetected_09c8d9d3-7a14-407b-97fe-d2da757a4666
+	fromColumn: vw_ft_orcamento_ensalamento.dia_semana
+	toColumn: DIM_DIA_SEMANA.dia_semana
+

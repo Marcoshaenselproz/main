@@ -1,0 +1,29 @@
+table DIM_ANDAR
+	lineageTag: 88ae648d-6712-4a74-b4e3-ce8969c3f6a4
+
+	column andar
+		dataType: string
+		lineageTag: 719ef4a9-dbad-449e-9b4e-12e289cf0c2b
+		summarizeBy: none
+		sourceColumn: andar
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_ANDAR = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[andar],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"andar"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [andar] <> null and [andar] <> ""),
+				    #"Linhas Classificadas" = Table.Sort(#"Linhas Filtradas",{{"andar", Order.Ascending}}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Linhas Classificadas", each [andar] <> null and [andar] <> "")
+				in
+				    #"Linhas Filtradas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

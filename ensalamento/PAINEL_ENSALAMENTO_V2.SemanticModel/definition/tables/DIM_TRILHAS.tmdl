@@ -1,0 +1,27 @@
+table DIM_TRILHAS
+	lineageTag: 37acd129-2144-4de2-ae30-9de2a18f1db8
+
+	column status_trilhas
+		dataType: string
+		lineageTag: f8229bad-91e0-4231-a5bf-154cbb6b8dfb
+		summarizeBy: none
+		sourceColumn: status_trilhas
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TRILHAS = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[status_trilhas],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"status_trilhas"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [status_trilhas] <> null and [status_trilhas] <> "")
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

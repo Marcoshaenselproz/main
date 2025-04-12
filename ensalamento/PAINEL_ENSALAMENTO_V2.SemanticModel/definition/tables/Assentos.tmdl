@@ -1,0 +1,18 @@
+table Assentos
+	lineageTag: a985799b-5b32-4167-afa1-b0a0c599b0d5
+
+	column Value
+		formatString: 0
+		lineageTag: 047715f3-4386-4685-bd0b-53f6703a85ef
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = User
+
+	partition Assentos = calculated
+		mode: import
+		source = GENERATESERIES(1, 100)
+
+	annotation PBI_Id = 2a48f9a2d7104d9787877508bb65d378
+

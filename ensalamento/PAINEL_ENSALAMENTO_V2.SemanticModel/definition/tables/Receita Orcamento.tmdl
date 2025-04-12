@@ -1,0 +1,49 @@
+table 'Receita Orcamento'
+	lineageTag: ba79a0f6-3561-410f-b336-92c5c149a459
+
+	column 'Receita Orcamento'
+		lineageTag: 6e5c4977-4a72-4069-a7d0-7b76d612f161
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Receita Orcamento Pedido'
+
+		relatedColumnDetails
+			groupByColumn: 'Receita Orcamento Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Receita Orcamento Campos'
+		isHidden
+		lineageTag: 330bf67d-7c13-4afe-b9fa-ee2623f3ceae
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Receita Orcamento Pedido'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Receita Orcamento Pedido'
+		isHidden
+		formatString: 0
+		lineageTag: 248016da-1665-44c6-a48d-42457b39eb76
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Receita Orcamento' = calculated
+		mode: import
+		source =
+				{
+				    ("Receita Liquida Orcamento", NAMEOF('Medida_Ensalamento'[Receita Bruta Orcamento]), 0),
+				    ("Receita Bruta Pago", NAMEOF('Medida_Ensalamento'[Receita Bruta Pago]), 1),
+				    ("Receita Bruta Devido", NAMEOF('Medida_Ensalamento'[Receita Bruta Devido]), 2)
+				}
+
+	annotation PBI_Id = 226996c3a47c44419a8391072eb171a2
+

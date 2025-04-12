@@ -1,0 +1,55 @@
+DEFINE
+	VAR __DS0FilterTable = 
+		TREATAS({(2025, "Jan")}, 'VW_CALENDARIO'[COD_ANO], 'VW_CALENDARIO'[DSC_MES])
+
+	VAR __SQDS0Core = 
+		SUMMARIZECOLUMNS(
+			'VW_CALENDARIO'[DATA],
+			__DS0FilterTable,
+			"MinMTD_REAL", CALCULATE(MIN('VW_CALENDARIO'[MTD_REAL]))
+		)
+
+	VAR __SQDS0BodyLimited = 
+		TOPN(1, __SQDS0Core, [MinMTD_REAL], 0)
+
+	VAR __DS0Core = 
+		SUMMARIZECOLUMNS(
+			'VW_CALENDARIO'[COD_DIA],
+			__DS0FilterTable,
+			__SQDS0BodyLimited,
+			"Total_Mat_Acum_Zerado", 'MEDIDAS'[Total Mat Acum Zerado],
+			"Total_Mat_Meta_Comercial_Acum_Zerado", 'MEDIDAS'[Total Mat Meta Comercial Acum Zerado],
+			"Total_Mat_Historica_dia_Acum_Y_1_Zerado", 'MEDIDAS'[Total Mat Historica dia Acum Y-1 Zerado]
+		)
+
+	VAR __DS0IntersectionCount = CALCULATE(COUNTROWS(__DS0Core))
+
+	VAR __DS0BodyBinnedSample = 
+		SAMPLEAXISWITHLOCALMINMAX(
+			3500,
+			__DS0Core,
+			'VW_CALENDARIO'[COD_DIA],
+			[Total_Mat_Acum_Zerado],
+			[Total_Mat_Meta_Comercial_Acum_Zerado],
+			[Total_Mat_Historica_dia_Acum_Y_1_Zerado],
+			350,
+			,
+			ALPHABETICAL,
+			ASC,
+			105000,
+			60
+		)
+
+EVALUATE
+	ROW(
+	"DS0IntersectionCount", __DS0IntersectionCount
+)
+
+EVALUATE
+	SUMMARIZECOLUMNS(__DS0FilterTable, __SQDS0BodyLimited, "Max_cod_dia", IGNORE('MEDIDAS'[Max_cod_dia]))
+
+EVALUATE
+	__DS0BodyBinnedSample
+
+ORDER BY
+	'VW_CALENDARIO'[COD_DIA]

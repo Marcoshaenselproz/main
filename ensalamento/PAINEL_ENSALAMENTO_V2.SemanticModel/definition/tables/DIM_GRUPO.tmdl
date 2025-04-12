@@ -1,0 +1,29 @@
+table DIM_GRUPO
+	lineageTag: 4cf87a4d-b7be-477f-9a6f-75a94cb0593a
+
+	column grupo_final
+		dataType: string
+		lineageTag: 1c51bebf-4172-4a80-8066-bb886ee28cd1
+		summarizeBy: none
+		sourceColumn: grupo_final
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_GRUPO = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[grupo_final],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"grupo_final"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [grupo_final] <> null and [grupo_final] <> ""),
+				    #"Consulta Acrescentada" = Table.Combine({#"Linhas Filtradas", DIM_GRUPO_VENDAS}),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Consulta Acrescentada", each [grupo_final] <> null and [grupo_final] <> "")
+				in
+				    #"Linhas Filtradas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

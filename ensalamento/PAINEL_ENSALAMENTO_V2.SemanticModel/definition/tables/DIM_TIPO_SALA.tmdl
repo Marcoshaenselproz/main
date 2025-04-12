@@ -1,0 +1,28 @@
+table DIM_TIPO_SALA
+	lineageTag: e17c2977-e520-40ef-a8be-e245cd109fde
+
+	column tipo_sala
+		dataType: string
+		lineageTag: 81c9a734-742f-4920-862b-2888820c1526
+		summarizeBy: none
+		sourceColumn: tipo_sala
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_TIPO_SALA = m
+		mode: import
+		source =
+				let
+				    Fonte = ENSALAMENTO_V2,
+				    branch_name1 = Fonte[tipo_sala],
+				    #"Itens Distintos" = List.Distinct(branch_name1),
+				    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"tipo_sala"}),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [tipo_sala] <> null and [tipo_sala] <> ""),
+				    #"Linhas Filtradas1" = Table.SelectRows(#"Linhas Filtradas", each [tipo_sala] <> null and [tipo_sala] <> "")
+				in
+				    #"Linhas Filtradas1"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

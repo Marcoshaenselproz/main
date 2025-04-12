@@ -1,0 +1,254 @@
+table ENSALAMENTO_V2
+	lineageTag: e88d5d2a-74d9-45c6-90c7-02c24c2027b0
+
+	column status_trilhas
+		dataType: string
+		lineageTag: 44034f88-52d7-4390-84fb-3770a6a99232
+		summarizeBy: none
+		sourceColumn: status_trilhas
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: dd560c1f-d784-4c50-8025-f265712475f1
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_final
+		dataType: string
+		lineageTag: abf90422-ffa9-4935-a4eb-1dc1831b100e
+		summarizeBy: none
+		sourceColumn: grupo_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column turma
+		dataType: string
+		lineageTag: fe5d1c7d-7891-45cf-a550-3f9c8d0dc597
+		summarizeBy: none
+		sourceColumn: turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column sala
+		dataType: string
+		lineageTag: 16ca2f9e-7683-4a95-9238-fa222dc3cdfd
+		summarizeBy: none
+		sourceColumn: sala
+
+		annotation SummarizationSetBy = Automatic
+
+	column andar
+		dataType: string
+		lineageTag: 57984ae9-129a-4644-a07c-c9ae2684435c
+		summarizeBy: none
+		sourceColumn: andar
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_sala
+		dataType: string
+		lineageTag: 80cab240-b40f-4e29-b7b6-f43a67891949
+		summarizeBy: none
+		sourceColumn: tipo_sala
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_cadeiras
+		dataType: int64
+		formatString: 0
+		lineageTag: 49c65a51-376b-40c2-915c-e4625280ce3f
+		summarizeBy: sum
+		sourceColumn: qtde_cadeiras
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: 597c215c-8315-4ce5-8823-d16c0f71051b
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_turma
+		dataType: string
+		lineageTag: 3c51ea13-d6bc-4719-af29-c4fc3a5438bd
+		summarizeBy: none
+		sourceColumn: status_turma
+
+		annotation SummarizationSetBy = Automatic
+
+	column concatx
+		dataType: string
+		lineageTag: ab6eb2b1-7206-454f-88ad-eb8c14bfec25
+		summarizeBy: none
+		sourceColumn: concatx
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_cursando
+		dataType: int64
+		formatString: 0
+		lineageTag: b785a7d3-5f59-45f4-a742-81c298553c5d
+		summarizeBy: sum
+		sourceColumn: qtde_cursando
+
+		annotation SummarizationSetBy = Automatic
+
+	column student_id
+		dataType: string
+		lineageTag: b28abb46-6d2e-4223-a9bc-dc37cb9d25ae
+		summarizeBy: none
+		sourceColumn: student_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column enrollment_id
+		dataType: string
+		lineageTag: 2bbda2e1-ff17-407b-ad25-0670a30c860d
+		summarizeBy: none
+		sourceColumn: enrollment_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		lineageTag: c677a97c-4f1d-42b3-bfd5-d60a06b66623
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: c6900942-46be-43b8-9e54-00d6b533b4cb
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column complemento
+		dataType: string
+		lineageTag: d473f605-9a1c-4748-b512-5266095bd2fd
+		summarizeBy: none
+		sourceColumn: complemento
+
+		annotation SummarizationSetBy = Automatic
+
+	column inicio_turma
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 734267bc-0a15-488f-8466-e970fbe3bc5c
+		summarizeBy: none
+		sourceColumn: inicio_turma
+
+		variation Variation
+			isDefault
+			relationship: 32b226b0-c07d-4abe-a255-9105ada53398
+			defaultHierarchy: LocalDateTable_c4189e9b-9de6-4575-b536-3da10ad90b16.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fim_turma
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 977f2cb4-1abb-403c-a130-8218842d7f84
+		summarizeBy: none
+		sourceColumn: fim_turma
+
+		variation Variation
+			isDefault
+			relationship: 2fc5ef44-2308-4200-8d33-e23524db77a5
+			defaultHierarchy: LocalDateTable_7f760690-6fe3-434e-afa9-4dab987eccdc.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column student_name
+		dataType: string
+		lineageTag: 619a4961-10b0-443c-be61-3d00a7402ae3
+		summarizeBy: none
+		sourceColumn: student_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo
+		dataType: string
+		lineageTag: 0565a9cd-9a05-47d5-93e7-95d661ac1973
+		summarizeBy: none
+		sourceColumn: grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_grupo
+		dataType: int64
+		formatString: 0
+		lineageTag: d5249a7e-99d9-48a2-ab76-25a827064148
+		summarizeBy: sum
+		sourceColumn: mes_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_grupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 8291ab81-a12a-4692-b523-8cc71a9896ea
+		summarizeBy: sum
+		sourceColumn: ano_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_nao_atribuido
+		dataType: string
+		lineageTag: f748cfbd-db63-485d-8c95-02e660b31d04
+		summarizeBy: none
+		sourceColumn: status_nao_atribuido
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_nao_atribuido_geral
+		dataType: string
+		lineageTag: a84da96e-1fe9-4cd3-b909-41eef261d2a9
+		summarizeBy: none
+		sourceColumn: status_nao_atribuido_geral
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_estagio_finalizando
+		dataType: int64
+		formatString: 0
+		lineageTag: cac97913-10d9-404c-af9f-fc9393c618dc
+		summarizeBy: sum
+		sourceColumn: qtde_estagio_finalizando
+
+		annotation SummarizationSetBy = Automatic
+
+	column status_ocupacao
+		dataType: string
+		lineageTag: 9f2d49be-41a0-4262-abd1-495f6a53528e
+		summarizeBy: none
+		sourceColumn: status_ocupacao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ENSALAMENTO_V2 = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_ensalamento_v2", null, [EnableFolding=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"student_id", type text}, {"enrollment_id", type text}, {"unidade", type text}, {"curso", type text}, {"turno", type text}, {"grupo_final", type text}, {"complemento", type text}, {"turma", type text}, {"status_trilhas", type text}, {"andar", type text}, {"tipo_sala", type text}, {"concatx", type text}, {"dia_semana", type text}, {"status_turma", type text}, {"qtde_cadeiras", Int64.Type}, {"qtde_cursando", Int64.Type}, {"sala", type text}, {"mes_grupo", Int64.Type}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}, {"grupo_final", Text.Proper, type text}, {"complemento", Text.Proper, type text}, {"status_trilhas", Text.Proper, type text}, {"andar", Text.Proper, type text}, {"tipo_sala", Text.Proper, type text}, {"dia_semana", Text.Proper, type text}, {"status_turma", Text.Proper, type text}, {"student_name", Text.Proper, type text}, {"status_nao_atribuido", Text.Proper, type text}, {"status_nao_atribuido_geral", Text.Proper, type text}, {"status_ocupacao", Text.Proper, type text}})
+				in
+				    #"Colocar Cada Palavra Em Maiúscula"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

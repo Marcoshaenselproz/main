@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "PAINEL_ENSALAMENTO_V2"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "72c539b0-5204-4cb5-a812-ec74f4289691"
+  }
+}

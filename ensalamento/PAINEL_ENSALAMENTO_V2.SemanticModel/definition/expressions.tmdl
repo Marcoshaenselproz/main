@@ -1,0 +1,15 @@
+expression DIM_GRUPO_VENDAS =
+		let
+		    Fonte = vw_vendas_ensalamento,
+		    branch_name1 = Fonte[grupo_final],
+		    #"Itens Distintos" = List.Distinct(branch_name1),
+		    #"Convertido para Tabela" = Table.FromColumns({#"Itens Distintos"}, {"grupo_final"}),
+		    #"Linhas Filtradas" = Table.SelectRows(#"Convertido para Tabela", each [grupo_final] <> null and [grupo_final] <> "")
+		in
+		    #"Linhas Filtradas"
+	lineageTag: 81239996-1f23-4290-8863-768bd0b250be
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

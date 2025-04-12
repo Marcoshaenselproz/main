@@ -1,0 +1,144 @@
+table vw_vendas_ensalamento
+	lineageTag: 246d6d1b-57ab-4685-9df8-8ba49b72f912
+
+	column numero_matricula
+		dataType: string
+		lineageTag: 9d7b2c9d-7231-4573-a988-837e7b8ccb52
+		summarizeBy: none
+		sourceColumn: numero_matricula
+
+		annotation SummarizationSetBy = Automatic
+
+	column id_curso
+		dataType: string
+		lineageTag: 5574bdb6-be19-43e1-a891-4112c61de12c
+		summarizeBy: none
+		sourceColumn: id_curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome
+		dataType: string
+		lineageTag: 2b7a97d8-54d8-4506-b859-c3c6d8940294
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column unidade
+		dataType: string
+		lineageTag: d4aff856-4cbf-4fdd-918a-684c74ff54a0
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column curso
+		dataType: string
+		lineageTag: 846431e9-8ce6-4d39-9636-1cc6c63c7f1d
+		summarizeBy: none
+		sourceColumn: curso
+
+		annotation SummarizationSetBy = Automatic
+
+	column turno
+		dataType: string
+		lineageTag: 78e15b06-a02b-43ee-a7b0-f1837332b2bf
+		summarizeBy: none
+		sourceColumn: turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo
+		dataType: string
+		lineageTag: fd12fa86-5920-45fa-a531-7ee3beb2634f
+		summarizeBy: none
+		sourceColumn: grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column complemento
+		dataType: string
+		lineageTag: e880815d-9ae7-4bcb-95b8-46f3fb93ffd3
+		summarizeBy: none
+		sourceColumn: complemento
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_grupo
+		dataType: string
+		lineageTag: 82af667b-6cfc-4677-b213-2f823c95f99e
+		summarizeBy: none
+		sourceColumn: mes_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column ano_grupo
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b686f69-8a03-4543-ab83-6baa03214f00
+		summarizeBy: sum
+		sourceColumn: ano_grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	column grupo_final
+		dataType: string
+		lineageTag: acead144-0702-46a1-908b-a5f86e349719
+		summarizeBy: none
+		sourceColumn: grupo_final
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtde_matriculas
+		dataType: int64
+		formatString: 0
+		lineageTag: 08ee1772-4000-4134-af30-30f00ba86f4e
+		summarizeBy: sum
+		sourceColumn: qtde_matriculas
+
+		annotation SummarizationSetBy = Automatic
+
+	column valor_mensalidade
+		dataType: double
+		lineageTag: eed8ef48-fdff-40fc-b03c-6350e4d70c3d
+		summarizeBy: sum
+		sourceColumn: valor_mensalidade
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column data_grupo
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 036dcfaf-19c9-40ae-8f69-314dced1c973
+		summarizeBy: none
+		sourceColumn: data_grupo
+
+		variation Variation
+			isDefault
+			relationship: a64068e9-a4e2-40a5-bf7f-6892ead3e5a9
+			defaultHierarchy: LocalDateTable_02075dc0-af87-4290-9a73-90cd8d464e3e.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition vw_vendas_ensalamento = m
+		mode: import
+		source =
+				let
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_vendas_ensalamento", null, [EnableFolding=true]),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(Fonte,{{"numero_matricula", Text.Proper, type text}, {"id_curso", Text.Proper, type text}, {"nome", Text.Proper, type text}, {"unidade", Text.Proper, type text}, {"curso", Text.Proper, type text}, {"turno", Text.Proper, type text}, {"grupo", Text.Proper, type text}, {"complemento", Text.Proper, type text}, {"mes_grupo", Text.Proper, type text}, {"grupo_final", Text.Proper, type text}}),
+				    #"Colocar Cada Palavra Em Maiúscula1" = Table.TransformColumns(#"Colocar Cada Palavra Em Maiúscula",{{"curso", Text.Proper, type text}}),
+				    #"Texto Aparado" = Table.TransformColumns(#"Colocar Cada Palavra Em Maiúscula1",{{"curso", Text.Trim, type text}}),
+				    #"Texto Limpo" = Table.TransformColumns(#"Texto Aparado",{{"curso", Text.Clean, type text}}),
+				    #"Tipo Alterado com Localidade" = Table.TransformColumnTypes(#"Texto Limpo", {{"valor_mensalidade", type number}}, "en-US")
+				in
+				    #"Tipo Alterado com Localidade"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+

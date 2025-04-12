@@ -1,0 +1,77 @@
+table DIM_UNIDADE_HISTORICA
+	lineageTag: 2eb7df9a-2395-4038-aa3d-a35e7b0da62d
+
+	column unidade
+		dataType: string
+		lineageTag: b5993ba9-74f9-4b30-a072-b640a70d4acc
+		summarizeBy: none
+		sourceColumn: unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column dsc_unidade
+		dataType: string
+		lineageTag: 5c6b702c-7e8f-4b66-b480-7a7a841869fb
+		summarizeBy: none
+		sourceColumn: dsc_unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column regional
+		dataType: string
+		lineageTag: 1fbc4a2e-7781-4e80-815e-f85c67733ab7
+		summarizeBy: none
+		sourceColumn: regional
+
+		annotation SummarizationSetBy = Automatic
+
+	column ultimo_status
+		dataType: string
+		lineageTag: 808a795a-ee57-462a-b4c1-9e6d08a8878c
+		summarizeBy: none
+		sourceColumn: ultimo_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column sigla
+		dataType: string
+		lineageTag: 6d4ed856-7791-439e-a115-fd0b6b6be934
+		summarizeBy: none
+		sourceColumn: sigla
+
+		annotation SummarizationSetBy = Automatic
+
+	column porte
+		dataType: string
+		lineageTag: c7a7ab0a-9289-41e3-ae7e-1b2f1d497b22
+		summarizeBy: none
+		sourceColumn: porte
+
+		annotation SummarizationSetBy = Automatic
+
+	column porte_unidade
+		dataType: string
+		lineageTag: 243e3d12-306d-46c1-99c8-d725a4dc62ef
+		summarizeBy: none
+		sourceColumn: porte_unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DIM_UNIDADE_HISTORICA = m
+		mode: import
+		source =
+				let
+				
+				    Fonte = Value.NativeQuery(GoogleBigQuery.Database([BillingProject="plancomercial"]){[Name="plancomercial"]}[Data], "SELECT * FROM plancomercial.PERSONE_ETL.vw_dim_unidade_historica", null, [EnableFolding=true]),
+				    #"Tipo Alterado" = Table.TransformColumnTypes(Fonte,{{"ano", Int64.Type}, {"data", type date}}),
+				    #"Colocar Cada Palavra Em Maiúscula" = Table.TransformColumns(#"Tipo Alterado",{{"unidade", Text.Proper, type text}, {"dsc_unidade", Text.Proper, type text}, {"territorio", Text.Proper, type text}, {"regional", Text.Proper, type text}, {"status", Text.Proper, type text}, {"sigla", Text.Proper, type text}, {"ultimo_status", Text.Proper, type text}}),
+				    #"Outras Colunas Removidas" = Table.SelectColumns(#"Colocar Cada Palavra Em Maiúscula",{"unidade", "dsc_unidade", "regional", "ultimo_status", "sigla", "porte", "porte_unidade"}),
+				    #"Duplicatas Removidas" = Table.Distinct(#"Outras Colunas Removidas"),
+				    #"Linhas Filtradas" = Table.SelectRows(#"Duplicatas Removidas", each ([unidade] <> null))
+				in
+				    #"Linhas Filtradas"
+
+	annotation PBI_NavigationStepName = Navegação
+
+	annotation PBI_ResultType = Table
+
