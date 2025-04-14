@@ -4853,6 +4853,28 @@ table MEDIDAS
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: a5562758-5dce-4410-80f3-a2f264ed0317
 
+	measure Titulo_Grafico_meta_mes_War_Room =
+			
+			VAR texto = SELECTEDVALUE(dim_unidade_historica[ultimo_status], "Padrão") -- Define um valor padrão para evitar BLANK()
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    texto = "Ativa", "Gráfico Atingimento Mês - Unidades Ativas", -- Caso o status seja "Ativa"
+			    "Gráfico Atingimento Mês - Todas Unidades" -- Valor padrão para qualquer outro caso
+			)
+		lineageTag: c23e37fa-3972-4213-9764-fcf0911fe8b5
+
+	measure Titulo_Grafico_meta_movel_War_Room =
+			
+			VAR texto = SELECTEDVALUE(dim_unidade_historica[ultimo_status], "Padrão") -- Define um valor padrão para evitar BLANK()
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    texto = "Ativa", "Gráfico Atingimento Móvel - Unidades Ativas", -- Caso o status seja "Ativa"
+			    "Gráfico Atingimento Móvel - Todas Unidades" -- Valor padrão para qualquer outro caso
+			)
+		lineageTag: 099cef5d-5f08-4ebf-8eb4-2f0ba53ec1ad
+
 	column MEDIDAS
 		dataType: string
 		isHidden
