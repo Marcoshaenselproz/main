@@ -572,7 +572,7 @@ table MEDIDAS
 		formatString: 0
 		lineageTag: 78fb3f60-c105-4621-a054-46a49e06a0d1
 
-	measure 'Total Mat Meta BP Acum' = CALCULATE([Total Mat Meta BP],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])))
+	measure 'Total Mat Meta BP Acum' = CALCULATE([Total Mat Meta BP],FILTER(ALLSELECTED('VW_CALENDARIO'), 'VW_CALENDARIO'[DATA] <= MAX('VW_CALENDARIO'[DATA])),ALL(VW_CALENDARIO[MTD_FECHAMENTO]))
 		formatString: #,0
 		lineageTag: c8e063e7-c1bc-4830-b8ff-e06db2afa650
 
@@ -4817,7 +4817,13 @@ table MEDIDAS
 		formatString: #,0
 		lineageTag: 5b6be269-e03d-481b-baa0-a1c42c0132c8
 
-	measure 'Conversão Geral Acum' = DIVIDE([Total Mat Acum],[Total Leads Acum])
+	measure 'Conversão Geral Acum' =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			var conv = DIVIDE([Total Mat Acum],[Total Leads Acum])
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(tbdia),BLANK(),conv)
 		formatString: 0%;-0%;0%
 		lineageTag: 70bc818c-205b-4461-b042-975234d8e655
 
@@ -4874,6 +4880,54 @@ table MEDIDAS
 			    "Gráfico Atingimento Móvel - Todas Unidades" -- Valor padrão para qualquer outro caso
 			)
 		lineageTag: 099cef5d-5f08-4ebf-8eb4-2f0ba53ec1ad
+
+	measure 'Total Conversão Geral Meta Dia All' =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			
+			VAR meta = CALCULATE([Conversão Geral Meta],ALLSELECTED(VW_CALENDARIO))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(tbdia),BLANK(),meta)
+		formatString: 0%;-0%;0%
+		lineageTag: eee39875-a479-42bb-a1b3-af38345834b5
+
+	measure 'Total Leads Meta Dia All' =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			VAR meta = CALCULATE(DIVIDE([Total Leads Meta],[Total dias uteis]),ALLSELECTED(VW_CALENDARIO))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Leads]),BLANK(),meta)
+		lineageTag: 09ef8209-f23f-4173-b7c3-7c14d3696bfd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Mat Meta BP Dia All' =
+			
+			
+			VAR meta = CALCULATE(DIVIDE([Total Mat Meta BP],[Total dias uteis]),ALLSELECTED(VW_CALENDARIO))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Mat Geral]),BLANK(),meta)
+		lineageTag: bdf824bb-1a70-45e1-b164-04e0362757c8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 100% =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			var dia = DAY(TODAY())
+			var meta = 1
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(tbdia),BLANK(),meta)
+		formatString: 0
+		lineageTag: 6da64895-1754-40b3-84b3-572582ba7a65
+
+	measure 'Conversão Geral c/ Zero' = DIVIDE([Total Mat Geral c/zero],[Total Leads])
+		formatString: 0%;-0%;0%
+		lineageTag: 05e20238-5f3c-4051-a7d1-720390f596f8
 
 	column MEDIDAS
 		dataType: string

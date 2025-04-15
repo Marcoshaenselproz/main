@@ -1343,6 +1343,17 @@ table Medida_LTV
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure '% Total Investimento Meta Acum' =
+			
+			var tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			
+			var meta = DIVIDE([Total Investimento Acum],[Total Investimento Meta Acum],0)
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK(tbdia),BLANK(),meta)
+		formatString: 0%;-0%;0%
+		lineageTag: 27dba62f-85a2-42d1-918f-84d545e151a0
+
 	column Column
 		isHidden
 		formatString: 0

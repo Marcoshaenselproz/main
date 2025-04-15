@@ -428,6 +428,14 @@ table VW_LEADS_GROUP
 
 		annotation SummarizationSetBy = Automatic
 
+	column descricao_caminho_completo
+		dataType: string
+		lineageTag: 395fada6-1368-4328-9bed-789437658418
+		summarizeBy: none
+		sourceColumn: descricao_caminho_completo
+
+		annotation SummarizationSetBy = Automatic
+
 	partition VW_LEADS_GROUP = m
 		mode: import
 		source =
