@@ -237,7 +237,7 @@
           "nodeIndex": "Medida_simulacao",
           "nodeLineageTag": "f1d88a8b-72d9-493e-b7b0-d37e253b977c",
           "size": {
-            "height": 176,
+            "height": 128,
             "width": 234
           },
           "zIndex": 0
@@ -523,7 +523,7 @@
           "nodeIndex": "vw_dim_curso",
           "nodeLineageTag": "848559b7-68fc-4b6d-a510-979098e4bda6",
           "size": {
-            "height": 200,
+            "height": 296,
             "width": 234
           },
           "zIndex": 0
@@ -536,7 +536,7 @@
           "nodeIndex": "vw_dim_curso_2",
           "nodeLineageTag": "1c0cc206-c161-4789-b3bf-65dfa6579fc3",
           "size": {
-            "height": 200,
+            "height": 296,
             "width": 234
           },
           "zIndex": 0
@@ -562,7 +562,7 @@
           "nodeIndex": "vw_dim_users_ajustado",
           "nodeLineageTag": "d6e1c8b8-8bd0-4728-8321-b563b5d563eb",
           "size": {
-            "height": 272,
+            "height": 300,
             "width": 234
           },
           "zIndex": 0
@@ -601,7 +601,7 @@
           "nodeIndex": "vw_ft_investimento_distribuido_tb",
           "nodeLineageTag": "0694ce28-ebce-49da-af49-2e332c92d65a",
           "size": {
-            "height": 224,
+            "height": 248,
             "width": 234
           },
           "zIndex": 0
@@ -692,7 +692,7 @@
           "nodeIndex": "vw_dim_url",
           "nodeLineageTag": "2cc0c059-1405-48a1-b564-d84997d2bd3b",
           "size": {
-            "height": 128,
+            "height": 104,
             "width": 234
           },
           "zIndex": 0
@@ -744,7 +744,7 @@
           "nodeIndex": "MATRIZ_INDICADORES_GRAFICO",
           "nodeLineageTag": "b909cd22-f7df-4edb-9018-1837b1bd2327",
           "size": {
-            "height": 300,
+            "height": 248,
             "width": 234
           },
           "zIndex": 0

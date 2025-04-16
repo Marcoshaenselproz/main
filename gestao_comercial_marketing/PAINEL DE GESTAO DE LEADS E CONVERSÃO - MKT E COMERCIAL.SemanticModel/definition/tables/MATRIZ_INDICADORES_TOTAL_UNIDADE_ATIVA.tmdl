@@ -56,35 +56,35 @@ table MATRIZ_INDICADORES_TOTAL_UNIDADE_ATIVA
 			
 			// Variáveis intermediárias para valores filtrados por status "Ativa"
 			VAR MatriculasMeta = [Total Mat Meta BP]
-			VAR MatriculasReal = CALCULATE([Total Mat Geral], dim_unidade_historica[status] = "Ativa")
+			VAR MatriculasReal = CALCULATE([Total Mat Geral], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR MatriculasAting = DIVIDE(MatriculasReal, MatriculasMeta)
 			
 			VAR LeadsMeta = [Total Leads Meta]
-			VAR LeadsReal = CALCULATE([Total Leads], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsReal = CALCULATE([Total Leads], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsAting = DIVIDE(LeadsReal, LeadsMeta)
 			
 			VAR LeadsPagosMeta = [Total Leads Meta Pago]
-			VAR LeadsPagosReal = CALCULATE([Total Leads Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsPagosReal = CALCULATE([Total Leads Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsPagosAting = DIVIDE(LeadsPagosReal, LeadsPagosMeta)
 			
 			VAR LeadsNaoPagosMeta = [Total Leads Meta Não Pago]
-			VAR LeadsNaoPagosReal = CALCULATE([Total Leads Não Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsNaoPagosReal = CALCULATE([Total Leads Não Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsNaoPagosAting = DIVIDE(LeadsNaoPagosReal, LeadsNaoPagosMeta)
 			
 			VAR PercentualLeadsPagosMeta = [% Total Leads Meta Pago Share]
-			VAR PercentualLeadsPagosReal = CALCULATE([% Total Leads Pago], dim_unidade_historica[status] = "Ativa")
+			VAR PercentualLeadsPagosReal = CALCULATE([% Total Leads Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR PercentualLeadsPagosAting = FORMAT(((PercentualLeadsPagosReal - PercentualLeadsPagosMeta) * 100), "+0.0;-0.0;0.0") & " p.p"
 			
 			VAR ConversaoGeralMeta = [Conversão Geral Meta]
-			VAR ConversaoGeralReal = CALCULATE([Conversão Geral], dim_unidade_historica[status] = "Ativa")
+			VAR ConversaoGeralReal = CALCULATE([Conversão Geral], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR ConversaoGeralAting = FORMAT(((ConversaoGeralReal - ConversaoGeralMeta) * 100), "+0.0;-0.0;0.0") & " p.p"
 			
 			VAR InvestimentoMeta = [Total Investimento Meta]
-			VAR InvestimentoReal = CALCULATE([Total Investimento], dim_unidade_historica[status] = "Ativa")
+			VAR InvestimentoReal = CALCULATE([Total Investimento], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR InvestimentoAting = DIVIDE(InvestimentoReal, InvestimentoMeta)
 			
 			VAR CPLMeta = [Total CPL Meta Pago]
-			VAR CPLReal = CALCULATE([Total CPL Pago], dim_unidade_historica[status] = "Ativa")
+			VAR CPLReal = CALCULATE([Total CPL Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR CPLAting = FORMAT((CPLReal - CPLMeta), "+0.0;-0.0;0.0")
 			
 			// Cálculo do valor bruto com base no indicador e métrica selecionados

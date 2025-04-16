@@ -10,14 +10,14 @@ table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
 			VAR ValorAtivo =
 			    SWITCH(
 			        TRUE(),
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto", CALCULATE([Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia", CALCULATE([Total Faturamento 1ª Mensalidade Recorrencia], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento total mensalidades", CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão", CALCULATE([Total Faturamento Antecipado Taxa Recorrencia Aprovado], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto", CALCULATE([Total Faturamento Antecipado Taxa Liquida Aprovado], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento Taxa", CALCULATE([Total Faturamento Antecipado Taxa Aprovada], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "Faturamento Total", CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[status] = "Ativa"),
-			        IndicadorSelecionado = "TKT Médio", CALCULATE([Total Ticket Médio Faturamento Total Curso], dim_unidade_historica[status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto", CALCULATE([Total Faturamento 1ª Mensalidade Boleto/Pix/Cartão], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia", CALCULATE([Total Faturamento 1ª Mensalidade Recorrencia], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Total Mensalidades", CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão", CALCULATE([Total Faturamento Antecipado Taxa Recorrencia Aprovado], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto", CALCULATE([Total Faturamento Antecipado Taxa Liquida Aprovado], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Total Taxa", CALCULATE([Total Faturamento Antecipado Taxa Aprovada], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "Faturamento Total", CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[ultimo_status] = "Ativa"),
+			        IndicadorSelecionado = "TKT Médio", CALCULATE([Total Ticket Médio Faturamento Total Curso], dim_unidade_historica[ultimo_status] = "Ativa"),
 			        BLANK()
 			    )
 			
@@ -26,34 +26,35 @@ table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
 			    SWITCH(
 			        TRUE(),
 			        // Faturamento Previsto 1º Pgto - Boleto
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "Meta", BLANK(),
 			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa")),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Boleto" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        
 			        // Faturamento Previsto 1º Pgto - Recorrência
 			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "Meta", BLANK(),
 			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa")),
+			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto - Recorrencia" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        
 			        // Faturamento Total Mensalidades
-			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
-			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento total mensalidades" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, [Total Faturamento Meta BP]),
-			        
+			        IndicadorSelecionado = "Faturamento Total Mensalidades" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Total Mensalidades" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Total Mensalidades" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[ultimo_status] = "Ativa")),
+			
+			
 			        // Faturamento Recorrente - Taxa Cartão
 			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "Meta", BLANK(),
 			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "% Ating", BLANK(),
+			        IndicadorSelecionado = "Faturamento Recorrente - Taxa Cartão" && MetricaSelecionada = "% Ating",DIVIDE(ValorAtivo,CALCULATE([Total Faturamento Antecipado Taxa Aprovada], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        
 			        // Faturamento Taxa de Matrícula - Boleto
 			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "Meta", BLANK(),
 			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "% Ating", BLANK(),
+			        IndicadorSelecionado = "Faturamento Taxa de Matrícula - Boleto" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo,CALCULATE([Total Faturamento Antecipado Taxa Aprovada], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        
 			        // Faturamento Taxa
-			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "Meta", BLANK(),
-			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "Real", ValorAtivo,
-			        IndicadorSelecionado = "Faturamento Taxa" && MetricaSelecionada = "% Ating", BLANK(),
+			        IndicadorSelecionado = "Faturamento Total Taxa" && MetricaSelecionada = "Meta", BLANK(),
+			        IndicadorSelecionado = "Faturamento Total Taxa" && MetricaSelecionada = "Real", ValorAtivo,
+			        IndicadorSelecionado = "Faturamento Total Taxa" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo,CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        
 			        // Faturamento Total
 			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
@@ -61,7 +62,7 @@ table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
 			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, [Total Faturamento Meta BP]),
 			        
 			        // TKT Médio
-			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "Meta", [Total Faturamento Meta BP],
+			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "Meta", DIVIDE([Total Faturamento Meta BP],[Total Mat Meta BP]),
 			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "Real", ValorAtivo,
 			        IndicadorSelecionado = "TKT Médio" && MetricaSelecionada = "% Ating", DIVIDE(ValorAtivo, DIVIDE([Total Faturamento Meta BP], [Total Mat Meta BP])) - 1,
 			        
@@ -152,34 +153,36 @@ table MATRIZ_INDICADORES_FATURAMENTO_UNIDADE_ATIVA
 		mode: import
 		source = ```
 				
+				
 				DATATABLE(
 				    "Indicador", STRING,
 				    "Ordem_Indicador", INTEGER,
 				    "Métrica", STRING,
 				    "Ordem_Métrica", INTEGER,
 				    {
+				        {"Faturamento Total", 1, "Meta", 1},
+				        {"Faturamento Total", 1, "Real", 2},
+				        {"Faturamento Total", 1, "% Ating", 3},
+				        {"Faturamento Previsto 1º Pgto - Boleto", 2, "Meta", 1},
+				        {"Faturamento Previsto 1º Pgto - Boleto", 2, "Real", 2},
+				        {"Faturamento Previsto 1º Pgto - Boleto", 2, "% Ating", 3},
+				        {"Faturamento Previsto 1º Pgto - Recorrencia", 3, "Meta", 1},
+				        {"Faturamento Previsto 1º Pgto - Recorrencia", 3, "Real", 2},
+				        {"Faturamento Previsto 1º Pgto - Recorrencia", 3, "% Ating", 3},
+				        {"Faturamento Recorrente - Taxa Cartão", 5, "Meta", 1},
+				        {"Faturamento Recorrente - Taxa Cartão", 5, "Real", 2},
+				        {"Faturamento Recorrente - Taxa Cartão", 5, "% Ating", 3},
+				        {"Faturamento Taxa de Matrícula - Boleto", 4, "Meta", 1},
+				        {"Faturamento Taxa de Matrícula - Boleto", 4, "Real", 2},
+				        {"Faturamento Taxa de Matrícula - Boleto", 4, "% Ating", 3},
+				        {"Faturamento Total Mensalidades", 6, "Meta", 1},
+				        {"Faturamento Total Mensalidades", 6, "Real", 2},
+				        {"Faturamento Total Mensalidades", 6, "% Ating", 3},
+				        {"Faturamento Total Taxa", 7, "Meta", 1},
+				        {"Faturamento Total Taxa", 7, "Real", 2},
+				        {"Faturamento Total Taxa", 7, "% Ating", 3},
 				
-				        {"Faturamento Previsto 1º Pgto - Boleto", 1, "Real", 2},
-				        {"Faturamento Previsto 1º Pgto - Boleto", 1, "% Ating", 3},
-				
-				        {"Faturamento Previsto 1º Pgto - Recorrencia", 2, "Real", 2},
-				        {"Faturamento Previsto 1º Pgto - Recorrencia", 2, "% Ating", 3},
-				
-				        {"Faturamento total mensalidades", 3, "Real", 2},
-				        {"Faturamento total mensalidades", 3, "% Ating", 3},
-				
-				        {"Faturamento Recorrente - Taxa Cartão", 4, "Real", 2},
-				        {"Faturamento Recorrente - Taxa Cartão", 4, "% Ating", 3},
-				
-				        {"Faturamento Taxa de Matrícula - Boleto", 5, "Real", 2},
-				        {"Faturamento Taxa de Matrícula - Boleto", 5, "% Ating", 3},
-				
-				        {"Faturamento Taxa", 6, "Real", 2},
-				        {"Faturamento Taxa", 6, "% Ating", 3},
-				
-				        {"Faturamento Total", 7, "Real", 2},
-				        {"Faturamento Total", 7, "% Ating", 3},
-				
+				        {"TKT Médio", 8, "Meta",1},
 				        {"TKT Médio", 8, "Real", 2},
 				        {"TKT Médio", 8, "% Ating", 3}
 				    }

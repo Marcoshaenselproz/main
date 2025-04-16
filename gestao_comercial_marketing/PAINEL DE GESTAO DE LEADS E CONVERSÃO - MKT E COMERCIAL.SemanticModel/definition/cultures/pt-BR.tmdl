@@ -53202,6 +53202,16 @@ cultureInfo pt-BR
 			          "indicador": {
 			            "State": "Generated"
 			          }
+			        },
+			        {
+			          "Leads | Vendas | Investimentos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -53922,7 +53932,7 @@ cultureInfo pt-BR
 			    "matriz_indicadores_grafico.valor_matriz_grafico_movel": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO",
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
 			          "ConceptualProperty": "VALOR_MATRIZ_GRAFICO_MOVEL"
 			        }
 			      },
@@ -53945,7 +53955,7 @@ cultureInfo pt-BR
 			    "matriz_indicadores_grafico.valor_matriz_grafico_movel1": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO",
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
 			          "ConceptualProperty": "% VALOR_MATRIZ_GRAFICO_MOVEL"
 			        }
 			      },
@@ -54004,7 +54014,7 @@ cultureInfo pt-BR
 			    "matriz_indicadores_grafico.cor_barra_grafico_movel": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO",
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
 			          "ConceptualProperty": "Cor_Barra_Grafico_movel"
 			        }
 			      },
@@ -60929,16 +60939,6 @@ cultureInfo pt-BR
 			          "total mat meta BP dia all": {
 			            "State": "Generated"
 			          }
-			        },
-			        {
-			          "Meta": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -61070,6 +61070,247 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
+			    "medida.conversão_geral_c__zero": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MEDIDAS",
+			          "ConceptualProperty": "Conversão Geral c/ Zero"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "conversão geral c/ zero": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "conversão geral c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "conversão geral c zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "conversão geral c/ zippo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.52
+			          }
+			        },
+			        {
+			          "conversão geral c zippo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "conversão geral c/ nothing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "conversão geral c/ nil": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "conversão geral c/ zip": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "conversão geral c/ zilch": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "conversão geral c/ naught": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "conversão geral c nothing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "conversão geral c nil": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "conversão geral c zip": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "matriz indicadores grafico movel": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "matriz indicadore grafico movel": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "MATRIZ_INDICADORES_GRAFICO_MOVEL": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel.indicador": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
+			          "ConceptualProperty": "Indicador"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "indicador": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel.ordem_indicador": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
+			          "ConceptualProperty": "Ordem_Indicador"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ordem indicador": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Ordem_Indicador": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel.métrica": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
+			          "ConceptualProperty": "Métrica"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "métrica": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel.ordem_métrica": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL",
+			          "ConceptualProperty": "Ordem_Métrica"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ordem métrica": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Ordem_Métrica": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
 			    "quadrante_rvv.obs": {
 			      "Definition": {
 			        "Binding": {
@@ -61093,6 +61334,237 @@ cultureInfo pt-BR
 			    }
 			  },
 			  "Relationships": {
+			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_trimestre": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_dia_Y-1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			          }
+			        },
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			            },
+			            "Object": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "hierarquia_de_data_have_trimestres"
+			        }
+			      ]
+			    },
+			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_ano": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_dia_Y-1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			          }
+			        },
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			            },
+			            "Object": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "hierarquia_de_data_have_anos"
+			        }
+			      ]
+			    },
+			    "base_matricula_dia_Y_1_data_final_has_variation_hierarquia_de_data": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_dia_Y-1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_dia_Y_1.data_final": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final"
+			          }
+			        },
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_dia_Y_1.data_final"
+			            },
+			            "Object": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "data_finals_have_hierarquia_de_data"
+			        }
+			      ]
+			    },
+			    "vw_matricula_data_taxa_pag_variation_hierarquia_de_data_mê_has_vw_matricula_data_taxa_pag_variation_hierarquia_de_data_dia": {
+			      "Binding": {
+			        "ConceptualEntity": "VW_MATRICULAS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê": {
+			          "Target": {
+			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			          }
+			        },
+			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia": {
+			          "Target": {
+			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            },
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "mê_have_dias"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
+			            },
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dias_have_mê"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dias_are_in_mê8"
+			        }
+			      ]
+			    },
+			    "vw_matricula_data_taxa_pag_variation_hierarquia_de_data_trimestre_has_vw_matricula_data_taxa_pag_variation_hierarquia_de_data_mê": {
+			      "Binding": {
+			        "ConceptualEntity": "VW_MATRICULAS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre": {
+			          "Target": {
+			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
+			          }
+			        },
+			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê": {
+			          "Target": {
+			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
+			            },
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "trimestres_have_mê"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            },
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "mê_have_trimestres"
+			        },
+			        {
+			          "Preposition": {
+			            "Subject": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
+			            },
+			            "Prepositions": [
+			              {
+			                "in": {
+			                  "State": "Generated"
+			                }
+			              }
+			            ],
+			            "Object": {
+			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "mê_are_in_trimestres8"
+			        }
+			      ]
+			    },
 			    "vw_matricula_data_taxa_pag_variation_hierarquia_de_data_ano_has_vw_matricula_data_taxa_pag_variation_hierarquia_de_data_trimestre": {
 			      "Binding": {
 			        "ConceptualEntity": "VW_MATRICULAS"
@@ -61254,7 +61726,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres"
+			          "ID": "hierarquia_de_data_have_trimestres1"
 			        }
 			      ]
 			    },
@@ -61287,7 +61759,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos"
+			          "ID": "hierarquia_de_data_have_anos1"
 			        }
 			      ]
 			    },
@@ -61353,7 +61825,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias"
+			          "ID": "mê_have_dias1"
 			        },
 			        {
 			          "Attribute": {
@@ -61366,7 +61838,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê"
+			          "ID": "dias_have_mê1"
 			        },
 			        {
 			          "Preposition": {
@@ -61419,7 +61891,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê"
+			          "ID": "trimestres_have_mê1"
 			        },
 			        {
 			          "Attribute": {
@@ -61432,7 +61904,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres"
+			          "ID": "mê_have_trimestres1"
 			        },
 			        {
 			          "Preposition": {
@@ -61617,7 +62089,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres1"
+			          "ID": "hierarquia_de_data_have_trimestres2"
 			        }
 			      ]
 			    },
@@ -61650,7 +62122,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos1"
+			          "ID": "hierarquia_de_data_have_anos2"
 			        }
 			      ]
 			    },
@@ -61716,7 +62188,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias1"
+			          "ID": "mê_have_dias2"
 			        },
 			        {
 			          "Attribute": {
@@ -61729,7 +62201,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê1"
+			          "ID": "dias_have_mê2"
 			        },
 			        {
 			          "Preposition": {
@@ -61782,7 +62254,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê1"
+			          "ID": "trimestres_have_mê2"
 			        },
 			        {
 			          "Attribute": {
@@ -61795,7 +62267,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres1"
+			          "ID": "mê_have_trimestres2"
 			        },
 			        {
 			          "Preposition": {
@@ -61980,7 +62452,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres2"
+			          "ID": "hierarquia_de_data_have_trimestres3"
 			        }
 			      ]
 			    },
@@ -62013,7 +62485,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos2"
+			          "ID": "hierarquia_de_data_have_anos3"
 			        }
 			      ]
 			    },
@@ -62079,7 +62551,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias2"
+			          "ID": "mê_have_dias3"
 			        },
 			        {
 			          "Attribute": {
@@ -62092,7 +62564,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê2"
+			          "ID": "dias_have_mê3"
 			        },
 			        {
 			          "Preposition": {
@@ -62145,7 +62617,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê2"
+			          "ID": "trimestres_have_mê3"
 			        },
 			        {
 			          "Attribute": {
@@ -62158,7 +62630,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres2"
+			          "ID": "mê_have_trimestres3"
 			        },
 			        {
 			          "Preposition": {
@@ -62343,7 +62815,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres3"
+			          "ID": "hierarquia_de_data_have_trimestres4"
 			        }
 			      ]
 			    },
@@ -62376,7 +62848,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos3"
+			          "ID": "hierarquia_de_data_have_anos4"
 			        }
 			      ]
 			    },
@@ -62442,7 +62914,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias3"
+			          "ID": "mê_have_dias4"
 			        },
 			        {
 			          "Attribute": {
@@ -62455,7 +62927,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê3"
+			          "ID": "dias_have_mê4"
 			        },
 			        {
 			          "Preposition": {
@@ -62508,7 +62980,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê3"
+			          "ID": "trimestres_have_mê4"
 			        },
 			        {
 			          "Attribute": {
@@ -62521,7 +62993,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres3"
+			          "ID": "mê_have_trimestres4"
 			        },
 			        {
 			          "Preposition": {
@@ -62706,7 +63178,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres4"
+			          "ID": "hierarquia_de_data_have_trimestres5"
 			        }
 			      ]
 			    },
@@ -62739,7 +63211,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos4"
+			          "ID": "hierarquia_de_data_have_anos5"
 			        }
 			      ]
 			    },
@@ -62805,7 +63277,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias4"
+			          "ID": "mê_have_dias5"
 			        },
 			        {
 			          "Attribute": {
@@ -62818,7 +63290,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê4"
+			          "ID": "dias_have_mê5"
 			        },
 			        {
 			          "Preposition": {
@@ -62871,7 +63343,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê4"
+			          "ID": "trimestres_have_mê5"
 			        },
 			        {
 			          "Attribute": {
@@ -62884,7 +63356,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres4"
+			          "ID": "mê_have_trimestres5"
 			        },
 			        {
 			          "Preposition": {
@@ -63069,7 +63541,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres5"
+			          "ID": "hierarquia_de_data_have_trimestres6"
 			        }
 			      ]
 			    },
@@ -63102,7 +63574,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos5"
+			          "ID": "hierarquia_de_data_have_anos6"
 			        }
 			      ]
 			    },
@@ -63168,7 +63640,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias5"
+			          "ID": "mê_have_dias6"
 			        },
 			        {
 			          "Attribute": {
@@ -63181,7 +63653,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê5"
+			          "ID": "dias_have_mê6"
 			        },
 			        {
 			          "Preposition": {
@@ -63234,7 +63706,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê5"
+			          "ID": "trimestres_have_mê6"
 			        },
 			        {
 			          "Attribute": {
@@ -63247,7 +63719,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres5"
+			          "ID": "mê_have_trimestres6"
 			        },
 			        {
 			          "Preposition": {
@@ -63432,7 +63904,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres6"
+			          "ID": "hierarquia_de_data_have_trimestres7"
 			        }
 			      ]
 			    },
@@ -63465,7 +63937,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos6"
+			          "ID": "hierarquia_de_data_have_anos7"
 			        }
 			      ]
 			    },
@@ -63531,7 +64003,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias6"
+			          "ID": "mê_have_dias7"
 			        },
 			        {
 			          "Attribute": {
@@ -63544,7 +64016,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê6"
+			          "ID": "dias_have_mê7"
 			        },
 			        {
 			          "Preposition": {
@@ -63597,7 +64069,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê6"
+			          "ID": "trimestres_have_mê7"
 			        },
 			        {
 			          "Attribute": {
@@ -63610,7 +64082,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres6"
+			          "ID": "mê_have_trimestres7"
 			        },
 			        {
 			          "Preposition": {
@@ -63795,7 +64267,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres7"
+			          "ID": "hierarquia_de_data_have_trimestres8"
 			        }
 			      ]
 			    },
@@ -63828,7 +64300,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos7"
+			          "ID": "hierarquia_de_data_have_anos8"
 			        }
 			      ]
 			    },
@@ -63894,7 +64366,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_dias7"
+			          "ID": "mê_have_dias8"
 			        },
 			        {
 			          "Attribute": {
@@ -63907,7 +64379,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dias_have_mê7"
+			          "ID": "dias_have_mê8"
 			        },
 			        {
 			          "Preposition": {
@@ -63960,7 +64432,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê7"
+			          "ID": "trimestres_have_mê8"
 			        },
 			        {
 			          "Attribute": {
@@ -63973,7 +64445,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres7"
+			          "ID": "mê_have_trimestres8"
 			        },
 			        {
 			          "Preposition": {
@@ -64158,7 +64630,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres8"
+			          "ID": "hierarquia_de_data_have_trimestres9"
 			        }
 			      ]
 			    },
@@ -64191,7 +64663,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos8"
+			          "ID": "hierarquia_de_data_have_anos9"
 			        }
 			      ]
 			    },
@@ -65565,6 +66037,171 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "vw_leads_groups_have_vw_dim_cursos"
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel_has_ordem_métrica": {
+			      "Binding": {
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "matriz_indicadores_grafico_movel": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel"
+			          }
+			        },
+			        "matriz_indicadores_grafico_movel.ordem_métrica": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel.ordem_métrica"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "matriz_indicadores_grafico_movel"
+			            },
+			            "Object": {
+			              "Role": "matriz_indicadores_grafico_movel.ordem_métrica"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "matriz_indicadores_grafico_movels_have_ordem_métricas"
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel_has_métrica": {
+			      "Binding": {
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "matriz_indicadores_grafico_movel": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel"
+			          }
+			        },
+			        "matriz_indicadores_grafico_movel.métrica": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel.métrica"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "matriz_indicadores_grafico_movel"
+			            },
+			            "Object": {
+			              "Role": "matriz_indicadores_grafico_movel.métrica"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "matriz_indicadores_grafico_movels_have_métricas"
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel_has_ordem_indicador": {
+			      "Binding": {
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "matriz_indicadores_grafico_movel": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel"
+			          }
+			        },
+			        "matriz_indicadores_grafico_movel.ordem_indicador": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel.ordem_indicador"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "matriz_indicadores_grafico_movel"
+			            },
+			            "Object": {
+			              "Role": "matriz_indicadores_grafico_movel.ordem_indicador"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "matriz_indicadores_grafico_movels_have_ordem_indicadors"
+			        }
+			      ]
+			    },
+			    "matriz_indicadores_grafico_movel_has_indicador": {
+			      "Binding": {
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "matriz_indicadores_grafico_movel": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel"
+			          }
+			        },
+			        "matriz_indicadores_grafico_movel.indicador": {
+			          "Target": {
+			            "Entity": "matriz_indicadores_grafico_movel.indicador"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "matriz_indicadores_grafico_movel"
+			            },
+			            "Object": {
+			              "Role": "matriz_indicadores_grafico_movel.indicador"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "matriz_indicadores_grafico_movels_have_indicadors"
+			        }
+			      ]
+			    },
+			    "medida_has_conversão_geral_c__zero": {
+			      "Binding": {
+			        "ConceptualEntity": "MEDIDAS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.conversão_geral_c__zero": {
+			          "Target": {
+			            "Entity": "medida.conversão_geral_c__zero"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.conversão_geral_c__zero"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medidas_have_conversão_geral_c__zero"
 			        }
 			      ]
 			    },
@@ -70518,15 +71155,15 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "matriz_indicadores_grafico_has_cor_barra_grafico_movel": {
+			    "matriz_indicadores_grafico_movel_has_matriz_indicadores_grafico_cor_barra_grafico_movel": {
 			      "Binding": {
-			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO"
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "matriz_indicadores_grafico": {
+			        "matriz_indicadores_grafico_movel": {
 			          "Target": {
-			            "Entity": "matriz_indicadores_grafico"
+			            "Entity": "matriz_indicadores_grafico_movel"
 			          }
 			        },
 			        "matriz_indicadores_grafico.cor_barra_grafico_movel": {
@@ -70539,7 +71176,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "matriz_indicadores_grafico"
+			              "Role": "matriz_indicadores_grafico_movel"
 			            },
 			            "Object": {
 			              "Role": "matriz_indicadores_grafico.cor_barra_grafico_movel"
@@ -70547,7 +71184,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "matriz_indicadores_graficos_have_cor_barra_grafico_movel"
+			          "ID": "matriz_indicadores_grafico_movels_have_cor_barra_grafico_movel"
 			        }
 			      ]
 			    },
@@ -70584,15 +71221,15 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
-			    "matriz_indicadores_grafico_has_valor_matriz_grafico_movel1": {
+			    "matriz_indicadores_grafico_movel_has_matriz_indicadores_grafico_valor_matriz_grafico_movel1": {
 			      "Binding": {
-			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO"
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "matriz_indicadores_grafico": {
+			        "matriz_indicadores_grafico_movel": {
 			          "Target": {
-			            "Entity": "matriz_indicadores_grafico"
+			            "Entity": "matriz_indicadores_grafico_movel"
 			          }
 			        },
 			        "matriz_indicadores_grafico.valor_matriz_grafico_movel1": {
@@ -70605,7 +71242,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "matriz_indicadores_grafico"
+			              "Role": "matriz_indicadores_grafico_movel"
 			            },
 			            "Object": {
 			              "Role": "matriz_indicadores_grafico.valor_matriz_grafico_movel1"
@@ -70613,19 +71250,19 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "matriz_indicadores_graficos_have__valor_matriz_grafico_movel"
+			          "ID": "matriz_indicadores_grafico_movels_have__valor_matriz_grafico_movel"
 			        }
 			      ]
 			    },
-			    "matriz_indicadores_grafico_has_valor_matriz_grafico_movel": {
+			    "matriz_indicadores_grafico_movel_has_matriz_indicadores_grafico_valor_matriz_grafico_movel": {
 			      "Binding": {
-			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO"
+			        "ConceptualEntity": "MATRIZ_INDICADORES_GRAFICO_MOVEL"
 			      },
 			      "State": "Generated",
 			      "Roles": {
-			        "matriz_indicadores_grafico": {
+			        "matriz_indicadores_grafico_movel": {
 			          "Target": {
-			            "Entity": "matriz_indicadores_grafico"
+			            "Entity": "matriz_indicadores_grafico_movel"
 			          }
 			        },
 			        "matriz_indicadores_grafico.valor_matriz_grafico_movel": {
@@ -70638,7 +71275,7 @@ cultureInfo pt-BR
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "matriz_indicadores_grafico"
+			              "Role": "matriz_indicadores_grafico_movel"
 			            },
 			            "Object": {
 			              "Role": "matriz_indicadores_grafico.valor_matriz_grafico_movel"
@@ -70646,7 +71283,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "matriz_indicadores_graficos_have_valor_matriz_grafico_movel"
+			          "ID": "matriz_indicadores_grafico_movels_have_valor_matriz_grafico_movel"
 			        }
 			      ]
 			    },
@@ -103891,237 +104528,6 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "vw_leads_groups_have_total_inscritos_geral_lead"
-			        }
-			      ]
-			    },
-			    "vw_matricula_data_taxa_pag_variation_hierarquia_de_data_trimestre_has_vw_matricula_data_taxa_pag_variation_hierarquia_de_data_mê": {
-			      "Binding": {
-			        "ConceptualEntity": "VW_MATRICULAS"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre": {
-			          "Target": {
-			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
-			          }
-			        },
-			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê": {
-			          "Target": {
-			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
-			            },
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "trimestres_have_mê8"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            },
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mê_have_trimestres8"
-			        },
-			        {
-			          "Preposition": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            },
-			            "Prepositions": [
-			              {
-			                "in": {
-			                  "State": "Generated"
-			                }
-			              }
-			            ],
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mê_are_in_trimestres8"
-			        }
-			      ]
-			    },
-			    "vw_matricula_data_taxa_pag_variation_hierarquia_de_data_mê_has_vw_matricula_data_taxa_pag_variation_hierarquia_de_data_dia": {
-			      "Binding": {
-			        "ConceptualEntity": "VW_MATRICULAS"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê": {
-			          "Target": {
-			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			          }
-			        },
-			        "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia": {
-			          "Target": {
-			            "Entity": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            },
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mê_have_dias8"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
-			            },
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dias_have_mê8"
-			        },
-			        {
-			          "Preposition": {
-			            "Subject": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.dia"
-			            },
-			            "Prepositions": [
-			              {
-			                "in": {
-			                  "State": "Generated"
-			                }
-			              }
-			            ],
-			            "Object": {
-			              "Role": "vw_matricula.data_taxa_pag.variation.hierarquia_de_data.mê"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dias_are_in_mê8"
-			        }
-			      ]
-			    },
-			    "base_matricula_dia_Y_1_data_final_has_variation_hierarquia_de_data": {
-			      "Binding": {
-			        "ConceptualEntity": "base_matricula_dia_Y-1"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "base_matricula_dia_Y_1.data_final": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final"
-			          }
-			        },
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "base_matricula_dia_Y_1.data_final"
-			            },
-			            "Object": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "data_finals_have_hierarquia_de_data"
-			        }
-			      ]
-			    },
-			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_ano": {
-			      "Binding": {
-			        "ConceptualEntity": "base_matricula_dia_Y-1"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			          }
-			        },
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			            },
-			            "Object": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.ano"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_anos9"
-			        }
-			      ]
-			    },
-			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_trimestre": {
-			      "Binding": {
-			        "ConceptualEntity": "base_matricula_dia_Y-1"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			          }
-			        },
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			            },
-			            "Object": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.trimestre"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_trimestres9"
 			        }
 			      ]
 			    },

@@ -1,0 +1,132 @@
+table MATRIZ_INDICADORES_GRAFICO_MOVEL
+	lineageTag: 0a091e19-454f-45ed-a27f-769e2989769f
+
+	measure '% VALOR_MATRIZ_GRAFICO_MOVEL' = FORMAT([VALOR_MATRIZ_GRAFICO_MOVEL], "0.0%")
+		lineageTag: f3ed385b-c6dc-4146-ae50-063978fb431d
+
+	measure Cor_Barra_Grafico_movel = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO_MOVEL[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO_MOVEL[Métrica])
+			VAR Valor = VALUE([VALOR_MATRIZ_GRAFICO_MOVEL]) 
+			
+			
+			RETURN 
+			    SWITCH(
+			        TRUE(),
+			        -- Cada indicador é comparado individualmente com DU_Real
+			        IndicadorSelecionado = "% ating. Conversão Geral" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating" && Valor >= 1, "#A3DDB3",
+			
+			        -- Se for maior ou igual a DU Real, mantém verde
+			        "#FFCC99"
+			    )
+			
+			```
+		lineageTag: 4377dd54-62d6-44fe-bad5-065fee9aadb3
+
+	measure VALOR_MATRIZ_GRAFICO_MOVEL = ```
+			
+			VAR IndicadorSelecionado = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO_MOVEL[Indicador])
+			VAR MetricaSelecionada = SELECTEDVALUE(MATRIZ_INDICADORES_GRAFICO_MOVEL[Métrica])
+			VAR ValorBruto = 
+			    SWITCH(
+			        TRUE(),
+			
+			        IndicadorSelecionado = "% ating. Conversão Geral" && MetricaSelecionada = "% Ating", DIVIDE([Conversão Geral],[Conversão Geral Meta Movel]),
+			        
+			        IndicadorSelecionado = "% ating.  investimento feito" && MetricaSelecionada = "% Ating", [% Total Investimento Meta Móvel Reduzido],
+			
+			        IndicadorSelecionado = "% ating. Leads Pagos" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel Pago],
+			
+			        IndicadorSelecionado = "% ating. Leads Total" && MetricaSelecionada = "% Ating", [% Total Leads Meta Movel],
+			
+			        IndicadorSelecionado = "% ating. meta Matrículas" && MetricaSelecionada = "% Ating", [% Total Mat Meta BP Movel],
+			
+			
+			
+			        IndicadorSelecionado = "% ating. meta Receita" && MetricaSelecionada = "% Ating", DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta Movel BP]),
+			        BLANK()
+			
+			
+			
+			
+			
+			    )
+			
+			RETURN 
+			  ValorBruto
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7ef6fe61-0474-49ec-a6d7-4eadd94fbef2
+
+	column Indicador
+		lineageTag: 4f84e923-f41a-4c1b-8857-dbcbb20cf54c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Indicador]
+		sortByColumn: Ordem_Indicador
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Indicador
+		formatString: 0
+		lineageTag: e5a71245-1302-4ba1-9132-9aa845dd1baf
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Indicador]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Métrica
+		lineageTag: db618f65-775f-4166-8d9b-5a6c7997db72
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordem_Métrica
+		formatString: 0
+		lineageTag: 3e7a4669-710e-482a-9c69-80aaa05e8323
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Ordem_Métrica]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MATRIZ_INDICADORES_GRAFICO_MOVEL = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE(
+				    "Indicador", STRING,
+				    "Ordem_Indicador", INTEGER,
+				    "Métrica", STRING,
+				    "Ordem_Métrica", INTEGER,
+				    {
+				
+				        {"% ating. Conversão Geral", 1, "% Ating", 1},
+				
+				        {"% ating.  investimento feito", 2, "% Ating",1 },
+				
+				        {"% ating. Leads Pagos", 3, "% Ating", 1},
+				
+				        {"% ating. Leads Total", 4, "% Ating", 1},
+				
+				        {"% ating. meta Matrículas", 5, "% Ating", 1},
+				
+				        {"% ating. meta Receita", 6, "% Ating", 1}
+				    
+				
+				    }
+				)
+				
+				```
+
+	annotation PBI_Id = 7cf36855a1094504b96817bcc2bed9fa
+

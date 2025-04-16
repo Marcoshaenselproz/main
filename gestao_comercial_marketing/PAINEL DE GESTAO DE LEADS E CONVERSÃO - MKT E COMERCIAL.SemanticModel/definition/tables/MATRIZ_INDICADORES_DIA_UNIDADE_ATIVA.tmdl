@@ -9,23 +9,23 @@ table MATRIZ_INDICADORES_DIA_UNIDADE_ATIVA
 			
 			// Variáveis intermediárias para valores filtrados por status "Ativa"
 			VAR MatriculasMeta = DIVIDE([Total Mat Meta BP], [Total dias uteis])
-			VAR MatriculasReal = CALCULATE([PDU Matrículas], dim_unidade_historica[status] = "Ativa")
+			VAR MatriculasReal = CALCULATE([PDU Matrículas], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR MatriculasAting = DIVIDE(MatriculasReal, MatriculasMeta)
 			
 			VAR LeadsMeta = DIVIDE([Total Leads Meta], [Total dias uteis])
-			VAR LeadsReal = CALCULATE([PDU Leads], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsReal = CALCULATE([PDU Leads], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsAting = DIVIDE(LeadsReal, LeadsMeta)
 			
 			VAR LeadsPagosMeta = DIVIDE([Total Leads Meta Pago], [Total dias uteis])
-			VAR LeadsPagosReal = CALCULATE([PDU Leads Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsPagosReal = CALCULATE([PDU Leads Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsPagosAting = DIVIDE(LeadsPagosReal, LeadsPagosMeta)
 			
 			VAR InvestimentoMeta = DIVIDE([Total Investimento Meta], [Total dias uteis])
-			VAR InvestimentoReal = CALCULATE(DIVIDE([Total Investimento], [Total dias uteis]), dim_unidade_historica[status] = "Ativa")
+			VAR InvestimentoReal = CALCULATE(DIVIDE([Total Investimento], [Total dias uteis corridos]), dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR InvestimentoAting = DIVIDE(InvestimentoReal, InvestimentoMeta)
 			
 			VAR ReceitaMeta = DIVIDE([Total Faturamento Meta BP], [Total dias uteis])
-			VAR ReceitaReal = CALCULATE(DIVIDE([Total Faturamento 1ª Mensalidade], [Total dias uteis]), dim_unidade_historica[status] = "Ativa")
+			VAR ReceitaReal = CALCULATE(DIVIDE([Total Faturamento 1ª Mensalidade], [Total dias uteis corridos]), dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR ReceitaAting = DIVIDE(ReceitaReal, ReceitaMeta)
 			
 			// Cálculo do valor bruto com base no indicador e métrica selecionados

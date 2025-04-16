@@ -8,27 +8,27 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			
 			// Variáveis intermediárias para valores filtrados por status "Ativa"
 			VAR MatriculasMeta = [Total Mat Meta BP Movel]
-			VAR MatriculasReal = CALCULATE([Total Mat Geral], dim_unidade_historica[status] = "Ativa")
+			VAR MatriculasReal = CALCULATE([Total Mat Geral], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR MatriculasAting = DIVIDE(MatriculasReal, MatriculasMeta)
 			
 			VAR LeadsMeta = [Total Leads Meta Movel]
-			VAR LeadsReal = CALCULATE([Total Leads], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsReal = CALCULATE([Total Leads], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsAting = DIVIDE(LeadsReal, LeadsMeta)
 			
 			VAR LeadsPagosMeta = [Total Leads Meta Movel Pago]
-			VAR LeadsPagosReal = CALCULATE([Total Leads Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsPagosReal = CALCULATE([Total Leads Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsPagosAting = DIVIDE(LeadsPagosReal, LeadsPagosMeta)
 			
 			VAR LeadsNaoPagosMeta = [Total Leads Meta Movel Não Pago]
-			VAR LeadsNaoPagosReal = CALCULATE([Total Leads Não Pago], dim_unidade_historica[status] = "Ativa")
+			VAR LeadsNaoPagosReal = CALCULATE([Total Leads Não Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR LeadsNaoPagosAting = DIVIDE(LeadsNaoPagosReal, LeadsNaoPagosMeta)
 			
 			VAR ConversaoGeralMeta = [Conversão Geral Meta Movel]
 			VAR ConversaoGeralReal = 
 			    IF(
-			        ISBLANK(CALCULATE([Conversão Geral], dim_unidade_historica[status] = "Ativa")),
+			        ISBLANK(CALCULATE([Conversão Geral], dim_unidade_historica[ultimo_status] = "Ativa")),
 			        BLANK(),
-			        CALCULATE([Conversão Geral], dim_unidade_historica[status] = "Ativa")
+			        CALCULATE([Conversão Geral], dim_unidade_historica[ultimo_status] = "Ativa")
 			    )
 			VAR ConversaoGeralAting = 
 			    IF(
@@ -38,11 +38,11 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			    )
 			
 			VAR InvestimentoMeta = [Total Investimento Meta Movel]
-			VAR InvestimentoReal = CALCULATE([Total Investimento], dim_unidade_historica[status] = "Ativa")
+			VAR InvestimentoReal = CALCULATE([Total Investimento], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR InvestimentoAting = DIVIDE(InvestimentoReal, InvestimentoMeta)
 			
 			VAR CPLMeta = [Total CPL Meta Movel Pago]
-			VAR CPLReal = CALCULATE([Total CPL Pago], dim_unidade_historica[status] = "Ativa")
+			VAR CPLReal = CALCULATE([Total CPL Pago], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR CPLAting = 
 			    IF(
 			        ISBLANK(CPLReal) || ISBLANK(CPLMeta),
@@ -51,7 +51,7 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			    )
 			
 			VAR FaturamentoMeta = [Total Faturamento Meta Movel BP]
-			VAR FaturamentoReal = CALCULATE([Total Faturamento 1ª Mensalidade], dim_unidade_historica[status] = "Ativa")
+			VAR FaturamentoReal = CALCULATE([Total Faturamento Bruto Esperado], dim_unidade_historica[ultimo_status] = "Ativa")
 			VAR FaturamentoAting = DIVIDE(FaturamentoReal, FaturamentoMeta)
 			
 			// Cálculo do valor bruto com base no indicador e métrica selecionados
@@ -94,9 +94,9 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "% Ating", CPLAting,
 			        
 			        // Faturamento Previsto 1º Pgto
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Meta", FaturamentoMeta,
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Real", FaturamentoReal,
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "% Ating", FaturamentoAting,
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Meta", FaturamentoMeta,
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Real", FaturamentoReal,
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "% Ating", FaturamentoAting,
 			        
 			        // Caso padrão
 			        BLANK()
@@ -238,9 +238,9 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 				        {"CPL", 7, "Meta", 1},
 				        {"CPL", 7, "Real", 2},
 				        {"CPL", 7, "% Ating", 3},
-				          {"Faturamento Previsto 1º Pgto", 8, "Meta", 1},
-				        {"Faturamento Previsto 1º Pgto", 8, "Real", 2},
-				        {"Faturamento Previsto 1º Pgto", 8, "% Ating", 3}
+				          {"Faturamento Total", 8, "Meta", 1},
+				        {"Faturamento Total", 8, "Real", 2},
+				        {"Faturamento Total", 8, "% Ating", 3}
 				
 				
 				

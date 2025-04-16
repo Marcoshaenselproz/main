@@ -35,9 +35,9 @@ table MATRIZ_INDICADORES_MOVEL
 			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "Real", [Total CPL Pago],
 			        IndicadorSelecionado = "CPL" && MetricaSelecionada = "% Ating", [Total CPL Meta Movel Pago Dif],
 			
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Meta", [Total Faturamento Meta Movel BP],
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "Real", [Total Faturamento 1ª Mensalidade],
-			        IndicadorSelecionado = "Faturamento Previsto 1º Pgto" && MetricaSelecionada = "% Ating",DIVIDE([Total Faturamento 1ª Mensalidade],[Total Faturamento Meta Movel BP]),
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Meta", [Total Faturamento Meta Movel BP],
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "Real", [Total Faturamento Bruto Esperado],
+			        IndicadorSelecionado = "Faturamento Total" && MetricaSelecionada = "% Ating",DIVIDE([Total Faturamento Bruto Esperado],[Total Faturamento Meta Movel BP]),
 			
 			        BLANK()
 			    )
@@ -178,9 +178,9 @@ table MATRIZ_INDICADORES_MOVEL
 				        {"CPL", 7, "Meta", 1},
 				        {"CPL", 7, "Real", 2},
 				        {"CPL", 7, "% Ating", 3},
-				          {"Faturamento Previsto 1º Pgto", 8, "Meta", 1},
-				        {"Faturamento Previsto 1º Pgto", 8, "Real", 2},
-				        {"Faturamento Previsto 1º Pgto", 8, "% Ating", 3}
+				          {"Faturamento Total", 8, "Meta", 1},
+				        {"Faturamento Total", 8, "Real", 2},
+				        {"Faturamento Total", 8, "% Ating", 3}
 				
 				
 				

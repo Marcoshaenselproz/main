@@ -18,11 +18,11 @@ table MATRIZ_INDICADORES_DIA
 			        IndicadorSelecionado = "Leads Pagos por dia" && MetricaSelecionada = "Real", [PDU Leads Pago],
 			        IndicadorSelecionado = "Leads Pagos por dia" && MetricaSelecionada = "% Ating", DIVIDE([PDU Leads Pago],DIVIDE([Total Leads Meta Pago],[Total dias uteis])),
 			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "Meta", DIVIDE([Total Investimento Meta],[Total dias uteis]),
-			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "Real", DIVIDE([Total Investimento],[Total dias uteis]),
-			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "% Ating", DIVIDE(DIVIDE([Total Investimento],[Total dias uteis]),DIVIDE([Total Investimento Meta],[Total dias uteis])),
+			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "Real", DIVIDE([Total Investimento],[Total dias uteis corridos]),
+			        IndicadorSelecionado = "Investimento por dia" && MetricaSelecionada = "% Ating", DIVIDE(DIVIDE([Total Investimento],[Total dias uteis corridos]),DIVIDE([Total Investimento Meta],[Total dias uteis])),
 			           IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "Meta", DIVIDE([Total Faturamento Meta BP],[Total dias uteis]),
-			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "Real", DIVIDE( [Total Faturamento Bruto Esperado],[Total dias uteis]),
-			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "% Ating", DIVIDE(DIVIDE( [Total Faturamento Bruto Esperado],[Total dias uteis]),DIVIDE([Total Faturamento Meta BP],[Total dias uteis])),
+			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "Real", DIVIDE( [Total Faturamento Bruto Esperado],[Total dias uteis corridos]),
+			        IndicadorSelecionado = "Receita por dia" && MetricaSelecionada = "% Ating", DIVIDE(DIVIDE( [Total Faturamento Bruto Esperado],[Total dias uteis corridos]),DIVIDE([Total Faturamento Meta BP],[Total dias uteis])),
 			        BLANK()
 			    )
 			
