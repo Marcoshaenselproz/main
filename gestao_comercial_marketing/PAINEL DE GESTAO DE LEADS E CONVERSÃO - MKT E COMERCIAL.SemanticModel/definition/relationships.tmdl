@@ -411,3 +411,11 @@ relationship fc00edf1-cd31-e841-8085-f7397275eb7a
 	fromColumn: VW_MATRICULAS_LIQUIDAS.mes_fechamento
 	toColumn: VW_CALENDARIO.DATA
 
+relationship AutoDetected_b8e7c838-0655-4632-a2c0-4f920fa18771
+	fromColumn: vw_investimento_detalhado.utm_campaign_agrupada
+	toColumn: DIM_UTM_CAMPAIGN.utm_campaign_agrupada
+
+relationship 50bb8fc3-edde-e027-bc5d-1f5b96bccbec
+	fromColumn: vw_investimento_detalhado.DATA
+	toColumn: VW_CALENDARIO.DATA
+

@@ -51,7 +51,6 @@ table MATRIZ_INDICADORES_TOTAL
 
 	measure '% Ating com Ícones MATRIZ_TOTAL' = ```
 			
-			
 			VAR ValorTexto = TRIM([VALOR_MATRIZ_META_TOTAL]) // Remove espaços extras
 			// Verifica se o valor contém "p.p" ou "%" para definir o tratamento adequado
 			VAR ContemPP = SEARCH("p.p", ValorTexto, 1, 0) > 0
@@ -82,7 +81,12 @@ table MATRIZ_INDICADORES_TOTAL
 			                            "🔴 " & ValorTexto,  // Valor positivo → vermelho
 			                            "🟢 " & ValorTexto   // Valor negativo ou zero → verde
 			                        ),
-			                    
+			                     SELECTEDVALUE(MATRIZ_INDICADORES_TOTAL[Indicador]) = "Conversão Geral",
+			                        IF(
+			                            ValorNumerico > 0, 
+			                            "🟢 " & ValorTexto,  // Valor positivo → vermelho
+			                            "🔴 " & ValorTexto   // Valor negativo ou zero → verde
+			                        ),
 			                    // Ícones para outros indicadores em "% Ating"
 			                    ValorNumerico >= [% D.U Real], "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde
 			                    ValorNumerico >= 0, "🟡 " & ValorTexto,  // Entre 0% e meta → círculo amarelo

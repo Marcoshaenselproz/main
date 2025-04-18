@@ -47,7 +47,7 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			    IF(
 			        ISBLANK(CPLReal) || ISBLANK(CPLMeta),
 			        BLANK(),
-			        FORMAT((CPLReal - CPLMeta), "+0.0;-0.0;0.0") & " p.p"
+			        FORMAT((CPLReal - CPLMeta), "+0.0;-0.0;0.0")
 			    )
 			
 			VAR FaturamentoMeta = [Total Faturamento Meta Movel BP]
@@ -156,7 +156,12 @@ table MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA
 			                            "🔴 " & ValorTexto,  // Valor positivo → vermelho
 			                            "🟢 " & ValorTexto   // Valor negativo ou zero → verde
 			                        ),
-			                    
+			                    SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL_UNIDADE_ATIVA[Indicador]) = "Conversão Geral",
+			                        IF(
+			                            ValorNumerico > 0, 
+			                            "🟢 " & ValorTexto,  // Valor positivo → vermelho
+			                            "🔴 " & ValorTexto   // Valor negativo ou zero → verde
+			                        ),
 			                    // Ícones para outros indicadores em "% Ating"
 			                    ValorNumerico >= 1, "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde
 			                    ValorNumerico >= 0, "🟡 " & ValorTexto,  // Entre 0% e meta → círculo amarelo

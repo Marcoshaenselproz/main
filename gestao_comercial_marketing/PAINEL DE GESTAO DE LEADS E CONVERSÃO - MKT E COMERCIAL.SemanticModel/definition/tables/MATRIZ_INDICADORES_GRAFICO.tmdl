@@ -33,9 +33,8 @@ table MATRIZ_INDICADORES_GRAFICO
 			RETURN 
 			  ValorBruto
 			```
+		formatString: 0%;-0%;0%
 		lineageTag: fecceead-f11c-4ef4-a0dc-f78c8a7c6c35
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure '% VALOR_MATRIZ_GRAFICO_META' = FORMAT([VALOR_MATRIZ_GRAFICO_META], "0.0%")
 		lineageTag: 03c69b51-20f0-40b7-bf14-f080a2c24a99

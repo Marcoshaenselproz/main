@@ -96,6 +96,12 @@ table MATRIZ_INDICADORES_MOVEL
 			                            "🔴 " & ValorTexto,  // Valor positivo → vermelho
 			                            "🟢 " & ValorTexto   // Valor negativo ou zero → verde
 			                        ),
+			                         SELECTEDVALUE(MATRIZ_INDICADORES_MOVEL[Indicador]) = "Conversão Geral",
+			                        IF(
+			                            ValorNumerico > 0, 
+			                            "🟢 " & ValorTexto,  // Valor positivo → vermelho
+			                            "🔴 " & ValorTexto   // Valor negativo ou zero → verde
+			                        ),
 			                    
 			                    // Ícones para outros indicadores em "% Ating"
 			                    ValorNumerico >= 1, "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde

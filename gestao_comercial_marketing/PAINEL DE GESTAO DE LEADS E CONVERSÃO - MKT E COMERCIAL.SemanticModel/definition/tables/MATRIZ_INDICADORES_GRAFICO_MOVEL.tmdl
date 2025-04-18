@@ -61,7 +61,7 @@ table MATRIZ_INDICADORES_GRAFICO_MOVEL
 			RETURN 
 			  ValorBruto
 			```
-		formatString: 0.0%;-0.0%;0.0%
+		formatString: 0%;-0%;0%
 		lineageTag: 7ef6fe61-0474-49ec-a6d7-4eadd94fbef2
 
 	column Indicador

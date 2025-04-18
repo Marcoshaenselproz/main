@@ -9127,6 +9127,16 @@ cultureInfo pt-BR
 			            "State": "Generated",
 			            "Weight": 0.99
 			          }
+			        },
+			        {
+			          "Diasem": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -53202,16 +53212,6 @@ cultureInfo pt-BR
 			          "indicador": {
 			            "State": "Generated"
 			          }
-			        },
-			        {
-			          "Leads | Vendas | Investimentos": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -61311,6 +61311,1505 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
+			    "medida.total_CPL_pago_meta_dia_all": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MEDIDAS",
+			          "ConceptualProperty": "Total CPL Pago Meta Dia All"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total CPL pago meta dia all": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
+			    "medida.total_investimento_meta_dia_all": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "MEDIDAS",
+			          "ConceptualProperty": "Total Investimento Meta Dia All"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total investimento meta dia all": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "aggregate investimento meta dia all": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "overall investimento meta dia all": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_CPL_pago_c__zero": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total CPL Pago c/ Zero"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total CPL pago c/ zero": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total CPL pago c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "pago c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "CPL pago c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "total CPL pago c zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "aggregate cpl pago c zero": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "overall cpl pago c zero": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "aggregate cpl pago c": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "overall cpl pago c": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "total cpl pago c zippo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.52
+			          }
+			        },
+			        {
+			          "total cpl pago c nothing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total cpl pago c nil": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total cpl pago c zip": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total cpl pago c zilch": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total cpl pago c naught": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_investimento_reduzido_c__zero": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Investimento Reduzido c/ Zero"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total investimento reduzido c/ zero": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total investimento reduzido c": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "total investimento reduzido c zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "zero": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "aggregate investimento reduzido c zero": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "overall investimento reduzido c zero": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "aggregate investimento reduzido c": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "overall investimento reduzido c": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "total investimento reduzido c zippo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.52
+			          }
+			        },
+			        {
+			          "total investimento reduzido c nothing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total investimento reduzido c nil": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total investimento reduzido c zip": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total investimento reduzido c zilch": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total investimento reduzido c naught": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_impressoes_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Impressoes Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total impressoes google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "aggregate impressoe google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "overall impressoe google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "Impressoes": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_clicks_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Clicks Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total clicks google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "google": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "clicks google": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "aggregate click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "overall click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "Clicks Totais": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_clicks_convertidos_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Clicks Convertidos Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total clicks convertidos google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "aggregate click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "overall click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "Clicks Convertidos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_custo_médio_por_click_convertido_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Custo Médio por Click Convertido Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo médio por click convertido google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Custo por Click Convertido": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_custo_médio_por_click_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Custo Médio por Click Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo médio por click google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "Custo por Click": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_custo_google": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "Total Custo Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "aggregate custo google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "overall custo google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "Total Custo": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_impressoes_google1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "% Total Clicks Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% total clicks google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "percentage total click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.617
+			          }
+			        },
+			        {
+			          "pct total click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "% aggregate click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "% overall click google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "% Clicks Totais": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "medida_LTV.total_clicks_convertidos_google1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Medida_LTV",
+			          "ConceptualProperty": "% Total Clicks Convertidos Google"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "% total clicks convertidos google": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "percentage total click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.624
+			          }
+			        },
+			        {
+			          "pct total click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "% aggregate click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "% overall click convertido google": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "% Clicks Conventidos": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "vw investimento detalhado": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "vw_investimento_detalhado": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.data": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "DATA"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "data": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "date": {
+			            "State": "Generated",
+			            "Weight": 0.7
+			          }
+			        },
+			        {
+			          "information": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "fact": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "info": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "statistic": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "document": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "figure": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "record": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ],
+			      "SemanticType": "Time"
+			    },
+			    "vw_investimento_detalhado.campaign_status": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "campaign_status"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "campaign status": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "campaign_status": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "campaign category": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "campaign importance": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "campaign prestige": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "campaign prominence": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "campaign condition": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "campaign class": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "campaign grade": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "campaign level": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "campaign position": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "campaign rank": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_impressoe": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_impressoes"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total impressoe": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total_impressoes": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "aggregate impressoe": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "overall impressoe": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_click": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_clicks"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total click": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total_clicks": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "click": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "aggregate click": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "overall click": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "total clack": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "total tick": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "total snap": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "total clunk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "clack": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "tick": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "snap": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        },
+			        {
+			          "clunk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.476
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_clicks_convertido": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_clicks_convertidos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total clicks convertido": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total click convertido": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "total_clicks_convertidos": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "aggregate click convertido": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "overall click convertido": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_custo_medio_por_click": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_custo_medio_por_click"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo medio por click": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total_custo_medio_por_click": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "aggregate custo medio por click": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "overall custo medio por click": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "total custo medio por clack": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total custo medio por tick": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total custo medio por snap": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        },
+			        {
+			          "total custo medio por clunk": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.504
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_custo_por_clicks_convertido": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_custo_por_clicks_convertidos"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo por clicks convertido": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total custo por click convertido": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.78
+			          }
+			        },
+			        {
+			          "total_custo_por_clicks_convertidos": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "aggregate custo por click convertido": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        },
+			        {
+			          "overall custo por click convertido": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.605
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.total_custo": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "total_custo"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "total custo": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "total_custo": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "aggregate custo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "overall custo": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.utm_campaign": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "utm_campaign"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "utm campaign": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "utm_campaign": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        },
+			        {
+			          "utm movement": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "utm operation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "utm promotion": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "utm crusade": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "utm drive": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "utm fight": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "utm battle": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "utm war": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.utm_campaign_agrupada": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "utm_campaign_agrupada"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "utm campaign agrupada": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "utm_campaign_agrupada": {
+			            "Type": "Noun",
+			            "State": "Generated",
+			            "Weight": 0.99
+			          }
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado.regiao": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "vw_investimento_detalhado",
+			          "ConceptualProperty": "regiao"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "regiao": {
+			            "State": "Generated"
+			          }
+			        }
+			      ]
+			    },
 			    "quadrante_rvv.obs": {
 			      "Definition": {
 			        "Binding": {
@@ -61334,6 +62833,39 @@ cultureInfo pt-BR
 			    }
 			  },
 			  "Relationships": {
+			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_mê": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_dia_Y-1"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			          }
+			        },
+			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê": {
+			          "Target": {
+			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
+			            },
+			            "Object": {
+			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "hierarquia_de_data_have_mê"
+			        }
+			      ]
+			    },
 			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_trimestre": {
 			      "Binding": {
 			        "ConceptualEntity": "base_matricula_dia_Y-1"
@@ -61693,7 +63225,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê"
+			          "ID": "hierarquia_de_data_have_mê1"
 			        }
 			      ]
 			    },
@@ -62056,7 +63588,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê1"
+			          "ID": "hierarquia_de_data_have_mê2"
 			        }
 			      ]
 			    },
@@ -62419,7 +63951,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê2"
+			          "ID": "hierarquia_de_data_have_mê3"
 			        }
 			      ]
 			    },
@@ -62782,7 +64314,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê3"
+			          "ID": "hierarquia_de_data_have_mê4"
 			        }
 			      ]
 			    },
@@ -63145,7 +64677,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê4"
+			          "ID": "hierarquia_de_data_have_mê5"
 			        }
 			      ]
 			    },
@@ -63508,7 +65040,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê5"
+			          "ID": "hierarquia_de_data_have_mê6"
 			        }
 			      ]
 			    },
@@ -63871,7 +65403,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê6"
+			          "ID": "hierarquia_de_data_have_mê7"
 			        }
 			      ]
 			    },
@@ -64234,7 +65766,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê7"
+			          "ID": "hierarquia_de_data_have_mê8"
 			        }
 			      ]
 			    },
@@ -64597,7 +66129,7 @@ cultureInfo pt-BR
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê8"
+			          "ID": "hierarquia_de_data_have_mê9"
 			        }
 			      ]
 			    },
@@ -66037,6 +67569,745 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "vw_leads_groups_have_vw_dim_cursos"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_regiao": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.regiao": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.regiao"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.regiao"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_regiaos"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_utm_campaign": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.utm_campaign": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.utm_campaign"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.utm_campaign"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_utm_campaigns"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_custo": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_custo": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_custo"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_custo"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custos"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_custo_por_clicks_convertido": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_custo_por_clicks_convertido": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_custo_por_clicks_convertido"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_custo_por_clicks_convertido"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custo_por_clicks_convertidos"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_custo_medio_por_click": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_custo_medio_por_click": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_custo_medio_por_click"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_custo_medio_por_click"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custo_medio_por_clicks"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_clicks_convertido": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_clicks_convertido": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_clicks_convertido"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_clicks_convertido"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_clicks_convertidos"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_click": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_click": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_click"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_click"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_clicks"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_total_impressoe": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.total_impressoe": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.total_impressoe"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.total_impressoe"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_impressoes"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_campaign_status": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.campaign_status": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.campaign_status"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.campaign_status"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_campaign_statuses"
+			        },
+			        {
+			          "DynamicAdjective": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Adjective": {
+			              "Role": "vw_investimento_detalhado.campaign_status"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "campaign_statuses_describe_vw_investimento_detalhados"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_data": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "vw_investimento_detalhado.data": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado.data"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "vw_investimento_detalhado.data"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_data"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_clicks_convertidos_google1": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_clicks_convertidos_google1": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_clicks_convertidos_google1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_clicks_convertidos_google1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have__total_clicks_convertidos_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_impressoes_google1": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_impressoes_google1": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_impressoes_google1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_impressoes_google1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have__total_clicks_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_custo_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_custo_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_custo_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_custo_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custo_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_custo_médio_por_click_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_custo_médio_por_click_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_custo_médio_por_click_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_custo_médio_por_click_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custo_médio_por_click_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_custo_médio_por_click_convertido_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_custo_médio_por_click_convertido_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_custo_médio_por_click_convertido_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_custo_médio_por_click_convertido_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_custo_médio_por_click_convertido_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_clicks_convertidos_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_clicks_convertidos_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_clicks_convertidos_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_clicks_convertidos_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_clicks_convertidos_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_clicks_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_clicks_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_clicks_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_clicks_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_clicks_google"
+			        }
+			      ]
+			    },
+			    "vw_investimento_detalhado_has_medida_LTV_total_impressoes_google": {
+			      "Binding": {
+			        "ConceptualEntity": "vw_investimento_detalhado"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "vw_investimento_detalhado": {
+			          "Target": {
+			            "Entity": "vw_investimento_detalhado"
+			          }
+			        },
+			        "medida_LTV.total_impressoes_google": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_impressoes_google"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "vw_investimento_detalhado"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_impressoes_google"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "vw_investimento_detalhados_have_total_impressoes_google"
+			        }
+			      ]
+			    },
+			    "medida_LTV_has_total_investimento_reduzido_c__zero": {
+			      "Binding": {
+			        "ConceptualEntity": "Medida_LTV"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida_LTV": {
+			          "Target": {
+			            "Entity": "medida_LTV"
+			          }
+			        },
+			        "medida_LTV.total_investimento_reduzido_c__zero": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_investimento_reduzido_c__zero"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida_LTV"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_investimento_reduzido_c__zero"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medida_LTV_have_total_investimento_reduzido_c__zero"
+			        }
+			      ]
+			    },
+			    "medida_LTV_has_total_CPL_pago_c__zero": {
+			      "Binding": {
+			        "ConceptualEntity": "Medida_LTV"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida_LTV": {
+			          "Target": {
+			            "Entity": "medida_LTV"
+			          }
+			        },
+			        "medida_LTV.total_CPL_pago_c__zero": {
+			          "Target": {
+			            "Entity": "medida_LTV.total_CPL_pago_c__zero"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida_LTV"
+			            },
+			            "Object": {
+			              "Role": "medida_LTV.total_CPL_pago_c__zero"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medida_LTV_have_total_CPL_pago_c__zero"
+			        }
+			      ]
+			    },
+			    "medida_has_total_investimento_meta_dia_all": {
+			      "Binding": {
+			        "ConceptualEntity": "MEDIDAS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.total_investimento_meta_dia_all": {
+			          "Target": {
+			            "Entity": "medida.total_investimento_meta_dia_all"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.total_investimento_meta_dia_all"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medidas_have_total_investimento_meta_dia_all"
+			        }
+			      ]
+			    },
+			    "medida_has_total_CPL_pago_meta_dia_all": {
+			      "Binding": {
+			        "ConceptualEntity": "MEDIDAS"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "medida": {
+			          "Target": {
+			            "Entity": "medida"
+			          }
+			        },
+			        "medida.total_CPL_pago_meta_dia_all": {
+			          "Target": {
+			            "Entity": "medida.total_CPL_pago_meta_dia_all"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "medida"
+			            },
+			            "Object": {
+			              "Role": "medida.total_CPL_pago_meta_dia_all"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "medidas_have_total_CPL_pago_meta_dia_all"
 			        }
 			      ]
 			    },
@@ -82718,6 +84989,39 @@ cultureInfo pt-BR
 			        }
 			      ]
 			    },
+			    "base_matricula_historica_count_has_medida_total_mat_geral_BF1": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_historica_count"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_historica_count": {
+			          "Target": {
+			            "Entity": "base_matricula_historica_count"
+			          }
+			        },
+			        "medida.total_mat_geral_BF1": {
+			          "Target": {
+			            "Entity": "medida.total_mat_geral_BF1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_historica_count"
+			            },
+			            "Object": {
+			              "Role": "medida.total_mat_geral_BF1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "base_matricula_historica_counts_have_total_mat_geral_BF"
+			        }
+			      ]
+			    },
 			    "vw_matricula_has_medida_total_mat_geral_BF1": {
 			      "Binding": {
 			        "ConceptualEntity": "VW_MATRICULAS"
@@ -88094,6 +90398,39 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "vw_leads_groups_have_total_mat_leads_sem_UTM"
+			        }
+			      ]
+			    },
+			    "base_matricula_historica_count_has_medida_total_mat_geral_c_zero1": {
+			      "Binding": {
+			        "ConceptualEntity": "base_matricula_historica_count"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "base_matricula_historica_count": {
+			          "Target": {
+			            "Entity": "base_matricula_historica_count"
+			          }
+			        },
+			        "medida.total_mat_geral_c_zero1": {
+			          "Target": {
+			            "Entity": "medida.total_mat_geral_c_zero1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "base_matricula_historica_count"
+			            },
+			            "Object": {
+			              "Role": "medida.total_mat_geral_c_zero1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "base_matricula_historica_counts_have_total_mat_geral_c_zero"
 			        }
 			      ]
 			    },
@@ -104528,39 +106865,6 @@ cultureInfo pt-BR
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "vw_leads_groups_have_total_inscritos_geral_lead"
-			        }
-			      ]
-			    },
-			    "base_matricula_dia_Y_1_data_final_variation_hierarquia_de_data_has_mê": {
-			      "Binding": {
-			        "ConceptualEntity": "base_matricula_dia_Y-1"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			          }
-			        },
-			        "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê": {
-			          "Target": {
-			            "Entity": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data"
-			            },
-			            "Object": {
-			              "Role": "base_matricula_dia_Y_1.data_final.variation.hierarquia_de_data.mê"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "hierarquia_de_data_have_mê9"
 			        }
 			      ]
 			    },

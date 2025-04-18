@@ -1866,7 +1866,7 @@ table MEDIDAS
 
 	measure 'Total Mat Geral c/zero' =
 			
-			var matgeral = [Total Mat Valida] + [Total Mat Canceladas]
+			var matgeral = [Total Mat Geral]
 			
 			RETURN
 			SWITCH(TRUE(),
@@ -4928,6 +4928,40 @@ table MEDIDAS
 	measure 'Conversão Geral c/ Zero' = DIVIDE([Total Mat Geral c/zero],[Total Leads])
 		formatString: 0%;-0%;0%
 		lineageTag: 05e20238-5f3c-4051-a7d1-720390f596f8
+
+	measure 'Total CPL Pago Meta Dia All' =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			VAR meta = CALCULATE([Total CPL Meta Pago],ALLSELECTED(VW_CALENDARIO))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Leads]),BLANK(),meta)
+		lineageTag: e120afa9-e577-4aea-8214-fe2066b4bd3c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Meta Dia All' =
+			
+			VAR tbdia = CALCULATE(SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),VW_CALENDARIO[MTD_REAL] = "Real")
+			VAR meta = CALCULATE(DIVIDE([Total Investimento Meta Reduzido],[Total dias uteis]),ALLSELECTED(VW_CALENDARIO))
+			RETURN
+			SWITCH(TRUE(),
+			ISBLANK([Total Leads]),BLANK(),meta)
+		lineageTag: e3250bd0-b1af-48f3-8005-fe684a87fd6e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure MaxDatamidiagoogle = ```
+			
+			VAR UltimaData = CALCULATE(MAX(vw_investimento_detalhado[DATA])
+			
+			    ) 
+			RETURN 
+			    UltimaData 
+			
+			```
+		formatString: Short Date
+		lineageTag: 15bd8b48-faa3-4711-9506-33f7cf404a84
 
 	column MEDIDAS
 		dataType: string

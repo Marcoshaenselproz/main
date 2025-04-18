@@ -19,7 +19,7 @@ queryGroup 'Erros na Consulta - 12/03/2025 10:19:55'
 
 	annotation PBI_QueryGroupOrder = 2
 
-annotation PBI_QueryOrder = ["VW_LEADS_GROUP","VW_LEADS_GROUP_SEM_CONSULTOR","VW_VISITANTES","VW_VISITANTES_GROUP","VW_MATRICULAS","VW_MATRICULAS_LIQUIDAS","VW_ATENDIMENTOS_GROUP","VW_LEADS_SEM_ATENDIMENTO","base_matricula_historica_count","base_matricula_dia_Y-1","vw_base_leads_historica_count","MEDIDAS","int_commercial__life_time_value_per_branch","vw_dim_users_ajustado","DIM_HORA","vw_dim_origens","vw_dim_url","DIM_UTM_CAMPAIGN","DIM_TIPO_LEAD","DIM_UNIDADE","dim_unidade_historica","DIM_TURNO","VW_CALENDARIO","DIM_COLABORADORES_ID","vw_dim_curso","vw_custo_ferramenta","vw_custo_operacional","vw_custo_consolidado_unidade","vw_custo_consolidado_unidade_group","vw_ft_investimento_distribuido_tb","vw_ft_base_meta_investimento","vw_ft_cac_full","vw_ft_meta_bp_comercial","Relatório_atendimentos","vw_ft_recorrencia","Contatos_asc","Base_meio_pagamento","Base_meio_pagamento_YoY_Dia","RangeStart","RangeEnd","DIM_TIPO_PAGAMENTO","DIM_TIPO_PARCELA","DIM_TAXA_MATRICULA","DIM_CONFIG_PAGINAS","DIM_EMAIL_AUTORIZADO_PAGINAS_BI","Quadrante_RVV","vw_dim_curso_2","Tabela_Evasao_Pedrino","Base_Titulos_reprovados","Erros em VW_MATRICULAS","DIM_METRICAS_PBI"]
+annotation PBI_QueryOrder = ["VW_LEADS_GROUP","VW_LEADS_GROUP_SEM_CONSULTOR","VW_VISITANTES","VW_VISITANTES_GROUP","VW_MATRICULAS","VW_MATRICULAS_LIQUIDAS","VW_ATENDIMENTOS_GROUP","VW_LEADS_SEM_ATENDIMENTO","base_matricula_historica_count","base_matricula_dia_Y-1","vw_base_leads_historica_count","MEDIDAS","int_commercial__life_time_value_per_branch","vw_dim_users_ajustado","DIM_HORA","vw_dim_origens","vw_dim_url","DIM_UTM_CAMPAIGN","DIM_TIPO_LEAD","DIM_UNIDADE","dim_unidade_historica","DIM_TURNO","VW_CALENDARIO","DIM_COLABORADORES_ID","vw_dim_curso","vw_custo_ferramenta","vw_custo_operacional","vw_custo_consolidado_unidade","vw_custo_consolidado_unidade_group","vw_ft_investimento_distribuido_tb","vw_ft_base_meta_investimento","vw_ft_cac_full","vw_ft_meta_bp_comercial","Relatório_atendimentos","vw_ft_recorrencia","Contatos_asc","Base_meio_pagamento","Base_meio_pagamento_YoY_Dia","RangeStart","RangeEnd","DIM_TIPO_PAGAMENTO","DIM_TIPO_PARCELA","DIM_TAXA_MATRICULA","DIM_CONFIG_PAGINAS","DIM_EMAIL_AUTORIZADO_PAGINAS_BI","Quadrante_RVV","vw_dim_curso_2","Tabela_Evasao_Pedrino","Base_Titulos_reprovados","Erros em VW_MATRICULAS","DIM_METRICAS_PBI","vw_investimento_detalhado"]
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
@@ -120,6 +120,7 @@ ref table DIM_METRICAS_PBI
 ref table VW_MATRICULAS_LIQUIDAS
 ref table 'Medidas Pedrino'
 ref table MATRIZ_INDICADORES_GRAFICO_MOVEL
+ref table vw_investimento_detalhado
 
 ref cultureInfo pt-BR
 

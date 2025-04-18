@@ -1559,8 +1559,62 @@
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": false,
       "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 21,
+            "y": 0
+          },
+          "nodeIndex": "vw_investimento_detalhado",
+          "nodeLineageTag": "43066c41-9581-4089-9d7e-7b28af30f846",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 624,
+            "y": 4
+          },
+          "nodeIndex": "VW_CALENDARIO",
+          "nodeLineageTag": "082963ce-de4c-46b9-b793-4d3a8f581ef7",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 309,
+            "y": 211
+          },
+          "nodeIndex": "DIM_UTM_CAMPAIGN",
+          "nodeLineageTag": "303395de-3f60-41b0-a58c-501de11451b4",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 5",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Layout 4",
+  "selectedDiagram": "Layout 5",
   "defaultDiagram": "Todas as tabelas"
 }

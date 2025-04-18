@@ -34,6 +34,12 @@ table MATRIZ_INDICADORES_TOTAL_UNIDADE_ATIVA
 			                            "🔴 " & ValorTexto,  // Valor positivo → vermelho
 			                            "🟢 " & ValorTexto   // Valor negativo ou zero → verde
 			                        ),
+			                        SELECTEDVALUE(MATRIZ_INDICADORES_TOTAL_UNIDADE_ATIVA[Indicador]) = "Conversão Geral",
+			                        IF(
+			                            ValorNumerico > 0, 
+			                            "🟢 " & ValorTexto,  // Valor positivo → vermelho
+			                            "🔴 " & ValorTexto   // Valor negativo ou zero → verde
+			                        ),
 			                    
 			                    // Ícones para outros indicadores em "% Ating"
 			                    ValorNumerico >= [% D.U Real], "🟢 " & ValorTexto,  // Meta atingida ou superada → círculo verde

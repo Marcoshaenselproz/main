@@ -418,7 +418,7 @@ table Medida_LTV
 			VAR TOTAL = DIVIDE([Total Investimento],[Total Leads Pago],0)
 			RETURN
 			IF(NOT ISBLANK(TOTAL) && TOTAL <> 0 ,TOTAL)
-		formatString: #,0
+		formatString: #,0.0
 		lineageTag: 0c25a235-cb3f-45b7-a859-0ee2e3e47064
 
 	measure 'Total Custo Central/Comercial' = ([Total Custo Central] + [Total Custo Comercial])
@@ -1353,6 +1353,99 @@ table Medida_LTV
 			ISBLANK(tbdia),BLANK(),meta)
 		formatString: 0%;-0%;0%
 		lineageTag: 27dba62f-85a2-42d1-918f-84d545e151a0
+
+	measure 'Total CPL Pago c/ Zero' = ```
+			
+			VAR tbdia = CALCULATE(
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),
+			    VW_CALENDARIO[MTD_REAL] = "Real"
+			)
+			VAR real = CALCULATE(
+			    SELECTEDVALUE(VW_CALENDARIO[MTD_REAL]),
+			    ALL(VW_CALENDARIO)
+			)
+			VAR TOTAL = IF(
+			    ISBLANK([Total CPL Pago]), 
+			    0, 
+			    [Total CPL Pago]
+			)
+			RETURN
+			IF(
+			    ISBLANK(tbdia) || real = "Real", 
+			    BLANK(), 
+			    TOTAL
+			)
+			```
+		lineageTag: 9b71a667-8b0b-4114-b66d-6dd8b749c301
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Investimento Reduzido c/ Zero' = ```
+			
+			VAR tbdia = CALCULATE(
+			    SELECTEDVALUE(VW_CALENDARIO[COD_DIA]),
+			    VW_CALENDARIO[MTD_REAL] = "Real"
+			)
+			VAR real = CALCULATE(
+			    SELECTEDVALUE(VW_CALENDARIO[MTD_REAL]),
+			    ALL(VW_CALENDARIO)
+			)
+			VAR TOTAL = IF(
+			    ISBLANK([Total Investimento Reduzido]), 
+			    0, 
+			    [Total Investimento Reduzido]
+			)
+			RETURN
+			IF(
+			    ISBLANK(tbdia) || real = "Real", 
+			    BLANK(), 
+			    TOTAL
+			)
+			```
+		lineageTag: 22ff6434-08b7-440d-afc1-13b9b243ada0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Impressoes Google' = SUM(vw_investimento_detalhado[total_impressoes])
+		formatString: #,0
+		lineageTag: abc4f91a-f716-4aab-88bc-57dfc0544e99
+
+	measure 'Total Clicks Google' = ```
+			SUM(vw_investimento_detalhado[total_clicks])
+			
+			```
+		formatString: #,0
+		lineageTag: 7876a54c-99d5-4590-8bb9-818f4b71280a
+
+	measure 'Total Clicks Convertidos Google' = SUM(vw_investimento_detalhado[total_clicks_convertidos])
+		formatString: #,0
+		lineageTag: 0365e79e-022c-488d-bc4b-c3340fd3f240
+
+	measure 'Total Custo Médio por Click Convertido Google' = DIVIDE([Total Custo Google], [Total Clicks Convertidos Google])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 3a2daf8c-4a8a-4295-8015-d009b29c8149
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total Custo Médio por Click Google' = DIVIDE([Total Custo Google],[Total Clicks Google])
+		formatString: "R$"\ #,0.0;-"R$"\ #,0.0;"R$"\ #,0.0
+		lineageTag: e8a9e96b-4a7f-4e1a-a6be-ae15ad103a70
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure 'Total Custo Google' = SUM(vw_investimento_detalhado[total_custo])
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 1928c468-e505-45eb-8980-44754501d9ce
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '% Total Clicks Google' = DIVIDE([Total Clicks Google], [Total Impressoes Google])
+		formatString: 0%;-0%;0%
+		lineageTag: 26372ee9-9f98-42f5-a1e2-8b08f01366c3
+
+	measure '% Total Clicks Convertidos Google' = DIVIDE([Total Clicks Convertidos Google], [Total Clicks Google])
+		formatString: 0%;-0%;0%
+		lineageTag: 43aacfd9-c576-4137-9692-24f3066ef8c3
 
 	column Column
 		isHidden
